@@ -1,0 +1,29 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+.wave{
+    width: 85%;
+}
+path{
+    width: 80%;
+    background: #00B4DB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.login{
+    /* width: 20%; */
+    width: auto;
+}
+.container-login{
+    width: 50vh;
+    margin-top: -590px;
+    margin-right: 20%;
+    /* margin-top:  */
+}
+.btn-login{
+    border-radius: 55px;
+}
+
+
