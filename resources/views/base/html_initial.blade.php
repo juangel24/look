@@ -1,31 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Look! | Acceder</title>
 
-    <!-- LINKS -->
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    
+    <!-- FONTS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
     <!-- STYLES -->
         <!-- MDBootstrap -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
     <link rel="stylesheet" href="css/style.css">
 
     <link rel="stylesheet" href="css/Look!/login.css">
-    <link rel="stylesheet" href="css/Look!/perfil.css">
     <link rel="stylesheet" href="css/Look!/register.css">
-
-    <!-- FONTS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800&display=swap">
-
-    <!-- LIBRERIES -->
- <!-- STYLES -->
-        <!-- MDBootstrap -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/mdb.min.css">
-        <link rel="stylesheet" href="css/style.css">
-    
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -43,19 +37,14 @@
     <!-- Your custom scripts (optional) -->
     <script type="text/javascript"></script>
 
-    <title>Look!</title>
-</head>
-<body id="portada">
-    @include('globals.navbar')
-        <!-- <main class="py-4"> -->
-            <div class="">
-                @yield('content')
-            </div>
-        <!-- </main> -->
-        
-<!-- End your project here-->
+    </head>
+    <body>
+    <script>
+var widthBrowser = window.outerWidth;
+    var heightBrowser = window.outerHeight;
+    console.log("Tamaño de la pantalla del navegador: width=" + widthBrowser + ", height=" + heightBrowser);
 
-  
 
-    </body>
+    </script>
+</body>
 </html>

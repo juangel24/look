@@ -13,9 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ACCESS TO Look!
+
 Route::get('', 'loginController@viewLogin');
 
 Route::get('verificar-usario', 'loginController@login');
-route::get('perfil',function(){
+Route::get('register', 'loginController@viewRegister')->name('register');
+
+Route::get('prueba', 'loginController@prueba');
+route::Get('perfil',function(){
     return view('perfil.perfil');
 });

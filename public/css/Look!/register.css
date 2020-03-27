@@ -1,10 +1,12 @@
-html, body {
-    margin: 0;
-    padding: 0;
+.wave-register{
+    background-color: green;
 }
-.wave{
-    width: 85%;
+.wave-r{
     height: auto;
+    width: 85%;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 path{
     width: 80%;
@@ -13,42 +15,41 @@ path{
     background: linear-gradient(to right, #0083B0, rgb(27, 86, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-.login{
-    /* width: 20%; */
-    width: auto;
-}
-.container-login{
+.container-register{
+    /* width: auto; */
+    height: auto;
     width: 50vh;
-    margin-top: -470px;
-    margin-right: 20%;
+    margin-top: 150px;
+    margin-left: 15%;
     /* margin-top:  */
 }
-.btn-login{
+.btn-register{
     border-radius: 55px;
 }
-.wave-l-m{
+.wave-r-m{
     width: 100%;
     position: fixed;
     bottom: 0;
     display: none;
 }
 
+
 /* RESPONSIVE (MOVIL) */
 @media screen and (max-width: 1238px) {
-    .wave-l{
+    .wave-r{
         width: 70%;
     }
 }
 @media screen and (max-width: 960px) {
-    .wave-l{
+    .wave-r{
         width: 55%;
     }
 }
 @media screen and (max-width: 730px) {
-    .wave-l{
+    .wave-r{
         display: none;
     }
-    .container-login{
+    .container-register{
         width: auto;
         margin: auto;
         display: block;
@@ -56,7 +57,7 @@ path{
         padding-left: 50px;
         padding-right: 50px;
     }
-    .wave-l-m{
+    .wave-r-m{
         display: block;
     }
 }
