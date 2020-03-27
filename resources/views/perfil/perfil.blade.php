@@ -1,5 +1,8 @@
 @extends('layout.base')
 
+@section('css')
+<link rel="stylesheet" href="css/Look!/perfil.css">
+@endsection
 @section('content')
 <div class="container perfil">
     <div class="row">
@@ -34,5 +37,6 @@
       </div>
      
     </div>
+    <hr>
   </div>
 @endsection

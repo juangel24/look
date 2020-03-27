@@ -9,7 +9,7 @@
     <title>Look</title>
 
     @yield('css')
-	<link rel="stylesheet" href="css/Look!/perfil.css">
+	
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"

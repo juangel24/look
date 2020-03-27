@@ -21,6 +21,6 @@ Route::get('verificar-usario', 'loginController@login');
 Route::get('register', 'loginController@viewRegister')->name('register');
 
 Route::get('prueba', 'loginController@prueba');
-route::Get('perfil',function(){
+route::Get('profile',function(){
     return view('perfil.perfil');
 });
