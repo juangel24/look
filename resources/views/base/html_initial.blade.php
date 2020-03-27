@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
     <link rel="stylesheet" href="css/style.css">
-
+    
+    <!-- LINKS -->
     <link rel="stylesheet" href="css/Look!/login.css">
     <link rel="stylesheet" href="css/Look!/register.css">
 
@@ -28,14 +29,24 @@
     <script src=""></script>
     <!-- jQuery -->
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
     <!-- Your custom scripts (optional) -->
     <script type="text/javascript"></script>
+
+    <script>
+        // Material Select Initialization
+        $('.datepicker').pickadate({
+            weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            showMonthsShort: true
+        })
+    </script>
+
 
     </head>
     <body>
@@ -43,8 +54,6 @@
 var widthBrowser = window.outerWidth;
     var heightBrowser = window.outerHeight;
     console.log("Tamaño de la pantalla del navegador: width=" + widthBrowser + ", height=" + heightBrowser);
-
-
     </script>
 </body>
 </html>
