@@ -29,17 +29,13 @@
 .eliminarfoto{
     text-align: center;
 }
-.modal-content  {
-    border-radius: 10px;
-}
+
 .btnsubirfoto{
     background-color: transparent;
     width: 100%;
     border-bottom: 0;
     border-left: 0;
     border-right: 0;
-    border-top: 1px solid #dbdbdb;
-    border-top: 1px solid rgba(var(--b6a,219,219,219),1);
     cursor: pointer;    
     line-height: 1.5;
     margin: 0;
@@ -65,10 +61,51 @@
     margin: 0;
     min-height: 48px;
     padding: 4px 8px;
-    text-align: center;
+    text-align: left;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     vertical-align: middle;
+}
+.btncancelar{
+    background-color: transparent;
+    width: 100%;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    height: 10px;
+    border-top: 1px solid #dbdbdb;
+    border-top: 1px solid rgba(var(--b6a,219,219,219),1);
+    cursor: pointer;    
+    margin: 0;
+    min-height: 48px;
+    padding: 4px 8px;
+    text-align: left;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+}
+/*.btnsubirfoto input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: center;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: inherit;
+    display: block;
+}*/
+.btnsubirfoto input[type=file] {
+    position: absolute;
+    display: block;
+    margin-top: -20px;
+    filter: alpha(opacity=0);
+    opacity: 0;    
 }
