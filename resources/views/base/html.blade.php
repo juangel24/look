@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800&display=swap">
 
     <!-- LIBRERIES -->
-
+ <!-- STYLES -->
+        <!-- MDBootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/mdb.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

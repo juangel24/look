@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('', 'loginController@viewLogin');
 
 Route::get('verificar-usario', 'loginController@login');
+route::get('perfil',function(){
+    return view('perfil.perfil');
+});
