@@ -23,13 +23,8 @@
           </button>
         </div>
     <div class="modal-body">
-      <div class="subirfoto">
-        <h6>Subir foto</h6>
-      </div>
-      <hr>
-      <div class="eliminarfoto">
-        <h6>Eliminar foto actual</h6>
-      </div>
+        <button class="btnsubirfoto"><h6>Subir foto</h6></button>
+        <button class="btneliminarfoto"><h6>Eliminar foto</h6></button>
     </div>
   </div>
 </div>
