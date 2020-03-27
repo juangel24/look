@@ -11,7 +11,7 @@ use Session;
 class loginController extends Controller
 {
     function viewLogin(){
-        return view('welcome');
+        return view('access/login');
     }
     function login(Request $request){
         $correo = $request->get('correo');
@@ -40,5 +40,9 @@ class loginController extends Controller
        
         return redirect('/home')
                 ->with('userIncorrecto', 'Cuenta o Contraseña incorrectas');  
+    }
+
+    function viewRegister(){
+        return view('access/register');
     }
 }

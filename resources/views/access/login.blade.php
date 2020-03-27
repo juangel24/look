@@ -60,11 +60,11 @@
                             <!-- Sign in button -->
                             <button class="btn btn-login btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Acceder</button>
                             <!-- Register -->
-                            <!-- <p>Not a member?
-                                <a href="">Register</a>
-                            </p> -->
+                            <p>No estas registrado?
+                                <a href="">Registrar</a>
+                            </p>
                             <!-- Social login -->
-                            <!-- <p>or sign in with:</p> -->
+                            <p>o accede a través de:</p>
                             <a type="button" class="btn-floating btn-fb btn-sm">
                                 <i class="fab fa-facebook-f"></i>
                             </a>

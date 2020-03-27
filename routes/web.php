@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// ACCESS TO Look!
+
 Route::get('', 'loginController@viewLogin');
 
 Route::get('verificar-usario', 'loginController@login');
+Route::get('register', 'loginController@viewRegister')->name('register');
+Route::get('re', [
+    'as' => 're',
+    'uses' => 'loginController@viewRegister'
+]);
