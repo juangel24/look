@@ -1,0 +1,63 @@
+.wave-register{
+    background-color: green;
+}
+.wave-r{
+    height: auto;
+    width: 85%;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+path{
+    width: 80%;
+    background: #00B4DB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.container-register{
+    /* width: auto; */
+    height: auto;
+    width: 50vh;
+    margin-top: 150px;
+    margin-left: 15%;
+    /* margin-top:  */
+}
+.btn-register{
+    border-radius: 55px;
+}
+.wave-r-m{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: none;
+}
+
+
+/* RESPONSIVE (MOVIL) */
+@media screen and (max-width: 1238px) {
+    .wave-r{
+        width: 70%;
+    }
+}
+@media screen and (max-width: 960px) {
+    .wave-r{
+        width: 55%;
+    }
+}
+@media screen and (max-width: 730px) {
+    .wave-r{
+        display: none;
+    }
+    .container-register{
+        width: auto;
+        margin: auto;
+        display: block;
+        margin-top: 80px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .wave-r-m{
+        display: block;
+    }
+}
