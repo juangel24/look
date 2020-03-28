@@ -21,21 +21,21 @@ class loginController extends Controller
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
 
         if($vato){
-            $usuario = Usuario::find($vato->id);
-            $passwordX = $usuario->contrasenia;
             
             $confirmarpass = $vato->contrasenia;
             $confirmar = $vato->correo;
             
             if($vato){
-                $confirmarpass = $vato->password;
+                $confirmarpass = $vato->contrasenia;
                 $confirmar = $vato->correo;
     
-                if (Hash::check($pass, $confirmarpass) && $confirmar == $usuario) {
+                if (Hash::check($pass, $confirmarpass) && $confirmar == $correo) {
                     $user = Session::put('usuario', $vato);
                     $user = Session::save('usuario', $vato);
+                    $user = Session::get('usuario');
+                    // dd($user);
                     
-                return redirect('/')
+                    return redirect('/home')
                         ->with('conected', 'Su cuenta se inició correctamente')
                         ->with('user', $user);
                 }
