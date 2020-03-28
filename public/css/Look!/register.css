@@ -2,7 +2,7 @@
     background-color: green;
 }
 .wave-r{
-    height: auto;
+    height: 800px;
     width: 85%;
     position: fixed;
     top: 0;
@@ -19,18 +19,31 @@ path{
     /* width: auto; */
     height: auto;
     width: 50vh;
-    margin-top: 150px;
+    margin-top: 130px;
     margin-left: 15%;
     /* margin-top:  */
 }
 .btn-register{
     border-radius: 55px;
+    z-index: 1;
 }
 .wave-r-m{
-    width: 100%;
+    width: 200% !important;
     position: fixed;
-    bottom: 0;
+    top: 0;
     display: none;
+}
+input[name="date"]{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+}
+select[name="gender"]{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+    margin-top: -11px !important;
+    width: auto !important;
 }
 
 
@@ -53,7 +66,7 @@ path{
         width: auto;
         margin: auto;
         display: block;
-        margin-top: 80px;
+        margin-top: 85px;
         padding-left: 50px;
         padding-right: 50px;
     }
