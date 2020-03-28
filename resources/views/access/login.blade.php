@@ -38,7 +38,7 @@
                     <button class="btn btn-login btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Acceder</button>
                     <!-- Register -->
                     <p>No estas registrado?
-                        <a href="">Registrar</a>
+                        <a href="/register">Registrar</a>
                     </p>
                     <!-- Social login -->
                     <p>o accede a través de:</p>

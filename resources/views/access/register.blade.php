@@ -4,12 +4,17 @@
             <div class="wave-r" style="height: 800px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M213.19,-0.00 C152.69,69.86 270.04,69.86 202.98,149.60 L500.00,149.60 L500.00,-0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
         </section>
 
+
+
+
+        
+
         <section class="register">
             <div class="container container-register">
                 <!-- Material form login -->
                     <p class="h4 mb-4 text-center mt-0">Sign up</p>
                     <!-- Form -->
-                    <form class="text-center" style="color: #757575;" action="{{ url('/register') }}" method="GET">
+                    <form class="text-center" style="color: #757575;" action="{{ url('/registerdata') }}" method="GET">
                         <!-- First and Last Name -->
                         <div class="form-row">
                             <div class="col">
@@ -39,26 +44,27 @@
                         </div>
                         <!-- Confirm Password -->
                         <div class="md-form mt-0">
-                            <input name="confirm-passwordR" type="password" id="materialLoginFormPasswordConfirm-register" class="form-control">
+                            <input name="confirmPasswordR" type="password" id="materialLoginFormPasswordConfirm-register" class="form-control">
                             <label for="materialLoginFormPasswordConfirm-register">Confirmar Contraseña</label>
                         </div>
                         <!-- Date and Gender -->
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-8">
                                 <!-- First name -->
-                                <div class="md-form">
-  <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
-  <label for="date-picker-example">Try me...</label>
-</div>
+                                <div class="md-form mt-0">
+                                    <input placeholder="Fecha de Nacimiento" name="date" class="datepicker date" data-date-format="yyyy/mm/dd">
+                                </div>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <!-- Last name -->
-                                <select class="mdb-select md-form mt-0">
-                                    <option value="" disabled selected>¿Qué es usted?</option>
-                                    <option value="H">Hombre</option>
-                                    <option value="M">Mujer</option>
-                                    <option value="T">Trans</option>
-                                </select>
+                                <div class="md-form mt-0">
+                                    <select name="gender" class="form-control genero-r" id="">
+                                        <option value="" selected>Género</option>
+                                        <option value="H">Hombre</option>
+                                        <option value="M">Mujer</option>
+                                        <option value="T">Trans</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-around">
@@ -102,10 +108,11 @@
         </section>
     </section>
 
-
-<script>
-    $('.datepicker').pickadate({
-weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-showMonthsShort: true
-})
-</script>
+    <script>
+        // $( "#target" ).click(function() {
+            $('body').notify({
+                message: 'Hello World',
+                type: 'danger'
+            });
+        // }
+    </script>
