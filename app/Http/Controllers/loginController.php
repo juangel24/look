@@ -16,43 +16,29 @@ class loginController extends Controller
     }
     function login(Request $request){
         $correo = $request->get('correo');
-        $pass = $request->get('password');
+        $pass = $request->password;
+        // dd($pass);
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        // dd($request->password, $vato->contrasenia);
-        if (Hash::check($request->password, $vato->contrasenia)){
-           dd("ggggg");
-        }
-
-        // if($vato){
-        //     $usuario = Usuario::find($vato->id);
-        //     $passwordX = $usuario->contrasenia;
-        //     $user = Session::put('usuario', $usuario);
-        //     $user = Session::save('usuario', $usuario);
-        //     $user = Session::get('usuario');
-        //     return redirect('/home')
-        //             ->with('conected', 'Su cuenta se inició correctamente')
-        //             ->with('user', $usuario);
-        // }
 
         if($vato){
             $usuario = Usuario::find($vato->id);
             $passwordX = $usuario->contrasenia;
-            // dd($usuario, $passwordX);
+            
             $confirmarpass = $vato->contrasenia;
             $confirmar = $vato->correo;
             
-            if (Hash::check('123', $passwordX)){
-                $user = Session::put('usuario', $vato);
-                $user = Session::save('usuario', $vato);
-                dd("entro");
-                return redirect('/home')
-                    ->with('conected', 'Su cuenta se inició correctamente')
-                    ->with('user', $user);
-            }
-            if (Hash::needsRehash($confirmarpass))
-            {
-                dd("g");
-                $hashed = Hash::make('secret');
+            if($vato){
+                $confirmarpass = $vato->password;
+                $confirmar = $vato->correo;
+    
+                if (Hash::check($pass, $confirmarpass) && $confirmar == $usuario) {
+                    $user = Session::put('usuario', $vato);
+                    $user = Session::save('usuario', $vato);
+                    
+                return redirect('/')
+                        ->with('conected', 'Su cuenta se inició correctamente')
+                        ->with('user', $user);
+                }
             }
         }
 
@@ -75,10 +61,11 @@ class loginController extends Controller
                     ->with('incorrecto', 'Las contraseñas deben ser iguales');
         }
         
-        $con = $request->get('password');
-        $password = Hash::make($con);
+        $con = $request->get('passwordR');
+        // $password = Hash::make($con);
+        $password = password_hash($con,PASSWORD_DEFAULT);
         $token = Str::random(60);
-        // dd($token);
+        // dd($password);
         
         $usuario = new Usuario();
         $usuario->correo = $request->correoR;
