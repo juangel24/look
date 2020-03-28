@@ -22,3 +22,7 @@ Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
 
 Route::get('prueba', 'loginController@prueba');
+
+Route::get('profile', function() { return view('perfil.perfil'); });
+
+Route::get('chat', function() { return view('chat'); });
