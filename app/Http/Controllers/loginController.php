@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Redirect;
 use App\Modelos\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -47,8 +48,8 @@ class loginController extends Controller
                 ->with('hacker', 'Hacker Detectado!...');
         }
         
-        return redirect('/')
-                ->with('userIncorrecto', 'Cuenta o Contraseña incorrectas');  
+        return Redirect::back();
+                // ->with('userIncorrecto', 'Cuenta o Contraseña incorrectas');  
     }
 
     function viewRegister(){

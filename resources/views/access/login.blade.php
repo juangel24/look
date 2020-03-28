@@ -12,7 +12,7 @@
                     <form class="text-center" style="color: #757575;" action="{{ url('/verificar-usario') }}">
                     <!-- Email -->
                     <div class="md-form">
-                        <input name="correo" type="email" id="materialLoginFormEmail" class="form-control">
+                        <input name="correo" value="{{ old ('correo') }}" type="email" id="materialLoginFormEmail" class="form-control">
                         <label for="materialLoginFormEmail">Usuario o correo electrónico</label>
                     </div>
                     <!-- Password -->
