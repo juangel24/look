@@ -45,6 +45,15 @@ select[name="gender"]{
     margin-top: -11px !important;
     width: auto !important;
 }
+.field-error {
+    /* margin-bottom: 12px; */
+    border-bottom: 1px solid #AF0C0C;
+    box-shadow: 0 2px 4px -2px #7f0909;
+}
+
+.error {
+    color: rgb(153, 0, 0);
+}
 
 
 /* RESPONSIVE (MOVIL) */

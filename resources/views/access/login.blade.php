@@ -1,4 +1,10 @@
 @extends('base/html_initial')
+@section('title')
+    Look! | Iniciar Sesión
+@endsection
+@section('css')
+    <link rel="stylesheet" href="css/Look!/login.css">
+@endsection
     <section>
         <section class="wave-login">
             <div class="wave-l" style="overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M208.09,0.00 C152.69,66.92 262.02,75.78 200.80,149.60 L-0.00,149.60 L-0.00,0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
@@ -9,16 +15,24 @@
                 <!-- Material form login -->
                     <p class="h4 mb-4 text-center">Sign in</p>
                     <!-- Form -->
-                    <form class="text-center" style="color: #757575;" action="{{ url('/verificar-usario') }}">
+                    <form class="text-center" style="color: #757575;" action="{{ url('/verificar-usario') }}" method="POST">
+                    @csrf
                     <!-- Email -->
                     <div class="md-form">
-                        <input name="correo" value="{{ old ('correo') }}" type="email" id="materialLoginFormEmail" class="form-control">
+                        <input name="correo" value="{{ old('correo') }}" 
+                        type="email" id="materialLoginFormEmail" class="form-control @error('correo') field-error @enderror">
                         <label for="materialLoginFormEmail">Usuario o correo electrónico</label>
+                        @error('correo')
+                            <div class="error"> {{ $message }} </div>
+                        @enderror
                     </div>
                     <!-- Password -->
                     <div class="md-form">
                         <input name="password" type="password" id="materialLoginFormPassword" class="form-control">
                         <label for="materialLoginFormPassword">Contraseña</label>
+                        @error('password')
+                            <div class="error"> {{ $message }} </div>
+                        @enderror
                     </div>
                     <div class="d-flex justify-content-around">
                         <!-- <div> -->

@@ -1,0 +1,133 @@
+db.getCollection("Order Details").aggregate([
+    {
+        "$lookup": {
+            from: 'Orders',
+            localField: 'OrderID',
+            foreignField: 'OrderID',
+            as: 'O'
+        }
+    },
+   { $unwind: {path: "$O", preserveNullAndEmptyArrays: false} },
+    {
+        "$lookup":{
+            from: 'Employees',
+            localField: 'EmployeeID',
+            foreignField: 'O.EmployeeID',
+            as: 'E'
+        }
+    },
+    { $unwind: {path: "$E", preserveNullAndEmptyArrays: false} },
+    {
+        "$lookup":{
+            from: 'Products',
+            localField: 'ProductID',
+            foreignField: 'ProductID',
+            as: 'P'
+        }
+    },
+    { "$unwind": "$P" },
+    
+    {
+        "$lookup": {
+            from: 'EmployeeTerritories',
+            localField: 'O.EmployeeID',
+            foreignField: 'EmployeeID',
+            as: 'EM'
+        }
+    },
+    { $unwind: {path: "$EM", preserveNullAndEmptyArrays: false} },
+    {
+        "$lookup": {
+            from: 'Territories',
+            localField: 'EM.TerritoryID',
+            foreignField: 'TerritoryID',
+            as: 'T'
+        }
+    },
+    { $unwind: {path: "$T", preserveNullAndEmptyArrays: false} },
+    {
+        "$lookup": {
+            from: 'Region',
+            localField: 'T.RegionID',
+            foreignField: 'RegionID',
+            as: 'R'
+        }
+    },
+   { $unwind: {path: "$R", preserveNullAndEmptyArrays: false} },
+    {
+        "$group": {
+            _id: {
+                region: "$R.RegionID",
+                year: {$year: "$O.OrderDate" },
+                producto: "$P.ProductName"
+            },
+            ganancia: {$sum: {$multiply: ["$UnitPrice", "$Quantity"]}},
+            
+            
+        }
+    },
+    {
+        "$project": {
+            year : "$_id.year",
+            region : "$_id.region",
+            producto: "$_id.producto",
+            ganancia: "$ganancia"
+        }
+    },
+   {
+        $sort : { region : -1, year : -1, ganancia: -1}
+   },
+   {
+       "$group":{
+           _id : {
+               year : "$year",
+               region : "$region"
+           },
+           producto: {$first :  "$producto"},
+           ultimoprod: {$last: "$producto"}
+       }
+   },
+  {
+        "$project": {
+            year: "$_id.year",
+           Eastern: {
+                $cond: {
+                    if: {$eq: ['$_id.region', 1] },
+                    then: { '$concat': ['$producto', ', ', '$ultimoprod'] },
+                    else: '',
+                }
+            },
+            Westerns: {
+                $cond: {
+                    if: {$eq: ['$_id.region', 2]     },
+                    then: { '$concat': ['$producto', ', ', '$ultimoprod'] },
+                    else: '',
+                }
+            },
+            Northern: {
+                $cond: {
+                    if: {$eq: ['$_id.region', 3] },
+                    then: { '$concat': ['$producto', ', ', '$ultimoprod'] },
+                    else: '',
+                }
+            },
+            Southern: {
+                $cond: {
+                    if: {$eq: ['$_id.region', 4] },
+                    then: { '$concat': ['$producto', ', ', '$ultimoprod'] },
+                    else: '',
+                }
+            }
+            
+        }
+    },
+    {
+        "$group":{
+            _id : "$year",
+            Eastern: { $max : "$Eastern"},
+            Westerns: { $max : "$Westerns"},
+            Southern: { $max : "$Southern"},
+            Northern: { $max : "$Northern"}
+        }
+    }
+])

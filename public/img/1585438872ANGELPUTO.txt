@@ -1,0 +1,25 @@
+
+
+select fecha,
+	group_concat(CASE WHEN regiones = 'Eastern' THEN productname ELSE '' END) AS Eastern,
+	group_concat(CASE WHEN regiones = 'Westerns' THEN productname ELSE '' END) AS Westerns,
+	group_concat(CASE WHEN regiones = 'Northern' THEN productname ELSE '' END) AS Northern,
+	group_concat(CASE WHEN regiones = 'Southern' THEN productname ELSE '' END) AS Southern
+	
+from (
+select year(orders.orderdate) as fecha,
+ products.ProductName, sum(orderdetails.Quantity * orderdetails.UnitPrice) as ganancia,
+ region.RegionID, region.regionDescription as regiones,
+ ROW_NUMBER() OVER (PARTITION BY year(orders.orderdate), regiones ORDER BY fecha,  regiones, ganancia desc) as rownum
+ from products
+inner join orderdetails on orderdetails.ProductID = products.ProductID
+inner join orders on orders.OrderID = orderdetails.OrderID
+inner join employees on employees.EmployeeID = orders.EmployeeID
+inner join employeeterritories on employeeterritories.EmployeeID = employees.EmployeeID
+inner join territories on employeeterritories.TerritoryID = territories.TerritoryID
+inner join region on region.RegionID = territories.RegionID
+group by fecha, products.ProductID, products.productName, region.RegionID
+order by fecha, regiones, ganancia desc
+) as tacos
+where rownum = 1
+GROUP by fecha
