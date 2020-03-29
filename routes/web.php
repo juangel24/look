@@ -24,5 +24,5 @@ Route::get('registerdata', 'loginController@register');
 Route::get('prueba', 'loginController@prueba');
 
 Route::get('profile', function() { return view('perfil.perfil'); });
-route::post('/uptadephoto','perfilController@uploadphoto');
+route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
 Route::get('chat', function() { return view('chat'); });

@@ -8,12 +8,13 @@
     <div class="row">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
-          <div class="text-center">
-              <a  type="button" data-toggle="modal" data-target="#modalLoginForm">
+          <div class="text-center view overlay" >
                 <img class="d-flex mr-3" id="fotodeperfil" src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image">
-              </a>
+                <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
+                  <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
+                  <p class="white-text">Actualizar</p>
+              </div>
           </div>
-            
             <div class="media-body " id="mediaperfil">
               <h5 class="mt-0 mb-2 font-weight-bold">Usuario&nbsp;&nbsp;
                   <a href="" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
@@ -45,10 +46,9 @@
     <hr>
   <!-- Central Modal Small -->
 
-
-  <form action="/uptadephoto" method="post" enctype="multipart/form-data">
-    @csrf
-  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form action="{{route('/cambiarphoto')}}" method="post" enctype="multipart/form-data">
+  @csrf
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -57,23 +57,28 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body mx-3">
+      <div class="modal-body mx-4">
         <div class="md-form mb-5">
-          <i class="fas fa-camera prefix grey-text"></i>
-         
-            <button class="btn btn-flat btn-lg" id="btnsubirfoto" type="button"><span class="btnsubirfoto">Subir foto<input type="file" name="imagen"></span></button>
+          <center><i class="fas fa-camera prefix grey-text"></i>
+            <button class="btn btn-flat" id="btnsubirfoto" type="button">
+              <span class="btnsubirfoto">Subir foto<input type="file" name="imagen" id="imagen">
+              </span>
+            </button>
+          </center>
+            <div id="lala">
+            
+            </div>
          </div>
-        <hr>
-        <div class="md-form mb-4">
-          <i class="fas fa-trash-alt prefix grey-text"></i>
-          <button class="btn btn-flat btn-lg btneliminarfoto" id="btneliminarfoto">Eliminar foto</button>
-        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Close</button>
+        <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Save changes</button>
       </div>
   </div>
 </div>
-
-</form>
 </div>
+</form>
 @endsection
 @section('javascript')
     <script src="js/perfil.js"></script>
