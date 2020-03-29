@@ -32,6 +32,7 @@ class loginController extends Controller
         $pass = $request->password;
         // dd($pass);
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
+        // dd($vato);
 
         if(!$vato){
             return redirect('/')
@@ -39,7 +40,7 @@ class loginController extends Controller
                     ->withInput();
         }
 
-        if($vato->contrasenia != $request->password){
+        if(!Hash::check($request->password, $vato->contrasenia)){
             return redirect('/')
                     ->with('wrongPass', 'hey')
                     ->withInput();
