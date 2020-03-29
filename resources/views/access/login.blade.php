@@ -16,6 +16,15 @@
                     <p class="h4 mb-4 text-center">Sign in</p>
                     <!-- Form -->
                     <form class="text-center" style="color: #757575;" action="{{ url('/verificar-usario') }}" method="POST">
+
+                    @if(Session::has('wrongPass'))
+                        <div class="no-user error">Correo y/o contraseña incorrectas</div>
+                    @endif
+
+                    @if(Session::has('noUser'))
+                        <div class="no-user error">No hay una cuenta registrada con ese correo</div>
+                    @endif
+                    
                     @csrf
                     <!-- Email -->
                     <div class="md-form">

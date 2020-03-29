@@ -33,6 +33,18 @@ class loginController extends Controller
         // dd($pass);
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
 
+        if(!$vato){
+            return redirect('/')
+                    ->with('noUser', 'hey')
+                    ->withInput();
+        }
+
+        if($vato->contrasenia != $request->password){
+            return redirect('/')
+                    ->with('wrongPass', 'hey')
+                    ->withInput();
+        }
+
         if($vato){
             
             $confirmarpass = $vato->contrasenia;
@@ -94,6 +106,15 @@ class loginController extends Controller
             'confirmPasswordR.max' => 'La contraseña debe tener máximo 12 caracteres',
             'date.required' => 'Ingrese su fecha de nacimiento',
             'gender.required' => 'Ingrese su sexo']);
+
+        $correo = $request->correoR;
+        $vato = DB::table('usuarios')->where('correo', $correo)->first();
+        
+        if($vato){
+            return redirect('/register')
+                    ->with('repeatUser', 'hey')
+                    ->withInput();
+        }
 
         if ($request->passwordR != $request->confirmPasswordR){
             return redirect('/register')

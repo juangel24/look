@@ -16,6 +16,9 @@
                     <p class="h4 mb-4 text-center mt-0">Sign up</p>
                     <!-- Form -->
                     <form class="text-center" style="color: #757575;" action="{{ url('/registerdata') }}" method="GET">
+                    @if(Session::has('repeatUser'))
+                        <div class="no-user error mb-4">Ya existe un usuario registrado con ese correo</div>
+                    @endif
                         <!-- First and Last Name -->
                         <div class="form-row">
                             <div class="col">
@@ -57,7 +60,7 @@
                         <div class="md-form mt-0">
                             <input name="passwordR" type="password" id="materialLoginFormPassword-register" 
                             class="form-control @error('correo') field-error @enderror">
-                            <label for="materialLoginFormPassword">Contraseña</label>
+                            <label for="materialLoginFormPassword-register">Contraseña</label>
                             @error('passwordR')
                                 <div class="error"> {{ $message }} </div>
                             @enderror
@@ -91,11 +94,11 @@
                                 <div class="md-form mt-0">
                                     <select name="gender" 
                                     class="form-control genero-r @error('correo') field-error @enderror" 
-                                    id="" value="{{ old('gender') }}">
+                                    id="">
                                         <option value="" selected>Género</option>
-                                        <option value="H">Hombre</option>
-                                        <option value="M">Mujer</option>
-                                        <option value="T">Trans</option>
+                                        <option value="H" {{ old('gender') == 'H' ? 'selected' : '' }}>Hombre</option>
+                                        <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Mujer</option>
+                                        <option value="T" {{ old('gender') == 'T' ? 'selected' : '' }}>Trans</option>
                                     </select>
                                     @error('gender')
                                         <div class="error"> {{ $message }} </div>
