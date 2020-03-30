@@ -15,14 +15,18 @@ use Illuminate\Support\Facades\Route;
 
 // ACCESS TO Look!
 
+    // LOGIN
 Route::get('', 'loginController@viewLogin');
-
-Route::get('verificar-usario', 'loginController@login');
+Route::post('verificar-usario', 'loginController@login');
+    // REGISTER
 Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
-
+    // PRUEBON
 Route::get('prueba', 'loginController@prueba');
 
+//PERFIL
 Route::get('profile', function() { return view('perfil.perfil'); });
+/*Route::get('profile', 'perfilController@perfil');*/
 route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
+
 Route::get('chat', function() { return view('chat'); });

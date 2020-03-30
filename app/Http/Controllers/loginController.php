@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use App\Modelos\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,10 +16,35 @@ class loginController extends Controller
         return view('access/login');
     }
     function login(Request $request){
+
+        // Validaciones
+        $this->validate($request, [
+            'correo' => 'required|max:100',
+            'password' => 'required|min:4|max:12',],
+
+            // Texto de las validaciones
+            ['correo.required' => 'Ingrese un correo',
+            'password.required' => 'Ingrese una contraseña',
+            'password.min' => 'La contraseña debe tener mínimo 4 caracteres',
+            'password.max' => 'La contraseña debe tener máximo 12 caracteres']);
+
         $correo = $request->get('correo');
         $pass = $request->password;
         // dd($pass);
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
+        // dd($vato);
+
+        if(!$vato){
+            return redirect('/')
+                    ->with('noUser', 'hey')
+                    ->withInput();
+        }
+
+        if(!Hash::check($request->password, $vato->contrasenia)){
+            return redirect('/')
+                    ->with('wrongPass', 'hey')
+                    ->withInput();
+        }
 
         if($vato){
             
@@ -42,13 +68,12 @@ class loginController extends Controller
             }
         }
 
-        if ($correo == null or $pass == null) {
-           return redirect('/')
-                ->with('hacker', 'Hacker Detectado!...');
-        }
-        
-        return redirect('/')
-                ->with('userIncorrecto', 'Cuenta o Contraseña incorrectas');  
+        // if ($correo == null or $pass == null) {
+        //    return redirect('/')
+        //         ->with('hacker', 'Hacker Detectado!...');
+        // }
+        // dd("hola");
+        return redirect('')->withInput();
     }
 
     function viewRegister(){
@@ -56,6 +81,42 @@ class loginController extends Controller
     }
 
     function register(Request $request){
+
+        // Validaciones
+        $this->validate($request, [
+            'first_name' => 'required|max:100',
+            'last_name' => 'required|max:100',
+            'correoR' => 'required|max:100',
+            'passwordR' => 'required|min:4|max:12',
+            'confirmPasswordR' => 'required|min:4|max:12',
+            'date' => 'required',
+            'gender' => 'required'],
+
+            // Texto de las validaciones
+            ['first_name.required' => 'Ingrese sus nombres',
+            'first_name.max' => 'Solo se permiten 100 caracteres',
+            'last_name.required' => 'Ingrese sus apellidos',
+            'last_name.max' => 'Solo se permiten 100 caracteres',
+            'correoR.required' => 'Ingrese un correo',
+            'correoR.max' => 'Solo se permiten 100 caracteres',
+            'passwordR.required' => 'Ingrese un contraseña',
+            'passwordR.min' => 'La contraseña debe tener mínimo 4 caracteres',
+            'passwordR.max' => 'La contraseña debe tener máximo 12 caracteres',
+            'confirmPasswordR.required' => 'Ingrese un contraseña',
+            'confirmPasswordR.min' => 'La contraseña debe tener mínimo 4 caracteres',
+            'confirmPasswordR.max' => 'La contraseña debe tener máximo 12 caracteres',
+            'date.required' => 'Ingrese su fecha de nacimiento',
+            'gender.required' => 'Ingrese su sexo']);
+
+        $correo = $request->correoR;
+        $vato = DB::table('usuarios')->where('correo', $correo)->first();
+        
+        if($vato){
+            return redirect('/register')
+                    ->with('repeatUser', 'hey')
+                    ->withInput();
+        }
+
         if ($request->passwordR != $request->confirmPasswordR){
             return redirect('/register')
                     ->with('incorrecto', 'Las contraseñas deben ser iguales');

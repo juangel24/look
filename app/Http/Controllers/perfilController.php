@@ -8,7 +8,7 @@ class perfilController extends Controller
 {
     public function uploadphoto(Request $r){
 
-        
+        //$imagen = Usuario::all();
         if($r->hasFile('imagen')){
             $file = $r->file('imagen');
             $name = time().$file->getClientOriginalName();
@@ -21,4 +21,8 @@ class perfilController extends Controller
             return redirect('/profile');
         }
     }
+   /* public function perfil(){
+        $usuarios = Usuario::all();
+        return view('perfil.perfil',compact('usuarios'));
+    }*/
 }
