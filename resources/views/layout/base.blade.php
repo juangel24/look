@@ -127,7 +127,7 @@
                                     +   " <div class='sProfile'> " 
                                     +       " <ul class='listSearchProfile'> "
                                     +           " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " 
-                                    +           " <li class='li-search-profile'><p> " + item.nombres + item.apellidos + " </p></li> " 
+                                    +           " <li class='li-search-profile'><p> " + item.nombres + " " + item.apellidos + " </p></li> " 
                                     +       " </ul> "
                                     +   " </div> " 
                                     + " </a> ";
