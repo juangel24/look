@@ -56,6 +56,16 @@
                                 <div class="error"> {{ $message }} </div>
                             @enderror
                         </div>
+                        <!-- Email -->
+                        <div class="md-form mt-0">
+                            <input name="user" type="text" id="materialLoginFormEmail-register" 
+                            class="form-control @error('user') field-error @enderror"
+                            value="{{ old('user') }}">
+                            <label for="materialLoginFormEmail-register">Usuario</label>
+                            @error('user')
+                                <div class="error"> {{ $message }} </div>
+                            @enderror
+                        </div>
                         <!-- Password -->
                         <div class="md-form mt-0">
                             <input name="passwordR" type="password" id="materialLoginFormPassword-register" 

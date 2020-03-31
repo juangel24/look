@@ -87,6 +87,7 @@ class loginController extends Controller
             'first_name' => 'required|max:100',
             'last_name' => 'required|max:100',
             'correoR' => 'required|max:100',
+            'user' => 'required|min:6|max:20',
             'passwordR' => 'required|min:4|max:12',
             'confirmPasswordR' => 'required|min:4|max:12',
             'date' => 'required',
@@ -99,6 +100,9 @@ class loginController extends Controller
             'last_name.max' => 'Solo se permiten 100 caracteres',
             'correoR.required' => 'Ingrese un correo',
             'correoR.max' => 'Solo se permiten 100 caracteres',
+            'user.required' => 'Ingrese un usuario',
+            'user.min' => 'El usuario debe tener mínimo 4 caracteres',
+            'user.max' => 'El usuario debe tener máximo 20 caracteres',
             'passwordR.required' => 'Ingrese un contraseña',
             'passwordR.min' => 'La contraseña debe tener mínimo 4 caracteres',
             'passwordR.max' => 'La contraseña debe tener máximo 12 caracteres',
@@ -131,6 +135,7 @@ class loginController extends Controller
         
         $usuario = new Usuario();
         $usuario->correo = $request->correoR;
+        $usuario->usuario = $request->user;
         $usuario->contrasenia = $password;
         // $usuario->api_token = $token;
         $usuario->nombres = $request->first_name;
@@ -156,12 +161,12 @@ class loginController extends Controller
         return view('welcome');
     }
 
-    function searchProfile(Request $request){
-        $data = DB::table('usuarios')
-            ->select('usuarios.nombres', 'usuarios.apellidos', 'usuarios.imagen')
-            ->where('nombres', 'LIKE', '%'.$request->search.'%')
-            ->orWhere('apellidos', 'LIKE', '%'.$request->search.'%')
-            ->get();
-        return $data;
-    }
+    // function searchProfile(Request $request){
+    //     $data = DB::table('usuarios')
+    //         ->select('usuarios.nombres', 'usuarios.apellidos', 'usuarios.imagen')
+    //         ->where('nombres', 'LIKE', '%'.$request->search.'%')
+    //         ->orWhere('apellidos', 'LIKE', '%'.$request->search.'%')
+    //         ->get();
+    //     return $data;
+    // }
 }

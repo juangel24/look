@@ -10,17 +10,18 @@ input[name="searchProfile"]:focus{
     border-bottom: 1px solid #b8b8b8;
 }
 .print-profileSearch{
-    overflow: scroll;
-    height: 350px;
+    max-height: 250px;
     width: 280px;
     background: rgb(240, 240, 240);
     display: none;
     z-index: 10;
-    position: absolute;
+    position: fixed;
     top: 2;
     left: 0;
     right: 0;
     margin: auto;
+    overflow-y: visible;
+    overflow-x: hidden;
 }
 .sProfile{
     height: 47.5px;

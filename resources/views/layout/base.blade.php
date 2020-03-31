@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+     <!-- CSRF Token -->
+     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Look</title>
 
     @yield('css')
@@ -102,51 +105,10 @@
 		});
     </script>
     
+    <script src="{{ asset('js/Look!/searcherProfile.js') }}"></script>
     @yield('javascript')
 
-    <script>
-        $('#searchProfile').on('keyup',function(e){
-        // e.preventDefault();
-        $value = $('#searchProfile').val();
-        console.log($value);
     
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-                url: 'searchProfile',
-                method: 'GET',
-                data: {'search':$value},
-                success: function(data) {
-                    if($value != ""){
-                        $('#printProfileSearched').html("");
-                        $.each(data, function(key, item){
-                            $html = " <a class='searchProfile' href='/profile'> " 
-                                    +   " <div class='sProfile'> " 
-                                    +       " <ul class='listSearchProfile'> "
-                                    +           " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " 
-                                    +           " <li class='li-search-profile'><p> " + item.nombres + " " + item.apellidos + " </p></li> " 
-                                    +       " </ul> "
-                                    +   " </div> " 
-                                    + " </a> ";
-                                    
-                            $('.print-profileSearch').css("display", "block");
-                            $('#printProfileSearched').append($html);
-                        })
-                    }
-                    else{
-                        $('.print-profileSearch').css("display", "none");
-                    }
-                },
-                error: function() {
-                    alert("No se ha podido obtener la información");
-                }
-            });
-        });
-
-    </script>
 </body>
 
 </html>
