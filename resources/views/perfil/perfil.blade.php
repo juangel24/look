@@ -8,10 +8,10 @@
     <div class="row">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
-          {{  base64_decode(Request::get('usuario'))  }}
-         
+        
+          
           <div class="text-center view overlay" >
-          <img class="d-flex mr-3" id="fotodeperfil"  src="/img/" alt="Generic placeholder image" onchange="filepreview()">
+          <img class="d-flex mr-3" id="fotodeperfil"  src="/img/profile_photos/{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
                 <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
                   <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
                   <p class="white-text">Actualizar</p>
@@ -19,7 +19,7 @@
           </div>
 
             <div class="media-body " id="mediaperfil">
-              <h5 class="mt-0 mb-2 font-weight-bold">Usuario&nbsp;&nbsp;
+              <h5 class="mt-0 mb-2 font-weight-bold"> {{Session::get('usuario')->usuario}}&nbsp;&nbsp;
                   <a href="" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
                   &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a>
                  </h5></a>
