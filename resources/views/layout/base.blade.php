@@ -106,7 +106,7 @@
 
     <script>
         $('#searchProfile').on('keyup',function(e){
-        e.preventDefault();
+        // e.preventDefault();
         $value = $('#searchProfile').val();
         console.log($value);
     
@@ -123,7 +123,7 @@
                     if($value != ""){
                         $('#printProfileSearched').html("");
                         $.each(data, function(key, item){
-                            $html = " <a class='searchProfile' href=''> " 
+                            $html = " <a class='searchProfile' href='/profile'> " 
                                     +   " <div class='sProfile'> " 
                                     +       " <ul class='listSearchProfile'> "
                                     +           " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " 

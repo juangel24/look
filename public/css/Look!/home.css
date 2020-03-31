@@ -20,7 +20,7 @@ input[name="searchProfile"]:focus{
     z-index: 10;
     position: absolute;
     margin: auto;
-    display: block;
+    display: none;
     top: 2;
     left: 0;
     right: 0;
