@@ -6,20 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-     <!-- CSRF Token -->
-     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Look</title>
 
     @yield('css')
-	
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
-        integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css"
+        integrity="sha256-+iogSQQebNm3dRNrrJiTa1ETQGIL+smA6rL+umhEvrQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 
     <link rel="stylesheet" href="{{ asset('/css/Look!/home.css') }}">
 </head>
@@ -27,7 +28,7 @@
 <body>
     <header>
         <!--Navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark default-color">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark default-color">
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand" href="#">
@@ -57,16 +58,15 @@
                     </ul>
 
                     <!-- Search form -->
-                    <ul class="navbar-nav justify-content-center ul-search">
-                        <form class="form-inline"
-                            action="{{ url('searchProfile') }}" method="GET"
+                    <ul class="justify-content-center ul-search">
+                        <form class="form-inline" action="{{ url('searchProfile') }}" method="GET"
                             onKeypress="if(event.keyCode == 13) event.returnValue = false;">
-                            <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
-                                name="searchProfile" aria-label="Search" id="searchProfile">
-                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Buscar"
+                                name="searchProfile" aria-label="Buscar" id="searchProfile">
+                            <i class="fas fa-search white-text" aria-hidden="true"></i>
                         </form>
                     </ul>
-                    
+
 
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item avatar">
@@ -90,8 +90,7 @@
         </div>
     </section>
 
-    <div class="container-fluid mt-3" id="container">
-        
+    <div class="container-fluid" id="container" style="padding-top: 5rem;">
         @yield('content')
     </div>
 
@@ -100,18 +99,17 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"
         integrity="sha256-OUFW7hFO0/r5aEGTQOz9F/aXQOt+TwqI1Z4fbVvww04=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/js/mdb.min.js"
+        integrity="sha256-R/XsWrXe04gYQmFYf8lc7jMaga8aLyzmGxWpaqbC+K8=" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
         $("body").tooltip({
 			selector: '[data-toggle=tooltip]'
 		});
     </script>
-    
+
     <script src="{{ asset('js/Look!/searcherProfile.js') }}"></script>
     @yield('javascript')
-
-    
 </body>
 
 </html>
