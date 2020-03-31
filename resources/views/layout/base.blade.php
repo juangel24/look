@@ -44,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="basicExampleNav">
 
                     <!-- Links -->
-                    <ul class="navbar-nav w-100 justify-content-center">
+                    <ul class="navbar-nav justify-content-center">
                         <li class="nav-item active">
                             <a class="nav-link" href="#"><i class="fas fa-home fa-lg"></i></a>
                         </li>
@@ -57,13 +57,16 @@
                     </ul>
 
                     <!-- Search form -->
-                    <form class="form-inline ml-auto"
+                    <ul class="navbar-nav justify-content-center ul-search">
+                    <form class="form-inline"
                         action="{{ url('searchProfile') }}" method="GET"
                         onKeypress="if(event.keyCode == 13) event.returnValue = false;">
                         <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
                             name="searchProfile" aria-label="Search" id="searchProfile">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </form>
+                    </ul>
+                    
 
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item avatar">
