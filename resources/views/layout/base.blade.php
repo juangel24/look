@@ -58,7 +58,7 @@
                     </ul>
 
                     <!-- Search form -->
-                    <ul class="navbar-nav justify-content-center ul-search">
+                    <ul class="justify-content-center ul-search">
                         <form class="form-inline" action="{{ url('searchProfile') }}" method="GET"
                             onKeypress="if(event.keyCode == 13) event.returnValue = false;">
                             <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Buscar"
