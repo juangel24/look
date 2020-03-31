@@ -1,7 +1,4 @@
 /* BUSQUEDA PERFIL */
-nav > {
-    
-}
 input[name="searchProfile"]{
     background: transparent;
     border: none;
@@ -22,12 +19,12 @@ input[name="searchProfile"]:focus{
     width: 280px;
     background: rgb(240, 240, 240);
     display: none;
-    z-index: 10;
+    z-index: 100;
     position: absolute;
-    top: 2;
     left: 0;
     right: 0;
     margin: auto;
+    margin-top: 60px;
     overflow-y: visible;
     overflow-x: hidden;
 }

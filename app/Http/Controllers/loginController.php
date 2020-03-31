@@ -101,7 +101,7 @@ class loginController extends Controller
             'correoR.required' => 'Ingrese un correo',
             'correoR.max' => 'Solo se permiten 100 caracteres',
             'user.required' => 'Ingrese un usuario',
-            'user.min' => 'El usuario debe tener mínimo 4 caracteres',
+            'user.min' => 'El usuario debe tener mínimo 6 caracteres',
             'user.max' => 'El usuario debe tener máximo 20 caracteres',
             'passwordR.required' => 'Ingrese un contraseña',
             'passwordR.min' => 'La contraseña debe tener mínimo 4 caracteres',
@@ -123,7 +123,7 @@ class loginController extends Controller
         }
 
         if ($request->passwordR != $request->confirmPasswordR){
-            return redirect('/register')
+            return redirect('/badregister')
                     ->with('incorrecto', 'Las contraseñas deben ser iguales');
         }
         
@@ -131,7 +131,6 @@ class loginController extends Controller
         // $password = Hash::make($con);
         $password = password_hash($con,PASSWORD_DEFAULT);
         $token = Str::random(60);
-        // dd($password);
         
         $usuario = new Usuario();
         $usuario->correo = $request->correoR;
@@ -145,8 +144,6 @@ class loginController extends Controller
         $usuario->sexo = $request->gender;
         $usuario->imagen = $img;
 
-        // dd($usuario);
-
         $usuario->save();
         
         $usu = Session::put('usuario', $usuario);
@@ -154,7 +151,7 @@ class loginController extends Controller
         
 		return redirect('/home')
                     ->with('correcto', 'Su cuenta se creó correctamente')
-                    ->with('user');
+                    ->with('user', $usu);
     }
 
     function prueba(){

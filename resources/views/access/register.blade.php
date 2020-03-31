@@ -1,7 +1,5 @@
 @extends('base/html_initial')
-@section('title')
-    Look! | Registrarse
-@endsection
+@section('title', 'Look! | Registrarse')
 @section('css')
     <link rel="stylesheet" href="css/Look!/register.css">
 @endsection

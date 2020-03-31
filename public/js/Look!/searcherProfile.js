@@ -29,7 +29,6 @@ $('#searchProfile').on('keyup', function (e) {
                         " </a> ";
 
                     $('.print-profileSearch').css("display", "block");
-                    $('.print-profileSearch').css("heigth", "auto");
                     $('#printProfileSearched').append($html);
                 })
             } else {
