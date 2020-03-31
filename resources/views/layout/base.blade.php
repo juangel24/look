@@ -58,13 +58,13 @@
 
                     <!-- Search form -->
                     <ul class="navbar-nav justify-content-center ul-search">
-                    <form class="form-inline"
-                        action="{{ url('searchProfile') }}" method="GET"
-                        onKeypress="if(event.keyCode == 13) event.returnValue = false;">
-                        <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
-                            name="searchProfile" aria-label="Search" id="searchProfile">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                    </form>
+                        <form class="form-inline"
+                            action="{{ url('searchProfile') }}" method="GET"
+                            onKeypress="if(event.keyCode == 13) event.returnValue = false;">
+                            <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
+                                name="searchProfile" aria-label="Search" id="searchProfile">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </form>
                     </ul>
                     
 
