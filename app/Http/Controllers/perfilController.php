@@ -8,6 +8,10 @@ class perfilController extends Controller
 {
     public function uploadphoto(Request $r){
 
+        $this->validate($r,[
+            'imagen' => '
+            requitred|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
         //$imagen = Usuario::all();
         if($r->hasFile('imagen')){
             $file = $r->file('imagen');
@@ -25,4 +29,5 @@ class perfilController extends Controller
         $usuarios = Usuario::all();
         return view('perfil.perfil',compact('usuarios'));
     }*/
+
 }

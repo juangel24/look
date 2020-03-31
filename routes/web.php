@@ -28,6 +28,10 @@ Route::get('prueba', 'loginController@prueba');
 Route::get('profile', function() { return view('perfil.perfil'); });
 /*Route::get('profile', 'perfilController@perfil');*/
 route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
+route::get('/userimage/{usuario}', [
+    'uses' => 'perfilController@uploadphoto',
+    'as' => 'uptadephoto.image'
+]);
 
 Route::get('chat', function() { return view('chat'); });
 

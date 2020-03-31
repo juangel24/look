@@ -11,7 +11,7 @@
           {{  base64_decode(Request::get('usuario'))  }}
          
           <div class="text-center view overlay" >
-                <img class="d-flex mr-3" id="fotodeperfil"  src="https://mdbootstrap.com/img/Photos/Others/placeholder1.jpg" alt="Generic placeholder image" onchange="filepreview()">
+          <img class="d-flex mr-3" id="fotodeperfil"  src="/img/" alt="Generic placeholder image" onchange="filepreview()">
                 <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
                   <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
                   <p class="white-text">Actualizar</p>
@@ -48,7 +48,28 @@
     </div>
     <hr>
   <!-- Central Modal Small -->
-
+  {{--@if (count($errors) > 0)
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong> Hubo un error en subir tu imágen, verifica que sea de la extension aceptada.</strong>
+    <ul>
+      @foreach ($errors->all() as $e)
+          <li>{{ $e }}</li>
+      @endforeach
+    </ul>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  @if ($message == session::get('message'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong> {{$message}}</strong>
+   
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif--}}
 <form action="{{route('/cambiarphoto')}}" method="post" enctype="multipart/form-data">
   @csrf
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
