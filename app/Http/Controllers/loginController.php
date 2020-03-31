@@ -108,6 +108,7 @@ class loginController extends Controller
             'date.required' => 'Ingrese su fecha de nacimiento',
             'gender.required' => 'Ingrese su sexo']);
 
+        $img = 'img/user.png';
         $correo = $request->correoR;
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
         
@@ -134,19 +135,33 @@ class loginController extends Controller
         // $usuario->api_token = $token;
         $usuario->nombres = $request->first_name;
         $usuario->apellidos = $request->last_name;
-        // $usuario->timestamps;
+        $usuario->timestamps;
         $usuario->fecha_nacimiento = $request->date;
         $usuario->sexo = $request->gender;
+        $usuario->imagen = $img;
+
+        // dd($usuario);
+
         $usuario->save();
         
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
         
 		return redirect('/home')
-                    ->with('correcto', 'Su cuenta se creó correctamente');
+                    ->with('correcto', 'Su cuenta se creó correctamente')
+                    ->with('user');
     }
 
     function prueba(){
         return view('welcome');
+    }
+
+    function searchProfile(Request $request){
+        $data = DB::table('usuarios')
+            ->select('usuarios.nombres', 'usuarios.apellidos', 'usuarios.imagen')
+            ->where('nombres', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('apellidos', 'LIKE', '%'.$request->search.'%')
+            ->get();
+        return $data;
     }
 }

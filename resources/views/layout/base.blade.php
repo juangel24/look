@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/css/mdb.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
         integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="{{ asset('/css/Look!/home.css') }}">
 </head>
 
 <body>
@@ -51,6 +53,15 @@
                         </li>
                     </ul>
 
+                    <!-- Search form -->
+                    <form class="form-inline ml-auto"
+                        action="{{ url('searchProfile') }}" method="GET"
+                        onKeypress="if(event.keyCode == 13) event.returnValue = false;">
+                        <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
+                            name="searchProfile" aria-label="Search" id="searchProfile">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </form>
+
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item avatar">
                             <a class="nav-link p-0" href="/profile">
@@ -66,7 +77,15 @@
         <!--/.Navbar-->
     </header>
 
+    <!-- PRINT PROFILE SEARCHED -->
+    <section>
+        <div class="print-profileSearch">
+            <div id="printProfileSearched"></div>
+        </div>
+    </section>
+
     <div class="container-fluid mt-3" id="container">
+        
         @yield('content')
     </div>
 
@@ -81,9 +100,53 @@
         $("body").tooltip({
 			selector: '[data-toggle=tooltip]'
 		});
+    </script>
+    
+    @yield('javascript')
+
+    <script>
+        $('#searchProfile').on('keyup',function(e){
+        e.preventDefault();
+        $value = $('#searchProfile').val();
+        console.log($value);
+    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+                url: 'searchProfile',
+                method: 'GET',
+                data: {'search':$value},
+                success: function(data) {
+                    if($value != ""){
+                        $('#printProfileSearched').html("");
+                        $.each(data, function(key, item){
+                            $html = " <a class='searchProfile' href=''> " 
+                                    +   " <div class='sProfile'> " 
+                                    +       " <ul class='listSearchProfile'> "
+                                    +           " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " 
+                                    +           " <li class='li-search-profile'><p> " + item.nombres + item.apellidos + " </p></li> " 
+                                    +       " </ul> "
+                                    +   " </div> " 
+                                    + " </a> ";
+                                    
+                            $('.print-profileSearch').css("display", "block");
+                            $('#printProfileSearched').append($html);
+                        })
+                    }
+                    else{
+                        $('.print-profileSearch').css("display", "none");
+                    }
+                },
+                error: function() {
+                    alert("No se ha podido obtener la información");
+                }
+            });
+        });
 
     </script>
-    @yield('javascript')
 </body>
 
 </html>

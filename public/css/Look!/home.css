@@ -1,0 +1,44 @@
+/* BUSQUEDA PERFIL */
+input[name="searchProfile"]{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+}
+input[name="searchProfile"]:focus{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+}
+.print-profileSearch{
+    overflow: scroll;
+    height: 350px;
+    width: 280px;
+   
+    background: rgb(240, 240, 240);
+    display: none;
+    padding-top: 10px;
+    z-index: 10;
+    position: absolute;
+    margin: auto;
+    display: block;
+    top: 2;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.sProfile{
+    height: 47.5px;
+}
+.sProfile .listSearchProfile{
+    border: 1px solid;
+}
+.li-search-profile{
+    display: inline-block !important;
+    text-decoration: none !important;
+    text-align: center;
+}
+.img-search-profile{
+    height: 40px;
+    margin-left: -15px !important;
+    margin-right: 30px
+}

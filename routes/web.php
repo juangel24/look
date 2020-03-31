@@ -30,3 +30,5 @@ Route::get('profile', function() { return view('perfil.perfil'); });
 route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
 
 Route::get('chat', function() { return view('chat'); });
+
+Route::get('searchProfile','homeController@searchProfile');
