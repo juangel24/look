@@ -16,7 +16,8 @@ class perfilController extends Controller
             $file = $r->file('imagen');
             $name = time().$file->getClientOriginalName();
             $file->move(public_path().'/img/profile_photos/',$name);
-            $usuario = Usuario::select("usuarios.id")->where('usuarios.id','=',$usuarios)->first();
+            $usuario = new Usuario();
+            $usuario = Usuario::where('usuarios.id','=',$usuarios)->first();
             $usuario->imagen = $r->input('imagen');
             $usuario->imagen = $name;
             $usuario->save();

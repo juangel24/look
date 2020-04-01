@@ -23,10 +23,7 @@
                   <a href="" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
                   &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a>
                  </h5></a>
-             <br>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-              vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-              congue felis in faucibus.
+              <h5>{{ Session::get('usuario')->nombres }}</h5>
             </div>
             <div>
                 
