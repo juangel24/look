@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modelos\Usuario;
+use Session;
 class perfilController extends Controller
 {
     public function uploadphoto(Request $r){
 
+        $usuarios = session::get('usuario.id');
        /* $this->validate($r,[
             'imagen' => '
             requitred|image|mimes:jpeg,png,jpg|max:2048'
@@ -17,7 +19,7 @@ class perfilController extends Controller
             $file = $r->file('imagen');
             $name = time().$file->getClientOriginalName();
             $file->move(public_path().'/img/profile_photos/',$name);
-            $usuario = Usuario::all()->first();
+           
             $usuario->imagen = $r->input('imagen');
             $usuario->imagen = $name;
             
