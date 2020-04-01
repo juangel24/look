@@ -8,7 +8,6 @@
         }
         .scrollable {
             overflow: auto;
-            padding-bottom: 2rem;
             scrollbar-color: #2bbbad transparent;
             scrollbar-width: thin;
         }
@@ -52,14 +51,22 @@
             <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 chat-header">
                 <div class="d-flex flex-row">
                     <a class="p-0 waves-effect waves-light" href="/profile">
-                        <img class="rounded-circle z-depth-0" alt="avatar image" src="https://pbs.twimg.com/media/BtrrJuDCMAAgG5s.jpg" height="35">
+                        <img class="rounded-circle z-depth-0" alt="avatar image" src="https://vignette.wikia.nocookie.net/bobesponja/images/c/c1/180px-SBz89.png/revision/latest/scale-to-width-down/340?cb=20131013132813" width="35" height="35">
                     </a>
-                    <h5 class="ml-2 mb-0 align-self-center">MikeWasauski</h5>
+                    <h5 class="ml-2 mb-0 align-self-center">mantarraya</h5>
                 </div>
                 <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
             </div>
             <!-- Mensajes del chat -->
-            <div class="h-100 scrollable" id="chat-messages">
+            <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages">
+                <div class="badge badge-light font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap mr-auto" style="max-width: 400px;">
+                    <p class="text-left" style="margin-bottom: 8px;">¡Cosa rosada con dedos de mantequilla, de todas formas ¿Qué tienes en esa caja?!</p>
+                    <p class="text-right small mb-0">07:34 p.m.</p>
+                </div>
+                <div class="badge badge-default font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap ml-auto" style="max-width: 400px;">
+                    <p class="text-left" style="margin-bottom: 8px;">Mis billeteras</p>
+                    <p class="text-right small mb-0">07:34 p.m.</p>
+                </div>
             </div>
             <!-- Input -->
             <div class="d-flex flex-row align-items-center border-top border-default p-3 chat-header">
