@@ -4,12 +4,12 @@
 <link rel="stylesheet" href="css/Look!/perfil.css">
 @endsection
 @section('content')
+@csrf
 <div class="container perfil">
     <div class="row">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
         
-          
           <div class="text-center view overlay" >
           <img class="d-flex mr-3" id="fotodeperfil"  src="/img/profile_photos/{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
                 <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
