@@ -11,4 +11,8 @@ class Usuario extends Model
     public $timestamps = true;
     protected $fillable = ['id','correo','usuario','contrasenia','descripcion','nombres','apellidos','fecha_nacimiento','sexo','imagen'];
 
+    public function publicaciones()
+        {
+            return $this->hasMany(App\Modelos\Publicaciones::class, 'usuario_id', 'id');
+        }
 }
