@@ -61,7 +61,7 @@ class loginController extends Controller
                     $user = Session::get('usuario');
                     // dd($user);
                     
-                    return redirect('/profile')
+                    return redirect('/home')
                         ->with('conected', 'Su cuenta se inició correctamente')
                         ->with('user', $user);
                 }

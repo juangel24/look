@@ -37,11 +37,12 @@ class perfilController extends Controller
     public function profile(){
         $usu = session::get('usuario');
         $usuarios = $usu->id;
+        // dd($usuarios);
         
         $id = session::get('usuario.id');
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$id)->first();
-        
+        // dd($usuario);
         //return $post;
         return view('perfil.perfil',compact('usuario','post'));
     }
