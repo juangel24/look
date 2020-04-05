@@ -12,7 +12,7 @@
         <div class="media" id="divmedia">
         
           <div class="text-center view overlay" >
-          <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset('img/profile_photos/'.$usuario->imagen) }}" style="height:100px;width:100px;border-radius:60%;">
+<img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
           <br>
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -92,7 +92,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Cancelar</button>
-              <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar" >Guardar</button>
+              <input type="submit" class="btn aqua-gradient btn-md" id="btnaceptar" value="Guardar"/>
             </div>
         </div>
       </div>
@@ -147,8 +147,9 @@
         
     $('#updateProfileForm').on('submit',function(e){
        e.preventDefault();
-       var card = $("#upload_image");
-       $.ajax({
+       if($("#btnaceptar").val() == 'Guardar'){
+        var card = $("#upload_image");
+        $.ajax({
         url: "{{route('posts')}}",
             type : "POST",
             data : new FormData(this),
@@ -161,6 +162,7 @@
             success:function(data){
                 $('#message').css('display', 'block');
                 $('#message').html(data.message);
+                setTimeout( function ( ) {  $("#message"); }, 2000 );
                 $('#message').addClass(data.class_name);
                 /*$('#upload_image').append(data.upload_image);*/
                 card.html('')
@@ -183,6 +185,8 @@
                 console.log(error);
             }
        });
+       }
+      
     });
   });
  

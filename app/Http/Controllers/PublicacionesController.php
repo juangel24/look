@@ -11,14 +11,16 @@ class PublicacionesController extends Controller
     public function posts(Request $r){
         $image = $r->file('imagen');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $id = session::get('usuario.id');
+            $id = session::get('usuario');
+            $idu = $id->id;
             $post = Publicaciones::create([
-                "usuario_id" => $id,
+                "usuario_id" => $idu,
                 "imagen" => $new_name,
                 "descripcion" => $r->get('descripcion')
             ]);
+            
             $validation = Validator::make($r->all(), [
-                'imagen' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'imagen' => 'required|image|mimes:jpeg,png,jpg|max:2048'
                ]);
             if($validation->passes())
             {
@@ -50,6 +52,7 @@ class PublicacionesController extends Controller
            }
         return redirect('/profile');
         }*/
+        $post->save();
        
     }
 }
