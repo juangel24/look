@@ -36,6 +36,8 @@ class perfilController extends Controller
     }
     public function profile(){
         $usuarios = session::get('usuario.id');
+        //$usuarios = session::get('usuario.imagen');
+        
         $id = session::get('usuario.id');
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$id)->first();

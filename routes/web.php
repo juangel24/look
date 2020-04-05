@@ -29,7 +29,7 @@ Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
 route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
 route::get('/publicaciones','PublicacionesController@posts')->name('publicaciones');
-Route::resource('/posts', 'PblicacionesController');
+route::POST('/posts','PublicacionesController@posts')->name('posts');
 route::get('/userimage/{usuario}', [
     'uses' => 'perfilController@uploadphoto',
     'as' => 'uptadephoto.image'
