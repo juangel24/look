@@ -35,10 +35,13 @@ class perfilController extends Controller
         }
     }
     public function profile(){
-        $usuarios = session::get('usuario.id');
+        $usu = session::get('usuario');
+        $usuarios = $usu->id;
+        
         $id = session::get('usuario.id');
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$id)->first();
+        
         //return $post;
         return view('perfil.perfil',compact('usuario','post'));
     }

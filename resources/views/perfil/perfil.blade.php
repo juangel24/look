@@ -11,7 +11,7 @@
         <div class="media" id="divmedia">
         
           <div class="text-center view overlay" >
-          <img class="d-flex mr-3" id="fotodeperfil"  src="/img/profile_photos/{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+          <img class="d-flex mr-3" id="fotodeperfil"  src="/img/profile_photos/{{$usuario}}" style="height:100px;width:100px;border-radius:60%;">
                 <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
                   <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
                   <p class="white-text">Actualizar</p>

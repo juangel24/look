@@ -61,7 +61,7 @@ class loginController extends Controller
                     $user = Session::get('usuario');
                     // dd($user);
                     
-                    return redirect('/home')
+                    return redirect('/profile')
                         ->with('conected', 'Su cuenta se inició correctamente')
                         ->with('user', $user);
                 }
@@ -112,7 +112,7 @@ class loginController extends Controller
             'date.required' => 'Ingrese su fecha de nacimiento',
             'gender.required' => 'Ingrese su sexo']);
 
-        $img = 'img/user.png';
+        $img = 'img/profile_photos/user.png';
         $correo = $request->correoR;
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
         
