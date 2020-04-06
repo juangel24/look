@@ -8,9 +8,9 @@
 {{-- DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
 <div class="container perfil">
     <div class="row">
+      <input type="hidden" value="{{ $usuario->id }}">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
-        
           <div class="text-center view overlay" >
 <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
           <br>
@@ -136,6 +136,7 @@
 </div>
 </div>
 </form>
+
 {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
 @endsection
 @section('javascript')

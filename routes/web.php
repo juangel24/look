@@ -27,7 +27,7 @@ Route::get('prueba', 'loginController@prueba');
 //PERFIL
 Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
-route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
+route::post('/updatephoto','perfilController@uploadphoto')->name("/cambiarphoto");
 route::get('/publicaciones','PublicacionesController@posts')->name('publicaciones');
 route::POST('/posts','PublicacionesController@posts')->name('posts');
 route::get('/userimage/{usuario}', [

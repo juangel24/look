@@ -28,7 +28,8 @@ class perfilController extends Controller
             $file->move(public_path().'/img/profile_photos/',$name);
             $usuario = new Usuario();
             $usuario = Usuario::where('usuarios.id','=',$usuarios)->first();
-            $usuario->imagen = $r->input('profileimage');
+            $usuario->imagen = $r->file('profileimage');
+            return $usuario;
             $usuario->imagen = $name;
             $usuario->update();
             return redirect('/profile');
@@ -41,12 +42,12 @@ class perfilController extends Controller
         $usuarios = $usu->id;
         // dd($usuarios);
         $id = session::get('usuario');
-        $idu = $id->imagen;
+        $idu = $id->id;
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-        $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$idu)->get();
+        $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         // dd($usuario);
         //return $post;
-        return view('perfil.perfil',compact('usuario','post'));
+        return view('perfil.perfil',compact('usuario'))->with('post',json_decode($post,true));
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');

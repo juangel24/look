@@ -27,7 +27,7 @@ $(document).ready(function(){
                 },false);
                 return xhr;
             },
-            url: "/uptadephoto",
+            url: "/updatephoto",
             type: 'POST',
             data: fd,
             processData: false,
