@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Look</title>
+    <title>@yield('title')</title>
 
     @yield('css')
 
@@ -108,7 +108,9 @@
 			selector: '[data-toggle=tooltip]'
 		});
     </script>
-
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="{{ asset('js/Look!/searcherProfile.js') }}"></script>
     @yield('javascript')
 </body>

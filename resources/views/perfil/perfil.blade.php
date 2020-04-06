@@ -12,7 +12,8 @@
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
           <div class="text-center view overlay" >
-<img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+          <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+          <!-- <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> -->
           <br>
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -25,7 +26,7 @@
 
             <div class="media-body " id="mediaperfil">
               <h5 class="mt-0 mb-2 font-weight-bold"> {{Session::get('usuario')->usuario}}&nbsp;&nbsp;
-                  <a href="" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
+                  <a href="/updateProfile" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
                   &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a>
                  </h5></a>
               <h5>{{ Session::get('usuario')->nombres }}</h5>
