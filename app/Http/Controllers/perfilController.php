@@ -39,13 +39,15 @@ class perfilController extends Controller
         }
     }
     public function profile(){
+       // $usuarios = session::get('usuario.id');
+        //$usuarios = session::get('usuario.imagen');
         $usu = session::get('usuario');
         $usuarios = $usu->id;
         // dd($usuarios);
-        
-        $id = session::get('usuario.id');
+        $id = session::get('usuario');
+        $idu = $id->imagen;
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-        $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$id)->first();
+        $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$idu)->get();
         // dd($usuario);
         //return $post;
         return view('perfil.perfil',compact('usuario','post'));
@@ -113,8 +115,7 @@ class perfilController extends Controller
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
         
         if($vato){
-            return redirect('/updateProfile')
-                ->with('repeatedEmail', 'hey')
+            return redirect('/profile')
                 ->withInput();
         } 
 
@@ -145,7 +146,8 @@ class perfilController extends Controller
         $usu = Session::get('usuario', $usuarioUpdated);
         // dd(Session::get('usuario'));
 
-        return view('perfil/perfil', compact('usuario'));
+        return redirect('/profile')
+            ->with('usuario', $usu);
 
     }
 

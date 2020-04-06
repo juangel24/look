@@ -5,6 +5,7 @@
 @endsection
 @section('content')
 @csrf
+{{-- DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
 <div class="container perfil">
     <div class="row">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
@@ -12,6 +13,11 @@
         
           <div class="text-center view overlay" >
           <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+          <!-- <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> -->
+          <br>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
                 <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
                   <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
                   <p class="white-text">Actualizar</p>
@@ -43,12 +49,22 @@
         </div>
     </div>
     <hr>
+  {{-- FIN DE  DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
+
+  {{-- BOTON DE CREACION DE PUBLICACION --}}
     <center><button type="button" class="btn blue-gradient" style="border-radius:30px;" data-toggle="modal" data-target="#modalpublicaciones"><i class="fas fa-plus-circle fa-2x pr-2"
       aria-hidden="true"></i>Crear publicacion</button></center>
-
-     {{--  <form action="{{ url('/publicaciones') }}" method="get" enctype="multipart/form-data" >
+  {{-- FIN DE BOTON DE CREACION DE PUBLICACION --}}
+      <br>
+      {{-- ALERT  --}}
+      <div class="alert" id="message" style="display: none"></div>
+      {{-- FIN DE ALERT --}}
+      {{-- MODAL DE CREACION DE PUBLICACION --}}
+      <form method="POST" enctype="multipart/form-data" id="updateProfileForm">
         @csrf
+    <input type="hidden" name="id" value="{{ $usuario->id }}">
       <div class="modal fade" id="modalpublicaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header text-center">
@@ -77,159 +93,23 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Cancelar</button>
-              <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Guardar</button>
+              <input type="submit" class="btn aqua-gradient btn-md" id="btnaceptar" value="Guardar"/>
             </div>
         </div>
       </div>
       </div>
-      </form> --}}
-      <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-4">
-          <!-- Card -->
-         
-          <div class="card">
-      
-            <!--Card image-->
-            <div class="view overlay">
-              <img class="card-img-top" src="/img/publicaciones/1585775330miles-morales-en-spider-man-un-nuevo-universo_3840x2879_xtrafondos.com.jpg"
-                alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
-      
-            <!--Card content-->
-            <div class="card-body">
-      
-              <!--Title-->
-              <h4 class="card-title">{{Session::get('usuario')->usuario}}</h4>
-              <!--Text-->
-              <p class="card-text">{{ session::get('usuario')->descripcion }}</p>
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="button" class="btn btn-light-blue btn-md">Read more</button>
-      
-            </div>
-      
-          </div>
+    </form>
+    {{-- FIN DE MODAL DE CREACION DE PUBLICACION --}}
+    <div id="upload_image" class="row row-cols-1 row-cols-md-2">
+      <div class="col mb-4">
+
+      </div>
+    </div>
+  
      
-          <!-- Card -->
-        </div>
-        {{--<div class="col mb-4">
-          <!-- Card -->
-          <div class="card">
-      
-            <!--Card image-->
-            <div class="view overlay">
-              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-                alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
-      
-            <!--Card content-->
-            <div class="card-body">
-      
-              <!--Title-->
-              <h4 class="card-title">Card title</h4>
-              <!--Text-->
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="button" class="btn btn-light-blue btn-md">Read more</button>
-      
-            </div>
-      
-          </div>
-          <!-- Card -->
-        </div>
-        <div class="col mb-4">
-          <!-- Card -->
-          <div class="card">
-      
-            <!--Card image-->
-            <div class="view overlay">
-              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-                alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
-      
-            <!--Card content-->
-            <div class="card-body">
-      
-              <!--Title-->
-              <h4 class="card-title">Card title</h4>
-              <!--Text-->
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="button" class="btn btn-light-blue btn-md">Read more</button>
-      
-            </div>
-      
-          </div>
-          <!-- Card -->
-        </div>
-        <div class="col mb-4">
-          <!-- Card -->
-          <div class="card">
-      
-            <!--Card image-->
-            <div class="view overlay">
-              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-                alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div>
-      
-            <!--Card content-->
-            <div class="card-body">
-      
-              <!--Title-->
-              <h4 class="card-title">Card title</h4>
-              <!--Text-->
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's content.</p>
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="button" class="btn btn-light-blue btn-md">Read more</button>
-      
-            </div>
-      
-          </div>
-          <!-- Card -->
-        </div>--}}
-      
-      
-      </div>
-      
-      
-  <!-- Central Modal Small -->
-  {{--@if (count($errors) > 0)
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <strong> Hubo un error en subir tu imágen, verifica que sea de la extension aceptada.</strong>
-    <ul>
-      @foreach ($errors->all() as $e)
-          <li>{{ $e }}</li>
-      @endforeach
-    </ul>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if ($message == session::get('message'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong> {{$message}}</strong>
-   
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif--}}
-<form action="{{route('/cambiarphoto')}}" method="post" enctype="multipart/form-data">
+      {{-- MODAL DE CAMBIAR FOTO DE PERFIL --}}
+  
+<form  action="{{ route('/cambiarphoto') }}" method="post" enctype="multipart/form-data">
   @csrf
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -247,12 +127,7 @@
               <span class="btnsubirfoto">Subir foto<input type="file" name="profileimage" id="profileimage">
               </span>
             </button>
-          </center>
-            <div id="lala">
-            
-            </div>
-         </div>
-        
+          </center>     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Close</button>
@@ -262,8 +137,59 @@
 </div>
 </div>
 </form>
+{{-- FIN DE MODAL DE FOTO DE PERFIL --}}
 @endsection
 @section('javascript')
     <script src="js/Look!/perfil.js"></script>
     <script src="js/Look!/publicaciones.js"></script>
+    <script src="js/Look!/nuevapublicacion.js"></script>
+    <script>
+      $(document).ready(function(){
+        
+    $('#updateProfileForm').on('submit',function(e){
+       e.preventDefault();
+       if($("#btnaceptar").val() == 'Guardar'){
+        var card = $("#upload_image");
+        $.ajax({
+        url: "{{route('posts')}}",
+            type : "POST",
+            data : new FormData(this),
+            dataType: 'JSON',
+            processData : false,
+            contentType: false,
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data){
+                $('#message').css('display', 'block');
+                $('#message').html(data.message);
+                setTimeout( function ( ) {  $("#message"); }, 2000 );
+                $('#message').addClass(data.class_name);
+                /*$('#upload_image').append(data.upload_image);*/
+                card.html('')
+                $.each(data,function(i,v){
+                    card.append('<div class="card">');
+                    card.append('<div class="view overlay">');
+                    card.append(data.upload_image);
+                    card.append('<a class="">');
+                    card.append('<div class="mask rgba-white-slight"></div>');
+                    card.append('</a>');
+                    card.append('</div>');
+                    card.append('</div>');
+                    card.append('</div>');
+                });
+            },
+            error: function(xhr, textStatus, error) {
+                console.log(xhr.responseText);
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+       });
+       }
+      
+    });
+  });
+ 
+    </script>
 @endsection
