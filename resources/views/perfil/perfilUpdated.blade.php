@@ -13,7 +13,7 @@
         <a id="hrefArrow" href="/profile">
             <i data-toggle="tooltip" data-placement="top" title="" id="" class="fas fa-angle-left" data-original-title="Actualizar perfil"></i>
         </a>
-    <form class="" action="{{ url('updateProfile') }}" method="POST">
+    <form class="" action="{{ url('updateProfiles') }}" method="GET">
         <a id="arrow" href="#">
             <i data-toggle="tooltip" data-placement="top" title="" id="" class="arrow fas fa-angle-left" data-original-title="Regresar"></i>
         </a>
