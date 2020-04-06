@@ -43,3 +43,32 @@ $(document).on("click","#lala",function(e){
     }
 });*/
 
+
+
+// UPDATED PROFILE
+$('.btn-conf-info').click( function () {
+    $('#arrow').show()
+    $('#hrefArrow').hide()
+    $('.formUpdate1').hide()
+    $('.formUpdate2').show()
+})
+$('#arrow').click( function () {
+    if($('.formUpdate2').show()){
+        $('#arrow').hide()
+        $('#hrefArrow').show()
+        $('.formUpdate2').hide()
+        $('.formUpdate1').show()
+    }
+    
+})
+
+console.log($('#firstNameUpdate').val())
+console.log($('#lastnameupdate').val())
+console.log($('#userUpdated').val())
+console.log($('#descriptionUpdate').val())
+console.log($('#emailUpdate').val())
+console.log($('#phoneUpdate').val())
+console.log($('#genderUpdate').val())
+console.log($('#dateUpdate').val())
+
+

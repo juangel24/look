@@ -27,7 +27,7 @@
                     <!-- Email -->
                     <div class="md-form">
                         <input name="correo" value="{{ old('correo') }}" 
-                        type="email" id="materialLoginFormEmail" class="form-control @error('correo') field-error @enderror">
+                        type="text" id="materialLoginFormEmail" class="form-control @error('correo') field-error @enderror">
                         <label for="materialLoginFormEmail">Usuario o correo electrónico</label>
                         @error('correo')
                             <div class="error"> {{ $message }} </div>

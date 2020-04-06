@@ -103,7 +103,7 @@
                                     <select name="gender" 
                                     class="form-control genero-r @error('correo') field-error @enderror" 
                                     id="">
-                                        <option value="" selected>Género</option>
+                                        <option value="" selected disabled>Género</option>
                                         <option value="H" {{ old('gender') == 'H' ? 'selected' : '' }}>Hombre</option>
                                         <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Mujer</option>
                                         <option value="T" {{ old('gender') == 'T' ? 'selected' : '' }}>Trans</option>

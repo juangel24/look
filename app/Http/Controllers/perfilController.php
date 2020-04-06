@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Modelos\Usuario;
 use App\Modelos\Publicaciones;
@@ -10,6 +11,9 @@ use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;*/
 use Session;
 use DB;
+use DateTime;
+use Str;
+
 class perfilController extends Controller
 {
     /*public function __construct()
@@ -69,5 +73,80 @@ class perfilController extends Controller
         $usuarios = Usuario::all();
         return view('perfil.perfil',compact('usuarios'));
     }*/
+
+    function viewUpdateProfile () {
+        $usuario = Session::get('usuario');
+        return view('perfil/perfilUpdated', compact('usuario'));
+    }
+
+    function updateProfile(Request $request) {
+        $this->validate($request, [
+            'firstNameUpdate' => 'required|min:3|max:60',
+            'lastnameupdate' => 'required|min:3|max:60',
+            'userUpdated' => 'required|min:6|max:20',
+            'descriptionUpdate' => 'required|min:6|max:1000',
+            'emailUpdate' => 'required',
+            'phoneUpdate' => 'required|integer|min:10',
+            'genderUpdate' => 'required',
+            'dateUpdate' => 'required'],
+
+            // Texto de las validaciones
+            ['firstNameUpdate.required' => 'Ingrese sus nombres',
+            'firstNameUpdate.max' => 'Solo se permiten 60 caracteres',
+            'firstNameUpdate.min' => 'Debe tener mínimo 3 caracteres',
+            'lastnameupdate.required' => 'Ingrese sus apellidos',
+            'lastnameupdate.max' => 'Solo se permiten 60 caracteres',
+            'lastnameupdate.min' => 'Debe tener mínimo 3 caracteres',
+            'userUpdate.required' => 'Ingrese un usuario',
+            'userUpdated.max' => 'Solo se permiten 20 caracteres',
+            'userUpdated.min' => 'Debe tener mínimo 3 caracteres',
+            'descriptionUpdate.required' => 'Ingrese una descripción',
+            'descriptionUpdate.max' => 'La contraseña debe tener máximo 1000 caracteres',
+            'emailUpdate.required' => 'Ingrese un correo',
+            'phoneUpdate.required' => 'Ingrese un número telefónico',
+            'phoneUpdate.min' => 'El número telefónico debe tener 10 caracteres',
+            'genderUpdate.required' => 'Seleccione su género',
+            'dateUpdate.required' => 'Seleccione su fecha de nacimiento']);
+        
+        $correo = $request->emailUpdate;
+        // dd($request->emailUpdate);
+        $vato = DB::table('usuarios')->where('correo', $correo)->first();
+        
+        if($vato){
+            return redirect('/updateProfile')
+                ->with('repeatedEmail', 'hey')
+                ->withInput();
+        } 
+
+        $usuario = Session::get('usuario');
+
+        $usuarioUpdated = Usuario::find($usuario->id);
+        // dd($usuarioUpdate);
+        
+        // $usuarioUpdated = new Usuario;
+        $usuarioUpdated->nombres = $request->firstNameUpdate;
+        $usuarioUpdated->apellidos = $request->lastnameupdate;
+        $usuarioUpdated->usuario = $request->userUpdated;
+        $usuarioUpdated->contrasenia = $usuario->contrasenia;
+        $usuarioUpdated->descripcion = $request->descriptionUpdate;
+        $usuarioUpdated->correo = $request->emailUpdate;
+        // $usuario->telefono = $request->phoneUpdate;
+        $usuarioUpdated->sexo = $request->genderUpdate;
+        $usuarioUpdated->fecha_nacimiento = $request->dateUpdate;
+        // dd(new DateTime());
+        $usuarioUpdated->updated_at = new DateTime();
+        // dd($usuarioUpdated);
+        $usuarioUpdated->save();
+
+        Session:flush();
+        Session::forget('usuario');
+
+        $usu = Session::put('usuario', $usuarioUpdated);
+        $usu = Session::get('usuario', $usuarioUpdated);
+        // dd(Session::get('usuario'));
+
+        return view('perfil/perfil', compact('usuario'));
+
+    }
 
 }

@@ -19,11 +19,12 @@ class loginController extends Controller
 
         // Validaciones
         $this->validate($request, [
-            'correo' => 'required|max:100',
+            'correo' => 'required|max:30',
             'password' => 'required|min:4|max:12',],
 
             // Texto de las validaciones
-            ['correo.required' => 'Ingrese un correo',
+            ['correo.required' => 'Ingrese un usuario',
+            'correo.max' => 'El usuario debe tener máximo 30 caracteres',
             'password.required' => 'Ingrese una contraseña',
             'password.min' => 'La contraseña debe tener mínimo 4 caracteres',
             'password.max' => 'La contraseña debe tener máximo 12 caracteres']);
@@ -31,10 +32,11 @@ class loginController extends Controller
         $correo = $request->get('correo');
         $pass = $request->password;
         // dd($pass);
-        $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        // dd($vato);
+        $vato = DB::table('usuarios')->where('correo', $correo)
+                ->orWhere('usuario', $correo)->first();
 
         if(!$vato){
+            
             return redirect('/')
                     ->with('noUser', 'hey')
                     ->withInput();
@@ -45,17 +47,18 @@ class loginController extends Controller
                     ->with('wrongPass', 'hey')
                     ->withInput();
         }
-
+        
         if($vato){
-            
             $confirmarpass = $vato->contrasenia;
             $confirmar = $vato->correo;
             
             if($vato){
+                
                 $confirmarpass = $vato->contrasenia;
-                $confirmar = $vato->correo;
-    
-                if (Hash::check($pass, $confirmarpass) && $confirmar == $correo) {
+                $confirmMail = $vato->correo;
+                $confirmUser = $vato->usuario;
+                
+                if (Hash::check($pass, $confirmarpass) && $confirmMail == $correo || $confirmUser == $correo) {
                     $user = Session::put('usuario', $vato);
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
@@ -67,7 +70,7 @@ class loginController extends Controller
                 }
             }
         }
-
+        
         // if ($correo == null or $pass == null) {
         //    return redirect('/')
         //         ->with('hacker', 'Hacker Detectado!...');
