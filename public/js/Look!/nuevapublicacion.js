@@ -27,14 +27,14 @@ $(document).ready(function(){
                 },false);
                 return xhr;
             },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
             url: "/updatephoto",
             type: 'POST',
             data: fd,
             processData: false,
             contentType: false,
-             headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             succes: function(data){
                 alert('success');
                 console.log(data);

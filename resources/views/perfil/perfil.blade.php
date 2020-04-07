@@ -1,5 +1,5 @@
 @extends('layout.base')
-
+@section('title', 'Look! | Mi Perfil |')
 @section('css')
 <link rel="stylesheet" href="css/Look!/perfil.css">
 @endsection
@@ -24,14 +24,18 @@
           </div>
 
             <div class="media-body " id="mediaperfil">
-              <h5 class="mt-0 mb-2 font-weight-bold"> {{Session::get('usuario')->usuario}}&nbsp;&nbsp;
+              <h4 class="mt-0 mb-2 font-weight-bold"> {{Session::get('usuario')->usuario}}&nbsp;&nbsp;
                   <a href="/updateProfile" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
                   &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a>
-                 </h5></a>
+                 </h4></a>
               <h5>{{ Session::get('usuario')->nombres }}</h5>
+                 <hr> 
+              <div>
+                  {{ session::Get('usuario')->descripcion }}
+              </div>
             </div>
             <div>
-                
+
             </div>
           </div>
          
@@ -108,7 +112,7 @@
      
       {{-- MODAL DE CAMBIAR FOTO DE PERFIL --}}
   
-<form  action="{{ route('/cambiarphoto') }}" method="post" enctype="multipart/form-data">
+<form  action="{{ url('/updatephoto') }}" method="post" enctype="multipart/form-data">
   @csrf
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -123,7 +127,7 @@
         <div class="md-form mb-5">
           <center><i class="fas fa-camera prefix grey-text"></i>
             <button class="btn btn-flat" id="btnsubirfoto" type="button">
-              <span class="btnsubirfoto">Subir foto<input type="file" name="profileimage" id="profileimage">
+              <span class="btnsubirfoto">Subir foto<input type="file" name="profileimage" id="profileimage" />
               </span>
             </button>
           </center> 
@@ -132,14 +136,19 @@
           </div>    
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Close</button>
-        <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Save changes</button>
+        <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Cancelar</button>
+        <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Subir foto</button>
       </div>
   </div>
 </div>
 </div>
 </form>
 
+{{--  @if ($post != null)
+    @foreach ($post->imagen as $p)
+        <img src="{{ $p->imagen }}" alt="" srcset="">
+    @endforeach
+@endif--}}
 {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
 @endsection
 @section('javascript')

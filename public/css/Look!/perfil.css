@@ -56,8 +56,7 @@
     margin-top: -30px;
     height: 100px;
     filter: alpha(opacity=0);
-    opacity: 0;
-    
+    opacity: 0;    
 }
 #divmedia{
     word-break: break-all;

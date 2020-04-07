@@ -40,18 +40,7 @@ class PublicacionesController extends Controller
             'class_name'  => 'alert-danger'
             ]);
             }
-           /*if($r->hasFile('imagen')){
-                $file = $r->file('imagen');
-                $name = time().$file->getClientOriginalName();
-                $file->move(public_path().'/img/publicaciones/',$name);
-                $post = new Publicaciones();
-                $post = Publicaciones::where('usuarios_id','=',$id)->first();
-                $post->imagen = $r->file('imagen');
-                $post->imagen = $name;
-                $post->save();
-           }
-        return redirect('/profile');
-        }*/
+
         $post->save();
        
     }
