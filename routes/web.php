@@ -35,7 +35,8 @@ route::get('/userimage/{usuario}', [
     'as' => 'uptadephoto.image'
 ]);
 Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
-Route::get('/updateProfiles', 'perfilController@updateProfile')->name('updateProfile');
+Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
+Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
 
 Route::get('chat', function() { return view('chat'); });
 
