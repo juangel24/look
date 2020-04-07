@@ -4,9 +4,9 @@ body {
     padding: 0;
 }
 .wave-l {
-    min-width: 75%;
-    max-width: 85%;
-    max-height: auto;
+    min-width: 95%;
+    max-width: 100%;
+    /* max-height: auto; */
     position: fixed;
     top: -5;
     left: 0;
@@ -17,7 +17,7 @@ body {
     animation-direction: alternate
 }
 path {
-    width: 80%;
+    width: 90%;
     background: #00B4DB;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);
@@ -34,13 +34,13 @@ path {
     text-align: center;
     margin-left: 40px;
     margin-top: 30px;
-    font-size: 50px;
+    font-size: 45px;
 }
 .logo{
     position: absolute;
     margin-top: 200px;
-    height: 100px;
-    margin-left: 70px;
+    height: 90px;
+    margin-left: 100px;
 }
 .login {
     /* width: 20%; */
@@ -90,25 +90,37 @@ path {
     }
     .title{
         font-size: 40px;
+        margin-left: 3%;
     }
     .logo{
         height: 80px;
+        margin-left: 7%;
     }
 }
 @media screen and (max-width: 1090px) {
     .wave-l {
-        width: 100px !important;
+        width: 200px !important;
     }
     .container-login{
-        margin-right: 100px;
+        margin-right: 60px;
     }
     .title{
-        font-size: 30px;
+        font-size: 35px;
         margin-left: 1%;
     }
     .logo{
-        height: 60px;
+        height: 65px;
+        margin-left: 7%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .title{
+        font-size: 26px;
         margin-left: 1%;
+    }
+    .logo{
+        height: 55px;
+        margin-left: 5%;
     }
 }
 @media screen and (max-width: 730px) {

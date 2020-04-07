@@ -1,30 +1,37 @@
-.wave-register{
+.wave-register {
     background-color: green;
 }
-.wave-r{
-    min-width: 75%;
-    max-width: 85%;
+
+.wave-r {
+    min-width: 85%;
+    max-width: 95%;
     max-height: 1000px;
     position: fixed;
     top: -5;
     right: 0;
-    animation-name:             dostuff; 
-    animation-duration:         3s; 
-    animation-iteration-count:  infinite;
+    animation-name: dostuff;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
     transition-timing-function: ease-in-out;
     animation-direction: alternate
 }
-.wave-r::after{
+
+.wave-r::after {
     animation-direction: reverse;
 }
-path{
+
+path {
     width: 80%;
-    background: #00B4DB;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #00B4DB;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-.logo-r{
+
+.logo-r {
     position: absolute;
     z-index: 1;
     /* position: fixed; */
@@ -33,7 +40,8 @@ path{
     margin-top: 280px;
     margin-right: 150px;
 }
-.title-r{
+
+.title-r {
     position: absolute;
     right: 0;
     color: #fff;
@@ -41,8 +49,10 @@ path{
     font-size: 50px;
     margin-right: 100px;
     margin-top: 110px;
+    text-align: center;
 }
-.container-register{
+
+.container-register {
     /* width: auto; */
     height: auto;
     width: 350px;
@@ -50,33 +60,38 @@ path{
     margin-left: 10%;
     /* margin-top:  */
 }
-.btn-register{
+
+.btn-register {
     border-radius: 55px;
     z-index: 1;
 }
-.wave-r-m{
+
+.wave-r-m {
     max-width: 200%;
     position: fixed;
     top: 0;
     display: none;
-    animation-name:             sparki; 
-    animation-duration:         6s; 
-    animation-iteration-count:  infinite;
+    animation-name: sparki;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
     transition-timing-function: ease-in-out;
     animation-direction: alternate
 }
-input[name="date"]{
+
+input[name="date"] {
     background: transparent;
     border: none;
     border-bottom: 1px solid #b8b8b8;
 }
-select[name="gender"]{
+
+select[name="gender"] {
     background: transparent;
     border: none;
     border-bottom: 1px solid #b8b8b8;
     margin-top: -11px !important;
     width: auto !important;
 }
+
 .field-error {
     /* margin-bottom: 12px; */
     border-bottom: 1px solid #AF0C0C;
@@ -90,76 +105,91 @@ select[name="gender"]{
 
 /* RESPONSIVE (MOVIL) */
 @media screen and (max-width: 1238px) {
-    .wave-r{
+    .wave-r {
         width: 60%;
     }
-    .title-r{
+
+    .title-r {
         font-size: 40px;
     }
-    .logo-r{
+
+    .logo-r {
         height: 80px;
     }
-@media screen and (max-width: 960px) {
-    .wave-r{
-        width: 20%;
+
+    @media screen and (max-width: 960px) {
+        .wave-r {
+            width: 20%;
+        }
+
+        .container-register {
+            width: 320px;
+            margin-left: 5%;
+        }
+
+        .title-r {
+            font-size: 40px;
+            margin-right: 2%;
+        }
+
+        .logo-r {
+            height: 80px;
+            margin-right: 8%;
+        }
     }
-    .container-register{
-        width: 320px;
-        margin-left: 8%;
-    }
-    .title-r{
-        font-size: 40px;
-        margin-right: 2%;
-    }
-    .logo-r{
-        height: 80px;
-        margin-right: 8%;
-    }
-}
-@media screen and (max-width: 730px) {
-    .wave-r{
-        display: none;
-    }
-    .container-register{
-        width: auto;
-        margin: auto;
-        display: block;
-        margin-top: 85px;
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-    .wave-r-m{
-        display: block;
+
+    @media screen and (max-width: 730px) {
+        .wave-r {
+            display: none;
+        }
+
+        .container-register {
+            width: auto;
+            margin: auto;
+            display: block;
+            margin-top: 85px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .wave-r-m {
+            display: block;
+        }
     }
 }
 
 
 /* ANIMATIONS */
-@-webkit-keyframes dostuff{
-    0%{
-      height:800px;
-      width: 75%;
+@-webkit-keyframes dostuff {
+    0% {
+        height: 800px;
+        width: 75%;
     }
-    50%{ 
-      height:900px;
-      width: 75.5%;
+
+    50% {
+        height: 900px;
+        width: 75.5%;
     }
-    100%{ 
-      height:1000px;
-      width: 76%;
+
+    100% {
+        height: 1000px;
+        width: 76%;
     }
 }
-@-webkit-keyframes sparki{
-    0%{
-        width:120%;
+
+@-webkit-keyframes sparki {
+    0% {
+        width: 120%;
         height: 100px;
     }
-    50%{ 
-        width:150%;
+
+    50% {
+        width: 150%;
         height: 120px;
     }
-    100%{ 
-        width:200%;
+
+    100% {
+        width: 200%;
         height: 125px;
     }
 }
