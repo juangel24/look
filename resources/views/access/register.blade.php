@@ -1,4 +1,4 @@
-@extends('base/html_initial')
+@extends('base.html')
 @section('title', 'Look! | Registrarse')
 @section('css')
     <link rel="stylesheet" href="css/Look!/register.css">
@@ -6,6 +6,8 @@
     <section>
         <section class="wave-register">
             <div class="wave-r" style="height: 800px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M213.19,-0.00 C152.69,69.86 270.04,69.86 202.98,149.60 L500.00,149.60 L500.00,-0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
+            <img class="logo-r" src="img/white_logo.png" alt="">
+            <h1 class="title-r">Meet extraordinary <br> people!</h1>
         </section>
 
         <section class="register">
@@ -151,9 +153,19 @@
                 <!-- Material form login -->
             </div>
 
-            <div class="wave-r-m" style="height: 70px;overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-0.00,49.85 C150.00,149.60 271.37,-49.87 500.00,49.85 L500.00,0.00 L-0.00,0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
+            <div class="wave-r-m" style="overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-0.00,49.85 C150.00,149.60 271.37,-49.87 500.00,49.85 L500.00,0.00 L-0.00,0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
         </section>
         @section('scripts')
-            $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            <script src="{{ asset('js/anime.min.js') }}"></script>
+            <script>
+                anime({
+                    targets: 'div .wave-l',
+                    translateX: -1,
+                    rotate: '1turn',
+                    backgroundColor: '#FFF',
+                    duration: 2000
+                });
+                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            </script>
         @endsection
     </section>

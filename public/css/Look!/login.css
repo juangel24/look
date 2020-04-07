@@ -3,12 +3,19 @@ body {
     margin: 0;
     padding: 0;
 }
-
-.wave {
-    width: 85%;
-    height: auto;
+.wave-l {
+    min-width: 75%;
+    max-width: 85%;
+    max-height: auto;
+    position: fixed;
+    top: -5;
+    left: 0;
+    animation-name:             dostuff; 
+    animation-duration:         6s; 
+    animation-iteration-count:  infinite;
+    transition-timing-function: ease-in-out;
+    animation-direction: alternate
 }
-
 path {
     width: 80%;
     background: #00B4DB;
@@ -19,53 +26,91 @@ path {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-
+.title{
+    position: absolute;
+    z-index: 100;
+    font-family: 'Kaushan Script', cursive;
+    color: #fff;
+    text-align: center;
+    margin-left: 40px;
+    margin-top: 30px;
+    font-size: 50px;
+}
+.logo{
+    position: absolute;
+    margin-top: 200px;
+    height: 100px;
+    margin-left: 70px;
+}
 .login {
     /* width: 20%; */
     width: auto;
 }
-
 .container-login {
-    width: 50vh;
-    margin-top: -550px;
-    margin-right: 20%;
+    width: 350px;
+    height: auto;
+    margin-top: 190px;
+    margin-right: 250px;
     /* margin-top:  */
 }
-
 .btn-login {
     border-radius: 55px;
 }
-
+.urlRegister{
+    position: relative;
+    z-index: 999;
+}
 .wave-l-m {
-    width: 100%;
+    max-width: 150%;
     position: fixed;
     bottom: 0;
+    height: 200px;
     display: none;
+    animation-name:             sparki; 
+    animation-duration:         6s; 
+    animation-iteration-count:  infinite;
+    transition-timing-function: ease-in-out;
+    animation-direction: alternate
 }
-
 .field-error {
     /* margin-bottom: 12px; */
     border-bottom: 1px solid #AF0C0C;
     box-shadow: 0 2px 4px -2px #7f0909;
 }
-
 .error {
     color: rgb(153, 0, 0);
 }
-
 /* RESPONSIVE (MOVIL) */
-@media screen and (max-width: 1238px) {
+@media screen and (max-width: 1338px) {
     .wave-l {
-        width: 70%;
+        width: 90% !important;
+    }
+    .container-login{
+        margin-right: 150px;
+    }
+    .title{
+        font-size: 40px;
+    }
+    .logo{
+        height: 80px;
     }
 }
-
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1090px) {
     .wave-l {
-        width: 55%;
+        width: 100px !important;
+    }
+    .container-login{
+        margin-right: 100px;
+    }
+    .title{
+        font-size: 30px;
+        margin-left: 1%;
+    }
+    .logo{
+        height: 60px;
+        margin-left: 1%;
     }
 }
-
 @media screen and (max-width: 730px) {
     .wave-l {
         display: none;
@@ -82,5 +127,33 @@ path {
 
     .wave-l-m {
         display: block;
+    }
+}
+
+/* ANIMATIONS */
+@-webkit-keyframes dostuff{
+    0%{
+      height:120%;
+    }
+    50%{ 
+      height:140%;
+    }
+    100%{ 
+      height:150%;
+    }
+}
+
+@-webkit-keyframes sparki{
+    0%{
+        width:110%;
+        height: 180px;
+    }
+    50%{ 
+        width:160%;
+        height: 200px;
+    }
+    100%{ 
+        width:120%;
+        height: 220px;
     }
 }
