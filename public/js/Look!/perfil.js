@@ -46,7 +46,7 @@ $(document).on("click","#lala",function(e){
 
 
 // UPDATED PROFILE
-$('.btn-conf-info').click( function () {
+/*$('.btn-conf-info').click( function () {
     $('#arrow').show()
     $('#hrefArrow').hide()
     $('.formUpdate1').hide()
@@ -70,5 +70,5 @@ console.log($('#emailUpdate').val())
 console.log($('#phoneUpdate').val())
 console.log($('#genderUpdate').val())
 console.log($('#dateUpdate').val())
-
+*/
 

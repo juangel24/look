@@ -8,12 +8,11 @@
 {{-- DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
 <div class="container perfil">
     <div class="row">
-      <input type="hidden" value="{{ $usuario->id }}">
       <div class="col-md-6 perfilfoto" id="perfilfoto">
         <div class="media" id="divmedia">
-          <div class="text-center view overlay" >
-          <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
-          <!-- <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> -->
+          <div class="text-center view overlay">
+          {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
+           <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
           <br>
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -127,7 +126,10 @@
               <span class="btnsubirfoto">Subir foto<input type="file" name="profileimage" id="profileimage">
               </span>
             </button>
-          </center>     
+          </center> 
+          <div id="lala">
+                  
+          </div>    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Close</button>
