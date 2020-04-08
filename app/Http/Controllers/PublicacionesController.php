@@ -9,39 +9,33 @@ use App\Modelos\Publicaciones;
 class PublicacionesController extends Controller
 {
     public function posts(Request $r){
-        $image = $r->file('imagen');
-        $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $id = session::get('usuario');
-            $idu = $id->id;
-            $post = Publicaciones::create([
-                "usuario_id" => $idu,
-                "imagen" => $new_name,
-                "descripcion" => $r->get('descripcion')
-            ]);
-            
             $validation = Validator::make($r->all(), [
-                'imagen' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+                'imagen' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'imagen' => 'required'
                ]);
             if($validation->passes())
             {
-                    
-                    $image->move(public_path('img/publicaciones'), $new_name);
-                    return response()->json([
-                    'message'   => 'Tu imágen se subió correctamente',
-                    'upload_image' => '<img src="/img/publicaciones/'.$new_name.'" class="img-fluid" width="200px" height="200px" />',
-                    'class_name'  => 'alert-success'
+                $image = $r->file('imagen');
+                $new_name = rand() . '.' . $image->getClientOriginalExtension();
+                    $id = session::get('usuario');
+                    $idu = $id->id;
+                    $post = Publicaciones::create([
+                        "usuario_id" => $idu,
+                        "imagen" =>  'img/publicaciones/'.$new_name,
+                        "descripcion" => $r->get('descripcion')
                     ]);
+                    $post->save();
+                    $image->move(public_path('img/publicaciones'), $new_name);
+                    Session::flash('mensaje', 'Foto Subida correctamente');
+                    return  redirect('/profile');;
             }
             else
             {
-            return response()->json([
-            'message'   => 'Hubo un error al subir su imágen',
-            'upload_image' => '',
-            'class_name'  => 'alert-danger'
-            ]);
+                Session::flash('mensajerror', 'Hubo un error al subir una foto');
+                return  redirect('/profile');;
             }
 
-        $post->save();
+        
        
     }
 }

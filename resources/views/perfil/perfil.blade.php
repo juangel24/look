@@ -44,9 +44,9 @@
       <div class="col-md-6 descripcion">
         <div class="container descripciones">
             <div class="row">
-              <div class="col-md-4"><h5><b>#</b>&nbsp;&nbsp;Publicaciones</h5></div>
-              <div class="col-md-4"><h5><b>#</b>&nbsp;&nbsp;Seguidores</h5></div>
-              <div class="col-md-4"><h5><b>#</b>&nbsp;&nbsp;Seguidos</h5></div>
+              <div class="col-md-4"><h5><b>0</b>&nbsp;&nbsp;Publicaciones</h5></div>
+              <div class="col-md-4"><h5><b>0</b>&nbsp;&nbsp;Seguidores</h5></div>
+              <div class="col-md-4"><h5><b>0</b>&nbsp;&nbsp;Seguidos</h5></div>
             </div>
           </div>
         </div>
@@ -60,10 +60,25 @@
   {{-- FIN DE BOTON DE CREACION DE PUBLICACION --}}
       <br>
       {{-- ALERT  --}}
-      <div class="alert" id="message" style="display: none"></div>
+      @if (session::has('mensaje'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{session::get('mensaje')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
+      @if (session::has('mensajerror'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{session::get('mensajerror')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
       {{-- FIN DE ALERT --}}
       {{-- MODAL DE CREACION DE PUBLICACION --}}
-      <form method="POST" enctype="multipart/form-data" id="updateProfileForm">
+      <form method="POST" enctype="multipart/form-data" id="updateProfileForm" action="{{ route('posts') }}">
         @csrf
     <input type="hidden" name="id" value="{{ $usuario->id }}">
       <div class="modal fade" id="modalpublicaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -103,13 +118,56 @@
       </div>
     </form>
     {{-- FIN DE MODAL DE CREACION DE PUBLICACION --}}
-    <div id="upload_image" class="row row-cols-1 row-cols-md-2">
-      <div class="col mb-4">
-
-      </div>
+  {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
+    @if ($post != null )
+    <div class="row">
+      @foreach ($post as $item)
+      <div class="col-lg-4 col-md-12 mb-4">
+          <!--Card-->
+          <div class="card card-cascade wider mb-4">
+      
+            <!--Card image-->
+            <div class="view view-cascade">
+              <img src="{{ $item->imagen }}" class="card-img-top" style="height:200px">
+              <a href="#!">
+                <div class="mask rgba-white-slight"></div>
+              </a>
+            </div>
+            <!--/Card image-->
+      
+            <!--Card content-->
+            <div class="card-body card-body-cascade text-center">
+              <!--Title-->
+              <h4 class="card-title"><strong>{{ session::get('usuario')->usuario }}</strong></h4>
+              <h5 class="indigo-text"><strong>{{ session::get('usuario')->nombres.' '.session::get('usuario')->apellidos }}</strong></h5>
+      
+              <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque
+                laudantium, totam
+                rem aperiam.
+              </p>
+      <hr>
+              <a class=""><i class="far fa-comment"></i></a>
+              <a class=""><i class="far fa-heart"></i></a>
+              <!--Dribbble-->
+              <a class="icons-sm fb-ic"><i class="fab fa-facebook-f"> </i></a>
+      
+            </div>
+            <!--/.Card content-->
+      
+          </div>
+          <!--/.Card-->
+        </div>
+      @endforeach    
+  </div>
+    @else
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>Hola {{ session::get('usuario')->usuario }}</strong>No has hecho ninguna publicaión x-x
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-  
-     
+    @endif
+     {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
       {{-- MODAL DE CAMBIAR FOTO DE PERFIL --}}
   
 <form  action="{{ url('/updatephoto') }}" method="post" enctype="multipart/form-data">
@@ -144,18 +202,13 @@
 </div>
 </form>
 
-{{--  @if ($post != null)
-    @foreach ($post->imagen as $p)
-        <img src="{{ $p->imagen }}" alt="" srcset="">
-    @endforeach
-@endif--}}
 {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
 @endsection
 @section('javascript')
     <script src="js/Look!/perfil.js"></script>
     <script src="js/Look!/publicaciones.js"></script>
     <script src="js/Look!/nuevapublicacion.js"></script>
-    <script>
+ {{--   <script>
       $(document).ready(function(){
         
     $('#updateProfileForm').on('submit',function(e){
@@ -203,5 +256,5 @@
     });
   });
  
-    </script>
+    </script>--}}
 @endsection

@@ -47,9 +47,14 @@ class perfilController extends Controller
         $id = session::get('usuario');
         $idu = $id->id;
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-        $post = json_encode($post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get());
-        
-        return view('perfil.perfil',compact('usuario'))->with('post',$post);
+        $posts = Publicaciones::select("imagen")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
+        /*$images = array();
+        foreach ($posts as $key => $value) {
+            $images[] = $value->imagen;
+        }
+        dd($images);*/
+        //dd($posts);
+        return view('perfil.perfil',compact('usuario'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');
