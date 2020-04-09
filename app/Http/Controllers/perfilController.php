@@ -85,74 +85,128 @@ class perfilController extends Controller
         return view('perfil/perfilUpdated', compact('usuario'));
     }
 
-    function updateProfile(Request $request) {
-        $this->validate($request, [
-            'firstNameUpdate' => 'required|min:3|max:60',
-            'lastnameupdate' => 'required|min:3|max:60',
-            'userUpdated' => 'required|min:6|max:20',
-            'descriptionUpdate' => 'required|min:6|max:1000',
-            'emailUpdate' => 'required',
-            'phoneUpdate' => 'required|integer|min:10',
-            'genderUpdate' => 'required',
-            'dateUpdate' => 'required'],
+    function updateProfile1(Request $request) {
+        if($request->profileimages != null){
+                $file = $request->file('profileimages');
+                $name = time().$file->getClientOriginalName();
+                $file->move(public_path().'/img/profile_photos/',$name);
+                $usuarios = Session::get('usuario');
+                $usuarioImgUpdated = Usuario::find($usuarios->id);
+                $usuarioImgUpdated->imagen = ('/img/profile_photos/'.$name);
+                $usuarioImgUpdated->save();
 
-            // Texto de las validaciones
-            ['firstNameUpdate.required' => 'Ingrese sus nombres',
-            'firstNameUpdate.max' => 'Solo se permiten 60 caracteres',
-            'firstNameUpdate.min' => 'Debe tener mínimo 3 caracteres',
-            'lastnameupdate.required' => 'Ingrese sus apellidos',
-            'lastnameupdate.max' => 'Solo se permiten 60 caracteres',
-            'lastnameupdate.min' => 'Debe tener mínimo 3 caracteres',
-            'userUpdate.required' => 'Ingrese un usuario',
-            'userUpdated.max' => 'Solo se permiten 20 caracteres',
-            'userUpdated.min' => 'Debe tener mínimo 3 caracteres',
-            'descriptionUpdate.required' => 'Ingrese una descripción',
-            'descriptionUpdate.max' => 'La contraseña debe tener máximo 1000 caracteres',
-            'emailUpdate.required' => 'Ingrese un correo',
-            'phoneUpdate.required' => 'Ingrese un número telefónico',
-            'phoneUpdate.min' => 'El número telefónico debe tener 10 caracteres',
-            'genderUpdate.required' => 'Seleccione su género',
-            'dateUpdate.required' => 'Seleccione su fecha de nacimiento']);
-        
-        $correo = $request->emailUpdate;
-        // dd($request->emailUpdate);
-        $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        
-        if($vato){
+                $vato = Session::get('usuario');
+                $u = DB::table('usuarios')->where('id', $vato->id)->first();
+                
+                Session::forget('usuario');
+
+                $usu = Session::put('usuario', $u);
+                $usu = Session::save('usuario', $u);
+                $usu = Session::get('usuario');
+                
+                return redirect('/updateProfile')
+                    ->with('user', $usu);
+            }
+            date_default_timezone_set('America/Monterrey');
+            $this->validate($request, [
+                'firstNameUpdate' => 'required|min:3|max:60',
+                'lastnameupdate' => 'required|min:3|max:60',
+                'userUpdated' => 'required|min:6|max:20',
+                'descriptionUpdate' => 'required|min:6|max:1000'],
+    
+                // Texto de las validaciones
+                ['firstNameUpdate.required' => 'Ingrese sus nombres',
+                'firstNameUpdate.max' => 'Solo se permiten 60 caracteres',
+                'firstNameUpdate.min' => 'Debe tener mínimo 3 caracteres',
+                'firstNameUpdate.min' => 'Debe tener mínimo 6 caracteres',
+                'lastnameupdate.required' => 'Ingrese sus apellidos',
+                'lastnameupdate.max' => 'Solo se permiten 60 caracteres',
+                'lastnameupdate.min' => 'Debe tener mínimo 3 caracteres',
+                'userUpdate.required' => 'Ingrese un usuario',
+                'userUpdated.max' => 'Solo se permiten 20 caracteres',
+                'userUpdated.min' => 'Debe tener mínimo 3 caracteres',
+                'descriptionUpdate.required' => 'Ingrese una descripción',
+                'descriptionUpdate.max' => 'La contraseña debe tener máximo 1000 caracteres']);
+    
+                // 'userUpdated.min' => 'Debe tener mínimo 3 caracteres']);
+    
+            $usuarios = Session::get('usuario'); 
+    
+            $usuarioUpdated = Usuario::find($usuarios->id);
+            $usuarioUpdated->nombres = $request->firstNameUpdate;
+            $usuarioUpdated->apellidos = $request->lastnameupdate;
+            $usuarioUpdated->usuario = $request->userUpdated;
+            $usuarioUpdated->contrasenia = $usuarios->contrasenia;
+            $usuarioUpdated->descripcion = $request->descriptionUpdate;
+            $usuarioUpdated->updated_at = new DateTime();
+            $usuarioUpdated->save();
+    
+            $user = Session::get('usuario');
+            $u = DB::table('usuarios')->where('correo', $user->correo)->first();
+    
+            Session::forget('usuario');
+    
+            $usu = Session::put('usuario', $u);
+            $usu = Session::save('usuario', $u);
+            $usu = Session::get('usuario');
+    
             return redirect('/profile')
+                ->with('usu', $usu);
+        }
+    
+        function updateProfile2 (Request $request) {
+            date_default_timezone_set('America/Monterrey');
+            // $this->validate($request, [
+            //     'emailUpdate' => 'required',
+            //     'phoneUpdate' => 'required|integer|min:10',
+            //     'genderUpdate' => 'required',
+            //     'dateUpdate' => 'required'],
+    
+            //     // Texto de las validaciones
+            //     ['emailUpdate.required' => 'Ingrese un correo',
+            //     'phoneUpdate.required' => 'Ingrese un número telefónico',
+            //     'phoneUpdate.min' => 'El número telefónico debe tener 10 caracteres',
+            //     'genderUpdate.required' => 'Seleccione su género',
+            //     'dateUpdate.required' => 'Seleccione su fecha de nacimiento']);
+    
+            $correo = $request->emailUpdate;
+            
+            $vato = DB::table('usuarios')->where('correo', $correo)->first();
+            // dd($vato);
+                
+            if($vato){
+                return redirect()
+                ->back()
+                ->with('repeatedEmail', 'hey')
                 ->withInput();
-        } 
+            } 
+    
+            $usuario = Session::get('usuario');
+    
+            $usuarioUpdated = Usuario::find($usuario->id);
+            $usuarioUpdated->nombres = $usuario->nombres;
+            $usuarioUpdated->apellidos = $usuario->apellidos;
+            $usuarioUpdated->usuario = $usuario->usuario;
+            $usuarioUpdated->contrasenia = $usuario->contrasenia;
+            $usuarioUpdated->descripcion = $usuario->descripcion;
+            $usuarioUpdated->correo = $request->emailUpdate;
+            // $usuario->telefono = $request->phoneUpdate;
+            $usuarioUpdated->sexo = $request->genderUpdate;
+            $usuarioUpdated->fecha_nacimiento = $request->dateUpdate;
+            $usuarioUpdated->updated_at = new DateTime();
+            $usuarioUpdated->save();
+            
+            Session:flush();
+            Session::forget('usuario');
 
-        $usuario = Session::get('usuario');
-
-        $usuarioUpdated = Usuario::find($usuario->id);
-        // dd($usuarioUpdate);
-        
-        // $usuarioUpdated = new Usuario;
-        $usuarioUpdated->nombres = $request->firstNameUpdate;
-        $usuarioUpdated->apellidos = $request->lastnameupdate;
-        $usuarioUpdated->usuario = $request->userUpdated;
-        $usuarioUpdated->contrasenia = $usuario->contrasenia;
-        $usuarioUpdated->descripcion = $request->descriptionUpdate;
-        $usuarioUpdated->correo = $request->emailUpdate;
-        // $usuario->telefono = $request->phoneUpdate;
-        $usuarioUpdated->sexo = $request->genderUpdate;
-        $usuarioUpdated->fecha_nacimiento = $request->dateUpdate;
-        // dd(new DateTime());
-        $usuarioUpdated->updated_at = new DateTime();
-        // dd($usuarioUpdated);
-        $usuarioUpdated->save();
-
-        Session:flush();
-        Session::forget('usuario');
-
-        $usu = Session::put('usuario', $usuarioUpdated);
-        $usu = Session::get('usuario', $usuarioUpdated);
-        // dd(Session::get('usuario'));
-
-        return redirect('/profile')
-            ->with('usuario', $usu);
-
-    }
+            $u = DB::table('usuarios')->where('correo', $request->emailUpdate)->first();
+            
+            $usu = Session::put('usuario', $u);
+            $usu = Session::save('usuario', $u);
+            $usu = Session::get('usuario');
+            // dd($usu);
+            return redirect('/profile')
+                ->with('usu', $usu);
+        }
 
 }

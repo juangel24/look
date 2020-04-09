@@ -73,7 +73,7 @@
                         <div class="error"> {{ $message }} </div>
                     @enderror
                 </div>
-                <button class="btn btn-conf-info" type="submit">Actualizar</button>
+                <button class="btn btn-act-profile" type="submit">Actualizar</button>
                 <button id="btnContinueForm" class="btn btn-conf-info" type="button">Configuración de información personal</button>
             </form>
         </div>

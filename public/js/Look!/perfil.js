@@ -59,16 +59,6 @@ $('#arrow').click( function () {
         $('.formUpdate2').hide()
         $('.formUpdate1').show()
     }
-    
 })
-
-console.log($('#firstNameUpdate').val())
-console.log($('#lastnameupdate').val())
-console.log($('#userUpdated').val())
-console.log($('#descriptionUpdate').val())
-console.log($('#emailUpdate').val())
-console.log($('#phoneUpdate').val())
-console.log($('#genderUpdate').val())
-console.log($('#dateUpdate').val())
 
 
