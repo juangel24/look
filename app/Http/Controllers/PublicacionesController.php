@@ -34,8 +34,14 @@ class PublicacionesController extends Controller
                 Session::flash('mensajerror', 'Hubo un error al subir una foto');
                 return  redirect('/profile');;
             }
-
-        
-       
+    }
+    public function post(){
+        //$id_post = Publicaciones::find($r->input('id_post'));
+        return view("perfil.showpost");
+    }
+    public function post1(Request $r){
+        $id_post = $r->get('id_post');
+        dd($id_post
+    );
     }
 }

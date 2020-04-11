@@ -75,13 +75,17 @@ width:100%;height:250px;
     color: blue;
     margin-top: -100px !important;
     margin-left: -15px;
+
+}
+#imagepost{
+    width: 100%;
+    height: 430px;
 }
 
-
-
-
-
-
+#div-comments-posts{
+    margin-left: -45px;
+    margin-top: -15px;
+}
 
 
 

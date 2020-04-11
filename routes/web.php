@@ -34,6 +34,7 @@ route::get('/userimage/{usuario}', [
     'uses' => 'perfilController@uploadphoto',
     'as' => 'uptadephoto.image'
 ]);
+route::get('/posts','PublicacionesController@post');
 Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
 Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
 Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
