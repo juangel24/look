@@ -35,13 +35,15 @@ class PublicacionesController extends Controller
                 return  redirect('/profile');;
             }
     }
-    public function post(){
+    public function post(Request $r, $id){
         //$id_post = Publicaciones::find($r->input('id_post'));
-        return view("perfil.showpost");
+        $id = session::get('usuario');
+        $idu = $id->id;
+        $posts = Publicaciones::select("imagen","id")->where("usuario_id","=",$idu)->get();
+        return view("perfil.showpost",compact("posts"));
     }
     public function post1(Request $r){
         $id_post = $r->get('id_post');
-        dd($id_post
-    );
+        dd($id_post);
     }
 }

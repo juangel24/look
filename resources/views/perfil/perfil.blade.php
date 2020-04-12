@@ -2,6 +2,7 @@
   @section('title', 'Look! | Mi Perfil |')
     @section('css')
       <link rel="stylesheet" href="css/Look!/perfil.css">
+
     @endsection
       @section('content')
         @csrf
@@ -133,25 +134,47 @@
                        <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
                     </div>
                     </a>
+                  
+                    @csrf
                     <div class="modal fade" id="imagemodal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" id="spanclose">&times;</span>
+                      </button>
                     <div class="modal-dialog modal-xl" role="document">
                       <div class="modal-content post">
-                      
-                        <div class="modal-header">
-                          <h5 class="modal-title font-weight-bold" id="exampleModalLabel"> {{ session::get('usuario')->usuario }}</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
+ 
                         <div class="modal-body">
                             {{-- <img src="{{ $item->imagen }}" id="imagepost"> --}}
-                            <div class="container">
+                           
+                             {{--  <form method="POST" action="/post/{{ $item->id }}" id="comment_form"> --}}
+                              <div class="container">
+
+                              
                               <div class="row">
-                                <div class="col" id="div-image-post">
-                                  <img src="{{ $item->imagen }}" id="imagepost">
+                                <div class="col-md-5">
+                                  <img src="{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
                                 </div>
-                                <div class="col" id="div-comments-posts" >
-                
+                                <div class="col-md-7  scrollable" id="div-comments-posts">
+                                  <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 chat-header">
+                                    <div class="d-flex flex-row">
+                                        <a class="p-0 waves-effect waves-light" href="/profile">
+                                            <img class="rounded-circle z-depth-0" alt="avatar image" src="{{ session::get('usuario')->imagen }}" width="35" height="35">
+                                        </a>
+                                        <h5 class="ml-2 mb-0 align-self-center">{{ session::get('usuario')->usuario }}</h5>
+                                    </div>
+                                    <div>
+                                      <a class="waves-effect waves-light" href="#"><i class="far fa-heart text-default fa-2x"></i></a>
+                                      <a class="waves-effect waves-light" href="#" style="margin-left:60px;"><i class="far fa-comment text-default fa-2x"></i></a>
+                                    </div>
+                                    <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
+                                  </div>
+                                  
+                                <div class="d-flex flex-row align-items-center" id="comment">
+                                    <div class="md-form border-top border-default comment-header">
+                                        <input name="comment_content" id="comment_content" placeholder="Escribe tu comentario aquí..." type="text" class="form-control">
+                                    </div>
+                                    <a id="icon-send-comment" class="button waves-effect waves-light"  type="submit"><i class="fas fa-paper-plane text-default fa-2x"></i></a>
+                                </div>
                                 </div>
                               </div>
                             </div>
@@ -161,11 +184,7 @@
                       </div>
                     </div>
                   </div>
-                  
                   </div>
-            
-                
-                <!--/.Card-->
               </div>
             @endforeach    
         </div>
@@ -218,14 +237,5 @@
           <script src="js/Look!/perfil.js"></script>
           <script src="js/Look!/publicaciones.js"></script>
           <script src="js/Look!/nuevapublicacion.js"></script>
-          <script>
-            /*$("#pop").on("click", function() {
-            $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
-            $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-              });*/
-              $(document).on('click','imgmodal',function(){
-                var id = $("#id_post").val();
-
-              });
-          </script>
+          {{-- <script src="js/Look!/comentarios.js"></script> --}}
       @endsection
