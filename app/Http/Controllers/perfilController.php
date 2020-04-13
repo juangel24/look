@@ -47,7 +47,7 @@ class perfilController extends Controller
         $id = session::get('usuario');
         $idu = $id->id;
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-        $posts = Publicaciones::select("imagen","id")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
+        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
         return view('perfil.perfil',compact('usuario','cantidad'))->with('post',$posts);
     }

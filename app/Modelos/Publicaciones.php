@@ -14,8 +14,12 @@ class Publicaciones extends Model
     public function usuario(){
         return $this->belongsTo(App\Modelos\Usuario::class,'usuario_id','id');
     }
-    public function comentarios()
+    /*public function comentarios()
         {
             return $this->hasMany(App\Modelos\Comentarios::class);
-        }
+        }*/
+    public function likes(){
+        return $this->hasMany(App\Modelos\Megusta::class,'publicacion_id','id');
+    }
+  
 }

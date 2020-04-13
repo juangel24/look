@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
+use App\Modelos\Megusta;   
 class PublicacionesController extends Controller
 {
     public function posts(Request $r){
@@ -45,5 +46,8 @@ class PublicacionesController extends Controller
     public function post1(Request $r){
         $id_post = $r->get('id_post');
         dd($id_post);
+    }
+    public function likes(){
+        
     }
 }

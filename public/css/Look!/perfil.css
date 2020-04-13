@@ -58,7 +58,7 @@
     filter: alpha(opacity=0);
     opacity: 0;    
 }
-#divmedia{
+#divmedia, #descripcionpost{
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -87,10 +87,8 @@ width:100%;height:250px;
     position: relative;
 }
 #comment {
-    padding-left: 0.8rem;
     margin-top: 50%;
     height:60px;
-    margin-left: -27px;
 }
 .container.post{
     height: 40px;
@@ -107,10 +105,13 @@ width:100%;height:250px;
     height: 60px;
     width: 95%;
    }
-#likes{
-    background-color: tomato;
-    height: 50px;
+#like{
+    float: inline-end;
 }
+#div-comments-post{
+    position: fixed;
+}
+
 
 
 /* PERFIL UPDATED */
