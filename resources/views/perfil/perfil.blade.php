@@ -2,7 +2,7 @@
   @section('title', 'Look! | Mi Perfil |')
     @section('css')
       <link rel="stylesheet" href="css/Look!/perfil.css">
-
+      <link rel="stylesheet" href="sweetalert2.min.css">
     @endsection
       @section('content')
         @csrf
@@ -120,7 +120,7 @@
           {{-- FIN DE MODAL DE CREACION DE PUBLICACION --}}
         {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
           @if ($post != null )
-          <div class="row">
+          <div class="row" id="postt">
             @csrf
             @foreach ($post as $item)
             <div class="col-lg-4 col-md-12 mb-4">
@@ -146,16 +146,28 @@
                                 <div class="col-md-5">
                                   <img src="{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
                                 </div>
-                                <div class="col-md-7 scrollable border border-default" id="div-comments-posts">
-                                  <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 chat-header">
+                                <div class="col-md-7 scrollable border border-default" id="div-comments-posts" data-postid="{{ $item->id }}">
+                                  <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 comment-header">
                                     <div class="d-flex flex-row">
                                         <a class="p-0 waves-effect waves-light" href="/profile">
-                                            <img class="rounded-circle z-depth-0" alt="avatar image" src="{{ session::get('usuario')->imagen }}" width="35" height="35">
+                                            <img class="rounded-circle z-depth-0" src="{{ $usuario->imagen }}" width="35" height="35">
                                         </a>
                                         <h5 class="ml-2 mb-0 align-self-center">{{ session::get('usuario')->usuario }}</h5>
-                                       &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-heart text-default fa-2x"></i></a>
+                                       &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
                                       </diV>
-                                  <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
+                                  <a class="waves-effect waves-light dropdown-toggle text-default mr-4" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                    {{--<i class="fas fa-ellipsis-h text-default fa-2x"></i>  --}}
+                                  </a>
+                                  <div class="dropdown-menu">
+                                    <button class="dropdown-item" onclick="deletepost();">Eliminar</button>
+                                    
+
+                                    {{-- <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a> --}}
+                                  </div>
+
                                   </div>
                                 <div class="d-flex flex-row align-items-center" id="comment" >
                                   <div class="md-form border-top border-default comment-header">
@@ -216,12 +228,17 @@
       </div>
       </form>
 
+    
+
+
       {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
       @endsection
       @section('javascript')
+          
           <script src="js/Look!/perfil.js"></script>
           <script src="js/Look!/publicaciones.js"></script>
           <script src="js/Look!/nuevapublicacion.js"></script>
-          {{-- <script src="js/Look!/comentarios.js"></script> --}}
           <script src="js/Look!/megusta.js"></script>
+          <script>
+          </script>
       @endsection

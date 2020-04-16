@@ -47,7 +47,20 @@ class PublicacionesController extends Controller
         $id_post = $r->get('id_post');
         dd($id_post);
     }
-    public function likes(){
+    public function likes(Request $r){
+        $post_id = $r['postid'];
+        $is_like = $r['isLike'] === true;
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = session::get('usuario');
+        $uid = $user->id;
         
+    }
+    public function deletepost($id){
+        $proveedores = Publicaciones::destroy($id);
+        return redirect("/profile");
     }
 }

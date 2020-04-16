@@ -59,6 +59,47 @@ $('#arrow').click( function () {
         $('.formUpdate2').hide()
         $('.formUpdate1').show()
     }
-})
+});
 
+//DELETE POST
+function deletepost(){
+    var id = $("input[name='id_post']").val();
+    var csrf_token = $('meta[name="csrf_token"]').attr('content');
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((willdelete) => {
+        if (willdelete) {
+          $.ajax({
+            url : "deletepost/" + id,
+            method: "GET",
+            data: { '_token': csrf_token},
+            success: function(data){
+                Swal.fire({
+                    title: 'Eliminar publicacion',
+                    icon: 'success',
+                    button: 'Done'
+                });
+                location.href = '/profile';
+            },
+            error: function(){
+                swal({
+                    title: 'Oopss..',
+                    text: 'data.message',
+                    type: 'error',
+                    timer: '1500'
+                });
+            }
+          });
+        }else{
+            Swal.fire("hola");
+        }
+      });
+    }    
 
+ 

@@ -1,9 +1,12 @@
  var postId = 0
 $("#like").on('click', function(event){
-    //console.log(e);
     event.preventDefault();
-    postId =  event.target.parentNode.parentNode.dataset['postid'];
     var isLike = event.target.previousElementSibling == null;
+    var token = $('input[name=_token]').val();
+    //console.log(isLike);
+    var urlLike = '{{ route("like") }}';
+    postId =  event.target.parentNode.parentNode.dataset['postid'];
+
     $.ajax({
         method : 'POST',
         url: urlLike,

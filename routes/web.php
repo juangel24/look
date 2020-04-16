@@ -35,6 +35,10 @@ route::get('/userimage/{usuario}', [
     'as' => 'uptadephoto.image'
 ]);
 route::get('/posts/{id}','PublicacionesController@post');
+route::post('/like',
+['uses' => 'PublicacionesController@likes',
+'as' => 'like']);
+route::GET('/deletepost/{id}','PublicacionesController@deletepost');
 Route::post('/post/{id}','PublicacionesController@comments');
 Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
 Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
