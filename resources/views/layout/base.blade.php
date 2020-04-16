@@ -53,7 +53,7 @@
                             <a class="nav-link" href="#"><i class="fas fa-globe fa-lg"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-comment fa-lg"></i></a>
+                            <a class="nav-link" href="/chat"><i class="fas fa-comment fa-lg"></i></a>
                         </li>
                     </ul>
 
@@ -71,8 +71,8 @@
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item avatar">
                             <a class="nav-link p-0" href="/profile">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
-                                    class="rounded-circle z-depth-0" alt="avatar image" height="35">
+                                <img src="{{Session::get('usuario')->imagen}}"
+                                    class="rounded-circle z-depth-0" alt="avatar image" height="35" width="35" >
                             </a>
                         </li>
                     </ul>
