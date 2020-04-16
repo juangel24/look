@@ -30,18 +30,18 @@
             </div>
             <!-- Contactos con chat -->
             <div class="h-100 scrollable" id="contacts-container">
-            @for ($i = 0; $i < 3; $i++)
+            @foreach ($other_users as $user)
                 <div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable">
                     <div class="d-flex flex-row align-items-center">
-                        <img class="mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="https://pbs.twimg.com/media/BtrrJuDCMAAgG5s.jpg" height="35">
+                        <img class="mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="{{ $user->imagen }}" width="35" height="35">
                         <div class="d-flex flex-column">
-                            <p class="mb-0">MikeWasauski</p>
+                            <p class="mb-0">{{ $user->usuario }}</p>
                             <small>Te envió un mensaje</small>
                         </div>
                     </div>
                     <span class="badge badge-pill badge-default mr-2">2</span>
                 </div>
-            @endfor
+            @endforeach
             </div>
         </div>
 
