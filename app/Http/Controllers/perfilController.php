@@ -204,8 +204,14 @@ class perfilController extends Controller
                 ->with('usu', $usu);
         }
 
-        function viewOtherProfile(){
-            return view('perfil.otherProfile');
+        function viewOtherProfile($id){
+            $usuario = DB::table('usuarios')->where('usuario', $id)->first();
+            dd($usuario);
+            //$idu = $id->id;
+            $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
+            $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
+            $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
+            return view('perfil.perfil',compact('usuario','cantidad'))->with('post',$posts);
         }
 
 }
