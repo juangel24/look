@@ -16,6 +16,9 @@
             width: 100%;
             height: 72px;
         }
+        div.active {
+            background-color: #b2ebf2;
+        }
     </style>
 @endsection
 
@@ -31,7 +34,7 @@
             <!-- Contactos con chat -->
             <div class="h-100 scrollable" id="contacts-container">
             @foreach ($other_users as $user)
-                <div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable">
+                <div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable user" data-id="{{ $user->id }}">
                     <div class="d-flex flex-row align-items-center">
                         <img class="mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="{{ $user->imagen }}" width="35" height="35">
                         <div class="d-flex flex-column">
@@ -59,14 +62,14 @@
             </div>
             <!-- Mensajes del chat -->
             <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages">
-                <div class="badge badge-light font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap mr-auto" style="max-width: 400px;">
+                <!--<div class="badge badge-light font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap mr-auto" style="max-width: 400px;">
                     <p class="text-left" style="margin-bottom: 8px;">¡Cosa rosada con dedos de mantequilla, de todas formas ¿Qué tienes en esa caja?!</p>
                     <p class="text-right small mb-0">07:34 p.m.</p>
                 </div>
                 <div class="badge badge-default font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap ml-auto" style="max-width: 400px;">
                     <p class="text-left" style="margin-bottom: 8px;">Mis billeteras</p>
                     <p class="text-right small mb-0">07:34 p.m.</p>
-                </div>
+                </div>-->
             </div>
             <!-- Input -->
             <div class="d-flex flex-row align-items-center border-top border-default p-3 chat-header">
@@ -81,8 +84,9 @@
 
 @section('javascript')
     <script type="text/javascript">
-        input_msg = $('input[name="msg"]');
-        icon_send_msg = $('#icon-send-msg');
+        //input para enviar msj
+        var input_msg = $('input[name="msg"]');
+        var icon_send_msg = $('#icon-send-msg');
         icon_send_msg.hide();
 
         input_msg.keyup(function() {
@@ -104,5 +108,29 @@
             chat = $('#chat-messages');
             chat.scrollTop(chat.scrollHeight);
         }
+
+        //
+        var receiver_id = '';
+        var user_id = "{{ Session::get('usuario')->id }}";
+        var users = $('.user');
+
+        users.click(function() {
+            users.removeClass('active');
+            $(this).addClass('active');
+
+            receiver_id = $(this).attr('data-id');
+
+            $.ajax({
+                type: "get",
+                url: "message/" + receiver_id,
+                data: "",
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(error) {
+                    console.log(error.responseText);
+                }
+            });
+        });
     </script>
 @endsection

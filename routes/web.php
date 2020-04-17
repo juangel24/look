@@ -41,6 +41,6 @@ Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
 Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
 Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
 
-Route::get('chat', 'ChatController@view');
-
 Route::get('searchProfile','homeController@searchProfile');
+
+include 'web/chat.php';
