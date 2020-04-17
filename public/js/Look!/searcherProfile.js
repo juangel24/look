@@ -15,6 +15,7 @@ $('#searchProfile').on('keyup', function (e) {
             'search': $value
         },
         success: function (data) {
+            
             if ($value != "") {
                 $('#printProfileSearched').html("");
                 $.each(data, function (key, item) {
@@ -23,7 +24,7 @@ $('#searchProfile').on('keyup', function (e) {
                         " <div class='sProfile'> " +
                         " <ul class='listSearchProfile'> " +
                         " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " +
-                        " <li class='li-search-profile'><p> " + item.usuario + " </p></li> " +
+                        " <li class='li-search-profile'><a href='/profile/"+ item.usuario +"'><p> " + item.usuario + " </p></a></li> " +
                         " </ul> " +
                         " </div> " +
                         " </a> ";

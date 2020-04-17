@@ -61,18 +61,9 @@
                     </ul>
 
                     <!-- Search form -->
-<<<<<<< HEAD
-                    <form class="form-inline ml-auto"
-                        action="{{ url('searchProfile') }}" method="GET"
-                        onKeypress="if(event.keyCode == 13) event.returnValue = false;">
-                        <a href=""><input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
-                            name="searchProfile" aria-label="Search" id="searchProfile">
-                        <i class="fas fa-search" aria-hidden="true"></i></a>
-=======
                     <form class="form-inline ml-auto" action="{{ url('searchProfile') }}" method="GET" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
                         <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search" name="searchProfile" aria-label="Search" id="searchProfile">
                         <i class="fas fa-search" aria-hidden="true"></i>
->>>>>>> bab8eb5aa0975dd78d4d1108e7e1eb5e7cb49fb4
                     </form>
                 </div>
                 <!-- Collapsible content -->

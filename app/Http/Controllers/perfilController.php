@@ -204,4 +204,8 @@ class perfilController extends Controller
                 ->with('usu', $usu);
         }
 
+        function viewOtherProfile(){
+            return view('perfil.otherProfile');
+        }
+
 }
