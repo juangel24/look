@@ -68,9 +68,9 @@
                     <form class="form-inline ml-auto"
                         action="{{ url('searchProfile') }}" method="GET"
                         onKeypress="if(event.keyCode == 13) event.returnValue = false;">
-                        <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
+                        <a href=""><input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search"
                             name="searchProfile" aria-label="Search" id="searchProfile">
-                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <i class="fas fa-search" aria-hidden="true"></i></a>
                     </form>
                 </div>
                 <!-- Collapsible content -->
