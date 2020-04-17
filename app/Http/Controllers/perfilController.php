@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modelos\Usuario;
+use App\Modelos\Publicaciones;
 /*use Illuminate\Support\Facades\Storage;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;*/
@@ -21,13 +22,13 @@ class perfilController extends Controller
 
         $usuarios = session::get('usuario.id');
 
-        if($r->hasFile('imagen')){
-            $file = $r->file('imagen');
+        if($r->hasFile('profileimage')){
+            $file = $r->file('profileimage');
             $name = time().$file->getClientOriginalName();
             $file->move(public_path().'/img/profile_photos/',$name);
             $usuario = new Usuario();
             $usuario = Usuario::where('usuarios.id','=',$usuarios)->first();
-            $usuario->imagen = $r->input('imagen');
+            $usuario->imagen = $r->input('profileimage');
             $usuario->imagen = $name;
             $usuario->update();
             return redirect('/profile');
@@ -35,8 +36,11 @@ class perfilController extends Controller
     }
     public function profile(){
         $usuarios = session::get('usuario.id');
+        $id = session::get('usuario.id');
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-        return view('perfil.perfil',compact('usuario'));
+        $post = Publicaciones::select("publicaciones.imagen")->where("usuario_id","=",$id)->first();
+        //return $post;
+        return view('perfil.perfil',compact('usuario','post'));
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');

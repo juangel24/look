@@ -1,4 +1,4 @@
-function filepreview(input){
+function profilefile(input){
     if(input.files && input.files[0]){
         var reader = new FileReader();
         reader.onload = function(e){
@@ -11,8 +11,8 @@ function filepreview(input){
     var img2 = '<div id ="lala" style=""><figure><img  src="'+imagg+'" /><figcaption><i class="fas fa-times"></i></figcaption></figure></div>';
     $(img2).insertAfter('#btnsubirfoto');*/
 }
-$('#imagen').change(function(){
-    filepreview(this);
+$('#profileimage').change(function(){
+    profilefile(this);
 });
 
 

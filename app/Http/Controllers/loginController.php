@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Modelos\Usuario;
@@ -145,13 +145,24 @@ class loginController extends Controller
         $usuario->imagen = $img;
 
         $usuario->save();
-        
+         
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
         
 		return redirect('/home')
                     ->with('correcto', 'Su cuenta se creó correctamente')
                     ->with('user', $usu);
+    }
+
+    function likes(Request $request){
+
+        $id = $request->id;
+        $agregado = Products::all()->find($id);
+
+        $producto = new Producto($id,$agregado['nombre'],$agregado['descripcion'],$agregado['precio'],$agregado['img']);
+        $arreglo = Session::get('productos')->push($producto);
+        return $arreglo;
+
     }
 
     function prueba(){

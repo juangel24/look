@@ -23,11 +23,13 @@ Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
     // PRUEBON
 Route::get('prueba', 'loginController@prueba');
-
+ 
 //PERFIL
 Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
 route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
+route::get('/publicaciones','PublicacionesController@posts')->name('publicaciones');
+Route::resource('/posts', 'PblicacionesController');
 route::get('/userimage/{usuario}', [
     'uses' => 'perfilController@uploadphoto',
     'as' => 'uptadephoto.image'
@@ -36,3 +38,8 @@ route::get('/userimage/{usuario}', [
 Route::get('chat', function() { return view('chat'); });
 
 Route::get('searchProfile','homeController@searchProfile');
+
+
+
+
+Route::post('/likes','loginController@likes');
