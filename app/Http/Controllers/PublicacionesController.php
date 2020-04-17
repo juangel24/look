@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
+use App\Modelos\Megusta;   
 class PublicacionesController extends Controller
 {
     public function posts(Request $r){
@@ -34,8 +35,32 @@ class PublicacionesController extends Controller
                 Session::flash('mensajerror', 'Hubo un error al subir una foto');
                 return  redirect('/profile');;
             }
-
+    }
+    public function post(Request $r, $id){
+        //$id_post = Publicaciones::find($r->input('id_post'));
+        $id = session::get('usuario');
+        $idu = $id->id;
+        $posts = Publicaciones::select("imagen","id")->where("usuario_id","=",$idu)->get();
+        return view("perfil.showpost",compact("posts"));
+    }
+    public function post1(Request $r){
+        $id_post = $r->get('id_post');
+        dd($id_post);
+    }
+    public function likes(Request $r){
+        $post_id = $r['postid'];
+        $is_like = $r['isLike'] === true;
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = session::get('usuario');
+        $uid = $user->id;
         
-       
+    }
+    public function deletepost($id){
+        $proveedores = Publicaciones::destroy($id);
+        return redirect("/profile");
     }
 }

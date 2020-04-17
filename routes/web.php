@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,7 +20,7 @@ Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
     // PRUEBON
 Route::get('prueba', 'loginController@prueba');
-
+ 
 //PERFIL
 Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
@@ -34,10 +31,19 @@ route::get('/userimage/{usuario}', [
     'uses' => 'perfilController@uploadphoto',
     'as' => 'uptadephoto.image'
 ]);
+route::get('/posts/{id}','PublicacionesController@post');
+route::post('/like',
+['uses' => 'PublicacionesController@likes',
+'as' => 'like']);
+route::GET('/deletepost/{id}','PublicacionesController@deletepost');
+Route::post('/post/{id}','PublicacionesController@comments');
 Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
 Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
 Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
 
-Route::get('chat', function() { return view('chat'); });
-
 Route::get('searchProfile','homeController@searchProfile');
+
+
+
+
+Route::post('/likes','loginController@likes');

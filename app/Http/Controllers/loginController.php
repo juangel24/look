@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Modelos\Usuario;
@@ -36,7 +36,7 @@ class loginController extends Controller
                 ->orWhere('usuario', $correo)->first();
 
         if(!$vato){
-            
+
             return redirect('/')
                     ->with('noUser', 'hey')
                     ->withInput();
@@ -47,30 +47,28 @@ class loginController extends Controller
                     ->with('wrongPass', 'hey')
                     ->withInput();
         }
-        
+
         if($vato){
             $confirmarpass = $vato->contrasenia;
             $confirmar = $vato->correo;
-            
+
             if($vato){
-                
+
                 $confirmarpass = $vato->contrasenia;
                 $confirmMail = $vato->correo;
                 $confirmUser = $vato->usuario;
-                
+
                 if (Hash::check($pass, $confirmarpass) && $confirmMail == $correo || $confirmUser == $correo) {
                     $user = Session::put('usuario', $vato);
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
                     // dd($user);
-                    
-                    return redirect('/home')
-                        ->with('conected', 'Su cuenta se inició correctamente')
-                        ->with('user', $user);
+
+                    return redirect('/chat');
                 }
             }
         }
-        
+
         // if ($correo == null or $pass == null) {
         //    return redirect('/')
         //         ->with('hacker', 'Hacker Detectado!...');
@@ -118,7 +116,7 @@ class loginController extends Controller
         $img = 'img/profile_photos/user.png';
         $correo = $request->correoR;
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        
+
         if($vato){
             return redirect('/register')
                     ->with('repeatUser', 'hey')
@@ -129,12 +127,12 @@ class loginController extends Controller
             return redirect('/badregister')
                     ->with('incorrecto', 'Las contraseñas deben ser iguales');
         }
-        
+
         $con = $request->get('passwordR');
         // $password = Hash::make($con);
         $password = password_hash($con,PASSWORD_DEFAULT);
         $token = Str::random(60);
-        
+
         $usuario = new Usuario();
         $usuario->correo = $request->correoR;
         $usuario->usuario = $request->user;
@@ -148,13 +146,24 @@ class loginController extends Controller
         $usuario->imagen = $img;
 
         $usuario->save();
-        
+         
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
-        
+
 		return redirect('/home')
                     ->with('correcto', 'Su cuenta se creó correctamente')
                     ->with('user', $usu);
+    }
+
+    function likes(Request $request){
+
+        $id = $request->id;
+        $agregado = Products::all()->find($id);
+
+        $producto = new Producto($id,$agregado['nombre'],$agregado['descripcion'],$agregado['precio'],$agregado['img']);
+        $arreglo = Session::get('productos')->push($producto);
+        return $arreglo;
+
     }
 
     function prueba(){

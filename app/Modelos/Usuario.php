@@ -15,4 +15,19 @@ class Usuario extends Model
         {
             return $this->hasMany(App\Modelos\Publicaciones::class, 'usuario_id', 'id');
         }
+    public function seguidores(){
+        return $this->hasMany(App\Modelos\Seguidores::class);
+    }
+    public function seguidos(){
+        return $this->hasMany(App\Modelos\Seguidores::class);
+    }
+    
+    /*public function followers()
+    {
+        return $this->belongsToMany(Usuario::class, 'seguidores', 'usuario_id', 'seguidor_id');
+    }
+    public function followings()
+    {
+        return $this->belongsToMany(Usuario::class, 'seguidores', 'seguidor_id', 'usuario_id');
+    }*/
 }
