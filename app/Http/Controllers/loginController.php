@@ -19,11 +19,12 @@ class loginController extends Controller
 
         // Validaciones
         $this->validate($request, [
-            'correo' => 'required|max:100',
+            'correo' => 'required|max:30',
             'password' => 'required|min:4|max:12',],
 
             // Texto de las validaciones
-            ['correo.required' => 'Ingrese un correo',
+            ['correo.required' => 'Ingrese un usuario',
+            'correo.max' => 'El usuario debe tener máximo 30 caracteres',
             'password.required' => 'Ingrese una contraseña',
             'password.min' => 'La contraseña debe tener mínimo 4 caracteres',
             'password.max' => 'La contraseña debe tener máximo 12 caracteres']);
@@ -31,10 +32,11 @@ class loginController extends Controller
         $correo = $request->get('correo');
         $pass = $request->password;
         // dd($pass);
-        $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        // dd($vato);
+        $vato = DB::table('usuarios')->where('correo', $correo)
+                ->orWhere('usuario', $correo)->first();
 
         if(!$vato){
+
             return redirect('/')
                     ->with('noUser', 'hey')
                     ->withInput();
@@ -47,23 +49,22 @@ class loginController extends Controller
         }
 
         if($vato){
-            
             $confirmarpass = $vato->contrasenia;
             $confirmar = $vato->correo;
-            
+
             if($vato){
+
                 $confirmarpass = $vato->contrasenia;
-                $confirmar = $vato->correo;
-    
-                if (Hash::check($pass, $confirmarpass) && $confirmar == $correo) {
+                $confirmMail = $vato->correo;
+                $confirmUser = $vato->usuario;
+
+                if (Hash::check($pass, $confirmarpass) && $confirmMail == $correo || $confirmUser == $correo) {
                     $user = Session::put('usuario', $vato);
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
                     // dd($user);
-                    
-                    return redirect('/home')
-                        ->with('conected', 'Su cuenta se inició correctamente')
-                        ->with('user', $user);
+
+                    return redirect('/chat');
                 }
             }
         }
@@ -112,10 +113,10 @@ class loginController extends Controller
             'date.required' => 'Ingrese su fecha de nacimiento',
             'gender.required' => 'Ingrese su sexo']);
 
-        $img = 'img/user.png';
+        $img = 'img/profile_photos/user.png';
         $correo = $request->correoR;
         $vato = DB::table('usuarios')->where('correo', $correo)->first();
-        
+
         if($vato){
             return redirect('/register')
                     ->with('repeatUser', 'hey')
@@ -126,12 +127,12 @@ class loginController extends Controller
             return redirect('/badregister')
                     ->with('incorrecto', 'Las contraseñas deben ser iguales');
         }
-        
+
         $con = $request->get('passwordR');
         // $password = Hash::make($con);
         $password = password_hash($con,PASSWORD_DEFAULT);
         $token = Str::random(60);
-        
+
         $usuario = new Usuario();
         $usuario->correo = $request->correoR;
         $usuario->usuario = $request->user;
@@ -148,7 +149,7 @@ class loginController extends Controller
          
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
-        
+
 		return redirect('/home')
                     ->with('correcto', 'Su cuenta se creó correctamente')
                     ->with('user', $usu);

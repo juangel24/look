@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,15 +24,22 @@ Route::get('prueba', 'loginController@prueba');
 //PERFIL
 Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
-route::post('/uptadephoto','perfilController@uploadphoto')->name("/cambiarphoto");
+route::post('/updatephoto','perfilController@uploadphoto')->name("/cambiarphoto");
 route::get('/publicaciones','PublicacionesController@posts')->name('publicaciones');
-Route::resource('/posts', 'PblicacionesController');
+route::POST('/posts','PublicacionesController@posts')->name('posts');
 route::get('/userimage/{usuario}', [
     'uses' => 'perfilController@uploadphoto',
     'as' => 'uptadephoto.image'
 ]);
-
-Route::get('chat', function() { return view('chat'); });
+route::get('/posts/{id}','PublicacionesController@post');
+route::post('/like',
+['uses' => 'PublicacionesController@likes',
+'as' => 'like']);
+route::GET('/deletepost/{id}','PublicacionesController@deletepost');
+Route::post('/post/{id}','PublicacionesController@comments');
+Route::get('/updateProfile', 'perfilController@viewUpdateProfile');
+Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
+Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
 
 Route::get('searchProfile','homeController@searchProfile');
 

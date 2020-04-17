@@ -1,50 +1,97 @@
-.wave-register{
+.wave-register {
     background-color: green;
 }
-.wave-r{
-    height: 800px;
-    width: 85%;
+
+.wave-r {
+    min-width: 85%;
+    max-width: 95%;
+    max-height: 1000px;
     position: fixed;
-    top: 0;
+    top: -5;
     right: 0;
+    animation-name: dostuff;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-in-out;
+    animation-direction: alternate
 }
-path{
+
+.wave-r::after {
+    animation-direction: reverse;
+}
+
+path {
     width: 80%;
-    background: #00B4DB;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #00B4DB;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgb(193, 209, 214), #00B4DB);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083B0, rgb(27, 86, 99));
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-.container-register{
+
+.logo-r {
+    position: absolute;
+    z-index: 1;
+    /* position: fixed; */
+    /* float: right; */
+    right: 0;
+    margin-top: 280px;
+    margin-right: 150px;
+}
+
+.title-r {
+    position: absolute;
+    right: 0;
+    color: #fff;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 50px;
+    margin-right: 100px;
+    margin-top: 110px;
+    text-align: center;
+}
+
+.container-register {
     /* width: auto; */
     height: auto;
-    width: 50vh;
+    width: 350px;
     margin-top: 90px;
-    margin-left: 15%;
+    margin-left: 10%;
     /* margin-top:  */
 }
-.btn-register{
+
+.btn-register {
     border-radius: 55px;
     z-index: 1;
 }
-.wave-r-m{
-    width: 200% !important;
+
+.wave-r-m {
+    max-width: 200%;
     position: fixed;
     top: 0;
     display: none;
+    animation-name: sparki;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-in-out;
+    animation-direction: alternate
 }
-input[name="date"]{
+
+input[name="date"] {
     background: transparent;
     border: none;
     border-bottom: 1px solid #b8b8b8;
 }
-select[name="gender"]{
+
+select[name="gender"] {
     background: transparent;
     border: none;
     border-bottom: 1px solid #b8b8b8;
     margin-top: -11px !important;
     width: auto !important;
 }
+
 .field-error {
     /* margin-bottom: 12px; */
     border-bottom: 1px solid #AF0C0C;
@@ -58,28 +105,91 @@ select[name="gender"]{
 
 /* RESPONSIVE (MOVIL) */
 @media screen and (max-width: 1238px) {
-    .wave-r{
-        width: 70%;
+    .wave-r {
+        width: 60%;
+    }
+
+    .title-r {
+        font-size: 40px;
+    }
+
+    .logo-r {
+        height: 80px;
+    }
+
+    @media screen and (max-width: 960px) {
+        .wave-r {
+            width: 20%;
+        }
+
+        .container-register {
+            width: 320px;
+            margin-left: 5%;
+        }
+
+        .title-r {
+            font-size: 40px;
+            margin-right: 2%;
+        }
+
+        .logo-r {
+            height: 80px;
+            margin-right: 8%;
+        }
+    }
+
+    @media screen and (max-width: 730px) {
+        .wave-r {
+            display: none;
+        }
+
+        .container-register {
+            width: auto;
+            margin: auto;
+            display: block;
+            margin-top: 85px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .wave-r-m {
+            display: block;
+        }
     }
 }
-@media screen and (max-width: 960px) {
-    .wave-r{
-        width: 55%;
+
+
+/* ANIMATIONS */
+@-webkit-keyframes dostuff {
+    0% {
+        height: 800px;
+        width: 75%;
+    }
+
+    50% {
+        height: 900px;
+        width: 75.5%;
+    }
+
+    100% {
+        height: 1000px;
+        width: 76%;
     }
 }
-@media screen and (max-width: 730px) {
-    .wave-r{
-        display: none;
+
+@-webkit-keyframes sparki {
+    0% {
+        width: 120%;
+        height: 100px;
     }
-    .container-register{
-        width: auto;
-        margin: auto;
-        display: block;
-        margin-top: 85px;
-        padding-left: 50px;
-        padding-right: 50px;
+
+    50% {
+        width: 150%;
+        height: 120px;
     }
-    .wave-r-m{
-        display: block;
+
+    100% {
+        width: 200%;
+        height: 125px;
     }
 }

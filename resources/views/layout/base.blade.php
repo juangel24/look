@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Look</title>
+    <title>@yield('title')</title>
 
     @yield('css')
 
@@ -53,7 +53,7 @@
                             <a class="nav-link" href="#"><i class="fas fa-globe fa-lg"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-comment fa-lg"></i></a>
+                            <a class="nav-link" href="/chat"><i class="fas fa-comment fa-lg"></i></a>
                         </li>
                     </ul>
 
@@ -71,8 +71,8 @@
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item avatar">
                             <a class="nav-link p-0" href="/profile">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
-                                    class="rounded-circle z-depth-0" alt="avatar image" height="35">
+                                <img src="{{Session::get('usuario')->imagen}}"
+                                    class="rounded-circle z-depth-0" alt="avatar image" height="35" width="35" >
                             </a>
                         </li>
                     </ul>
@@ -101,13 +101,16 @@
         integrity="sha256-OUFW7hFO0/r5aEGTQOz9F/aXQOt+TwqI1Z4fbVvww04=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/js/mdb.min.js"
         integrity="sha256-R/XsWrXe04gYQmFYf8lc7jMaga8aLyzmGxWpaqbC+K8=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script type="text/javascript">
         $("body").tooltip({
 			selector: '[data-toggle=tooltip]'
 		});
     </script>
-
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="{{ asset('js/Look!/searcherProfile.js') }}"></script>
     @yield('javascript')
 </body>
