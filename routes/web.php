@@ -20,7 +20,7 @@ Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
     // PRUEBON
 Route::get('prueba', 'loginController@prueba');
- 
+
 //PERFIL
 Route::get('/profile','perfilController@profile');
 /*Route::get('profile', 'perfilController@perfil');*/
@@ -43,7 +43,7 @@ Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
 Route::get('/profile/{userprofile}', 'perfilController@viewOtherProfile');
 Route::get('searchProfile','homeController@searchProfile');
 
-
-
-
 Route::post('/likes','loginController@likes');
+
+// Rutas relacionadas al chat
+include 'web/chat.php';
