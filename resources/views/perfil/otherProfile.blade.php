@@ -21,21 +21,17 @@
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-                    {{--<div>
-                          <button class="btn btn-primary" id="idseguidor">Seguir</button>
-                        </div>--}}
+                      <button class="btn btn-primary" id="idseguidor" value="{{ $usuario->id }}">Seguir</button>  
                   </div>
-
                 </div>
-              
             </div>
             
             <div class="col-md-6 col-sm-4 descripcion">
               <div class="container descripciones" id="descripciones">
                   <div class="row">
                     <div class="col-md-4"><h5><b class="font-weight-bold">{{ $cantidad }}</b>&nbsp;&nbsp;Publicaciones</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold">0</b>&nbsp;&nbsp;Seguidores</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold">0</b>&nbsp;&nbsp;Seguidos</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowers">0</b>&nbsp;&nbsp;Seguidores</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowing">0</b>&nbsp;&nbsp;Seguidos</h5></div>
                   </div>
                 </div>
               </div>
@@ -143,4 +139,29 @@
       {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
       @endsection
       @section('javascript')
+        <script>
+          $("#idseguidor").click(function(e){
+            e.preventDefault();
+            //var token = $('input[name=_token]').val();
+            id = $("#idseguidor").val();
+            console.log(id);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+              url: "{{ url('seguidores') }}",
+              method: "GET",
+              data : { "id": id},
+              success: function(data){
+                $("#otherfollowers").append();
+                html = ``;
+              }
+            }).fail( function( jqXHR, textStatus, errorThrown ) {
+                console.log(jqXHR, textStatus, errorThrown  );
+            });
+        });
+        </script>
       @endsection

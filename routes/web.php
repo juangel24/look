@@ -40,6 +40,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
     Route::get('/profile/{userprofile}', 'perfilController@viewOtherProfile');
     Route::get('searchProfile','homeController@searchProfile');
+    route::GET('seguidores',"PublicacionesController@seguidor");
 
     // Eddu
     Route::post('/likes','loginController@likes');

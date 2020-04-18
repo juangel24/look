@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
+use App\Modelos\Seguidores; 
 use App\Modelos\Megusta;   
 use DB;
 class PublicacionesController extends Controller
@@ -65,10 +66,11 @@ class PublicacionesController extends Controller
         return redirect("/profile");
     }
     public function seguidor(Request $r){
+        $id_seguidor = $r->id;
         $usuario = session::get('usuario');
         $id = $usuario->id;
-        DB::unprepared('CREATE TRIGGER followers after insert on seguidores 
-         for each row
-        insert into seguidores (usuario_id,seguidor_id) VALUES ('.$id.')');
+        DB::select("call followers ('$id','$id_seguidor')");   
+        ///Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
+        return Seguidores::select("seguidor_id")->where("usuario_id","=",$usuario->id)->count();
     }
 }
