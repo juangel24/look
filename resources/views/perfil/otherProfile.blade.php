@@ -52,7 +52,7 @@
               <input type="hidden" value="{{ $item->id }}" name="id_post" id="id_post">
                   <div class="view overlay" data-postid="{{ $item->id }}">
                     <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
-                      <img src="{{ $item->imagen }}" class="card-img-top" style="height:270px;" id="imgpost">
+                      <img src="../{{ $item->imagen }}" class="card-img-top" style="height:270px;" id="imgpost">
                       <div class="mask flex-center rgba-black-light">
                        <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
                       </div>
@@ -69,13 +69,13 @@
                             <div class="container">
                               <div class="row">
                                 <div class="col-md-5">
-                                  <img src="{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
+                                  <img src="../{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
                                 </div>
                                 <div class="col-md-7 scrollable border border-default" id="div-comments-posts" data-postid="{{ $item->id }}">
                                   <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 comment-header">
                                     <div class="d-flex flex-row">
                                         <a class="p-0 waves-effect waves-light" href="/profile">
-                                            <img class="rounded-circle z-depth-0" src="{{ $usuario->imagen }}" width="35" height="35">
+                                            <img class="rounded-circle z-depth-0" src="../{{ $usuario->imagen }}" width="35" height="35">
                                         </a>
                                         <h5 class="ml-2 mb-0 align-self-center">{{ $usuario->usuario }}</h5>
                                        &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
