@@ -80,18 +80,6 @@
                                         <h5 class="ml-2 mb-0 align-self-center">{{ $usuario->usuario }}</h5>
                                        &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
                                       </diV>
-                                  <a class="waves-effect waves-light dropdown-toggle text-default mr-4" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                                    {{--<i class="fas fa-ellipsis-h text-default fa-2x"></i>  --}}
-                                  </a>
-                                  <div class="dropdown-menu">
-                                    <button class="dropdown-item" onclick="deletepost();">Eliminar</button>
-                                    
-
-                                    {{-- <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a> --}}
-                                  </div>
 
                                   </div>
                                 <div class="d-flex flex-row align-items-center" id="comment" >
