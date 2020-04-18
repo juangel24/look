@@ -164,6 +164,11 @@ class loginController extends Controller
 
     }
 
+    function logout(){
+        Session::forget('usuario');
+        return redirect('/');
+    }
+
     function prueba(){
         return view('welcome');
     }
