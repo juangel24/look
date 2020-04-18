@@ -7,6 +7,7 @@ use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
 use App\Modelos\Megusta;   
+use DB;
 class PublicacionesController extends Controller
 {
     public function posts(Request $r){
@@ -62,5 +63,12 @@ class PublicacionesController extends Controller
     public function deletepost($id){
         $proveedores = Publicaciones::destroy($id);
         return redirect("/profile");
+    }
+    public function seguidor(Request $r){
+        $usuario = session::get('usuario');
+        $id = $usuario->id;
+        DB::unprepared('CREATE TRIGGER followers after insert on seguidores 
+         for each row
+        insert into seguidores (usuario_id,seguidor_id) VALUES ('.$id.')');
     }
 }

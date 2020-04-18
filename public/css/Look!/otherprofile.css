@@ -1,0 +1,179 @@
+
+.butonperfil{
+    width: 110px;
+    height: 120px;
+    margin-top: 5px;
+    border-radius: 85px;
+}
+.descripciones{
+   
+    margin-top: 20px;
+    height: 75%;
+}
+
+#mediaperfilotro{
+    word-wrap: break-word;
+}
+#fotodeotroperfil{
+    border-radius: 60%;
+    width: 100px;
+    margin-top: 30px;
+    box-shadow: none;
+}
+
+ .iconsperfilotro{
+     align-items: center;
+     color: black;
+}
+#iconfoto{
+    color: #ffff;
+}
+.subirfoto{
+    text-align: center;
+}
+.eliminarfoto{
+    text-align: center;
+}
+
+#btnsubirfoto{
+    width: 50%;
+    margin-top: -5px;
+    margin-left: -15px;
+    border: none;
+    box-shadow: 1;
+    text-align: center;
+
+}
+.btnsubirfoto input[type=file] {
+    position: absolute;
+    display: block;
+    width: 100%;
+    margin-top: -30px;
+    height: 100px;
+    filter: alpha(opacity=0);
+    opacity: 0;    
+}
+#divmediaotro, #descripcionpost{
+    word-break: break-all;
+    word-wrap: break-word;
+}
+#btncerrar, #btnaceptar{
+    border-radius:25px;
+}
+#lala img{
+width:100%;height:250px;
+}
+#lolo img{
+    width:100%;height:250px;
+    }
+#lala i{
+    color: blue;
+    margin-top: -100px !important;
+    margin-left: -15px;
+
+}
+#div-image-post{
+    width: 100%;
+    position: fixed;
+}
+#imagepost{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#comment {
+    margin-top: 50%;
+    height:60px;
+}
+.container.post{
+    height: 40px;
+}
+#spanclose{
+    color:#ffffff;font-size: 250%;margin-right:30px;
+    border: none;
+}
+#comment_content{
+    margin-top: 15px;
+
+}
+.comment-header{
+    height: 60px;
+    width: 95%;
+   }
+#like{
+    float: inline-end;
+}
+#div-comments-post{
+    position: fixed;
+}
+
+
+
+/* PERFIL UPDATED */
+.cont-image-upd{
+    margin: auto;
+    display: block;
+    height: 170px;
+    width: 100px;
+    border-radius:100px;
+    /* margin-top: -100px; */
+}
+.fotodeperfil{
+    margin: auto;
+    display: block;
+    margin-top: 30px;
+}
+.btn-act-profile{
+    border-radius: 55px !important;
+    z-index: 1;
+    margin: auto !important;
+    margin-top: 50px !important;
+    display: block !important;
+}
+.btn-act-profile:hover{
+    background-color: rgb(15, 191, 197) !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(97,96,97,1);
+        -moz-box-shadow: 0px 3px 11px 0px rgba(97,96,97,1);
+            box-shadow: 0px 3px 11px 0px rgba(97,96,97,1) !important;
+}
+.btn-conf-info{
+    border-radius: 55px !important;
+    z-index: 1;
+    margin: auto !important;
+    margin-top: 50px !important;
+    display: block !important;
+}
+.btn-conf-info:hover{
+    background-color: rgb(15, 191, 197) !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0px 3px 11px 0px rgba(97,96,97,1);
+        -moz-box-shadow: 0px 3px 11px 0px rgba(97,96,97,1);
+            box-shadow: 0px 3px 11px 0px rgba(97,96,97,1) !important;
+}
+.formUpdate2{
+    margin-top: 120px;
+    display: none;
+}
+#arrow{
+    display: none;
+}
+select[name="gender"]{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+    margin-top: -11px !important;
+    width: 100% !important;
+}
+.no-user-updated{
+    text-align: center;
+}
+.field-error {
+    /* margin-bottom: 12px; */
+    border-bottom: 1px solid #AF0C0C;
+    box-shadow: 0 2px 4px -2px #7f0909;
+}
+.error {
+    color: rgb(153, 0, 0);
+}
+

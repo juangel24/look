@@ -206,12 +206,11 @@ class perfilController extends Controller
 
         function viewOtherProfile($id){
             $usuario = DB::table('usuarios')->where('usuario', $id)->first();
-            dd($usuario);
-            //$idu = $id->id;
-            $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
-            $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
-            $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
-            return view('perfil.perfil',compact('usuario','cantidad'))->with('post',$posts);
+            $otheruser = DB::table('usuarios')
+            ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
+            ->where("usuarios.id",$usuario->id)->first();
+            $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuario->id)->orderby('created_at','desc')->get();
+            $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
+            return view('perfil.otherProfile',compact('usuario','cantidad'))->with('post',$posts);
         }
-
 }

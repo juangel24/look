@@ -33,10 +33,11 @@
                     <div>
                         {{ session::Get('usuario')->descripcion }}
                     </div>
+                    {{--<div>
+                          <button class="btn btn-primary" id="idseguidor">Seguir</button>
+                        </div>--}}
                   </div>
-                  <div>
 
-                  </div>
                 </div>
               
             </div>
