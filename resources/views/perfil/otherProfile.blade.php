@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('perfil.navbar')
   @section('title', 'Look! |  Perfil ')
     @section('css')
       <link rel="stylesheet" href="../css/Look!/perfil.css">
