@@ -79,8 +79,7 @@
                             </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-default"
                         aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="/profile">Perfil</a>
                             <a class="dropdown-item" href="/logout">Salir</a>
                         </div>
                     </li>
