@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ChatController extends Controller {
-    private $msgCollection = null;
+    private $messages = null;
 
     function __construct() {
-        $this->msgCollection = new Message;
+        $this->messages = new Message;
     }
 
     function view() {
@@ -25,16 +25,29 @@ class ChatController extends Controller {
     function getMessages($user_id) {
         $session_id = Session::get('usuario')->id;
         /*$condition = [
-            'from' => $user_id,
-        ];*/
+            'from' => ['$in' => [$session_id, $user_id]],
+            'to' => ['$in' => [$session_id, $user_id]]
+        ];
 
-        $messages = $this->msgCollection->find(/*$condition*/)->toArray();
+        return $this->messages->find($condition)->toArray();*/
 
-        return $messages;
+        // Código temporal - Problema: No se pueden aplicar los filtros
+        $messages = $this->messages->find()->toArray();
+        $user_messages = [];
+
+        foreach ($messages as $msg) {
+            if (
+                ($msg->from == $session_id && $msg->to == $user_id) ||
+                ($msg->from == $user_id && $msg->to == $session_id)
+            )
+                array_push($user_messages, $msg);
+        }
+
+        return $user_messages;
     }
 
     function insert() {
-        $this->msgCollection->insertMany([
+        $this->messages->insertMany([
             [
                 'from' => 35,
                 'to' => 34,

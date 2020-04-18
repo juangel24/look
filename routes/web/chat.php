@@ -1,3 +1,3 @@
 <?php
 Route::get('chat', 'ChatController@view');
-Route::get('message/{id}', 'ChatController@getMessages');
+Route::get('messages/{id}', 'ChatController@getMessages');
