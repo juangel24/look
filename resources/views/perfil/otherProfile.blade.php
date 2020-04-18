@@ -129,6 +129,7 @@
                 </div>    
             </div>
             <div class="modal-footer">
+              <div id="obtenerUrlPerfil" value="{{$usuario->usuario}}"></div>
               <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Cancelar</button>
               <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Subir foto</button>
             </div>
@@ -152,16 +153,61 @@
             });
 
             $.ajax({
-              url: "{{ url('seguidores') }}",
-              method: "GET",
-              data : { "id": id},
-              success: function(data){
-                $("#otherfollowers").append();
-                html = ``;
-              }
-            }).fail( function( jqXHR, textStatus, errorThrown ) {
-                console.log(jqXHR, textStatus, errorThrown  );
-            });
-        });
+                url: "{{ url('seguidores') }}",
+                method: "GET",
+                data : { "id": id},
+                success: function(data){
+                  $("#otherfollowers").append();
+                  html = ``;
+                }
+              }).fail( function( jqXHR, textStatus, errorThrown ) {
+                  console.log(jqXHR, textStatus, errorThrown  );
+              });
+          });
+
+          //Buscador de Usuarios
+          $('#searchProfile').on('keyup', function (e) {
+              // e.preventDefault();
+              $value = $('#searchProfile').val();
+              $userProfile = $('#obtenerUrlPerfil').val()
+
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+              $.ajax({
+                  url: "{{ url('searchProfile/')}}",
+                  method: 'GET',
+                  data: {
+                      'search': $value
+                  },
+                  success: function (data) {
+                      
+                      if ($value != "") {
+                          $('#printProfileSearched').html("");
+                          $.each(data, function (key, item) {
+                            console.log(item.imagen)
+                              $html = " <a class='searchProfile' href='/profile'> " +
+                                  " <div class='sProfile'> " +
+                                  " <ul class='listSearchProfile'> " +
+                                  ' <li class="li-search-profile"><img class="img-search-profile" src="/'+ item.imagen +'" alt=""></li> ' +
+                                  " <li class='li-search-profile'><a href='/profile/"+ item.usuario +"'><p> " + item.usuario + " </p></a></li> " +
+                                  " </ul> " +
+                                  " </div> " +
+                                  " </a> ";
+
+                              $('.print-profileSearch').css("display", "block");
+                              $('#printProfileSearched').append($html);
+                          })
+                      } else {
+                          $('.print-profileSearch').css("display", "none");
+                      }
+                  },
+                  error: function () {
+                      alert("No se ha podido obtener la información");
+                  }
+              });
+          });
         </script>
       @endsection

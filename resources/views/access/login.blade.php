@@ -7,13 +7,13 @@
         <section class="wave-login">
             <div class="wave-l" style="overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M208.09,0.00 C152.69,66.92 262.02,75.78 200.80,149.60 L-0.00,149.60 L-0.00,0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
             <img class="logo" src="img/white_logo.png" alt="">
-            <h1 class="title">Meet extraordinary <br> people!</h1>
+            <h1 class="title">Conoce gente <br> extraordinaria!</h1>
         </section>
 
         <section class="login">
             <div class="container container-login">
                 <!-- Material form login -->
-                    <p class="h4 mb-4 text-center">Sign in</p>
+                    <p class="h4 mb-4 text-center">Inicio de sesión</p>
                     <!-- Form -->
                     <form class="text-center" style="color: #757575;" action="{{ url('/verificar-usario') }}" method="POST">
 
@@ -44,17 +44,6 @@
                         @enderror
                     </div>
                     <div class="d-flex justify-content-around">
-                        <!-- <div> -->
-                            <!-- Remember me -->
-                            <!-- <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-                                <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
-                            </div>
-                        </div>
-                        <div> -->
-                        <!-- Forgot password -->
-                        <!-- <a href="">Forgot password?</a>
-                        </div> -->
                     </div>
 
                     <!-- Sign in button -->
@@ -64,7 +53,7 @@
                         <a class="urlRegister" href="{{ url('/register') }}">Registrar</a>
                     </p>
                     <!-- Social login -->
-                    <p>o accede a través de:</p>
+                    <!-- <p>o accede a través de:</p>
                     <a type="button" class="btn-floating btn-fb btn-sm">
                         <i class="fab fa-facebook-f"></i>
                     </a>
@@ -76,7 +65,7 @@
                     </a>
                     <a type="button" class="btn-floating btn-git btn-sm">
                         <i class="fab fa-github"></i>
-                    </a>
+                    </a> -->
 
                     </form>
                     <!-- Form -->

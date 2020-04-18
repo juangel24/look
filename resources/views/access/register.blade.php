@@ -7,13 +7,13 @@
         <section class="wave-register">
             <div class="wave-r" style="height: 800px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M213.19,-0.00 C152.69,69.86 270.04,69.86 202.98,149.60 L500.00,149.60 L500.00,-0.00 Z" style="stroke: none; fill: #00B4DB;"></path></svg></div>
             <img class="logo-r" src="img/white_logo.png" alt="">
-            <h1 class="title-r">Meet extraordinary <br> people!</h1>
+            <h1 class="title-r">Conoce gente <br> extraordinaria!</h1>
         </section>
 
         <section class="register">
             <div class="container container-register">
                 <!-- Material form login -->
-                    <p class="h4 mb-4 text-center mt-0">Sign up</p>
+                    <p class="h4 mb-4 text-center mt-0">Registrate</p>
                     <!-- Form -->
                     <form class="text-center" style="color: #757575;" action="{{ url('/registerdata') }}" method="GET">
                     @if(Session::has('repeatUser'))
@@ -133,7 +133,7 @@
                         <!-- Sign in button -->
                         <button class="btn btn-register btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Registrar</button>
                         <!-- Social login -->
-                        <p>o registrate a través de:</p>
+                        <!-- <p>o registrate a través de:</p>
                         <a type="button" class="btn-floating btn-fb btn-sm">
                             <i class="fab fa-facebook-f"></i>
                         </a>
@@ -145,7 +145,7 @@
                         </a>
                         <a type="button" class="btn-floating btn-git btn-sm">
                             <i class="fab fa-github"></i>
-                        </a>
+                        </a> -->
 
                     </form>
                     <!-- Form -->

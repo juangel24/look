@@ -9,7 +9,7 @@ $('#searchProfile').on('keyup', function (e) {
         }
     });
     $.ajax({
-        url: 'searchProfile',
+        url: '/searchProfile',
         method: 'GET',
         data: {
             'search': $value
