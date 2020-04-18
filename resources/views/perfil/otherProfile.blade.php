@@ -157,7 +157,8 @@
                 method: "GET",
                 data : { "id": id},
                 success: function(data){
-                  $("#otherfollowers").append();
+                  console.log(data)
+                  $("#othersfollowers").html(data);
                   html = ``;
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {

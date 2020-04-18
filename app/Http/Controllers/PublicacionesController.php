@@ -69,8 +69,10 @@ class PublicacionesController extends Controller
         $id_seguidor = $r->id;
         $usuario = session::get('usuario');
         $id = $usuario->id;
-        DB::select("call followers ('$id','$id_seguidor')");   
-        ///Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
-        return Seguidores::select("seguidor_id")->where("usuario_id","=",$usuario->id)->count();
+        DB::select("call followers ('$id','$id_seguidor')");  
+        
+        // $validacion = DB::table('');
+        // if
+        return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
 }
