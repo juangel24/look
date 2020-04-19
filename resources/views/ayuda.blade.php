@@ -136,8 +136,6 @@
                 <div class="col-9 ">
 
                     @foreach($fo as $fo)
-
-
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
                         <div class="text-center ">
@@ -154,19 +152,21 @@
                                     <span class="input-group-btn">
                                         {{csrf_field()}}
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
-                                        <figcaption class="figure-caption"> <button class="btn btn-link"> A caption for the above image. </button></figcaption>
+                                        <figcaption class="figure-caption">
+                                            <button class="btn btn-link">
+                                                
+                                                    
+                                            aqui deberian de ir los likes pero memarca error
+                                            </button>
+                                        </figcaption>
                                         <button type="button" class="btn btn-default btn-like">like!</button>
                                         <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
-
-
 
                                     </span>
                                     <figcaption class="figure-caption">{{$fo->descripcion}}</figcaption>
 
-
                                 </div>
                             </div>
-
                             <!-- ################################################### -->
 
                         </div>
@@ -200,7 +200,7 @@
                 </div>
                 <div class="modal-footer">
                     <form>
-                    {{csrf_field()}}
+                        {{csrf_field()}}
                         <label for="message-text" class="col-form-label">Message:</label>
                         <textarea class="form-control" id="message-text" class="yeah"></textarea>
                         <button type="button" val="" class="btn btn-primary enviar">Send message</button>
@@ -235,16 +235,13 @@
                 url: "/likes",
                 data: {
                     id: id,
-                    _token: token
+                    _token: token,
+                    usu:1 //aqui lo cambiaremos por la variable id de la variable session
                 },
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
-                    console.log(Object.keys(response).length)
-                    var cantidad = $('.likes').val();
-                    var auxi = 1;
-                    var sum = parseFloat(cantidad) + parseFloat(auxi);
-                    $('.likes').val(sum);
+                    console.log(response)
 
                 }
             });
@@ -257,8 +254,8 @@
             var token = $('input[name=_token]').val();
             var id = $(".enviar").val();
             var te = $("#message-text").val();
-            var usu=1;
-            var e="";
+            var usu = 1;
+            var e = "";
             var contenido = $('.cemn');
             contenido.html('');
             console.log(te);
@@ -267,8 +264,8 @@
                 data: {
                     id: id,
                     _token: token,
-                    commen:te,
-                    usu:usu
+                    commen: te,
+                    usu: usu
                 },
                 type: "POST",
                 datatype: "json",
@@ -282,7 +279,7 @@
 
                 }
             });
-                te.val(e);
+            te.val(e);
         });
 
         $('.btn-comentario').click(function() {

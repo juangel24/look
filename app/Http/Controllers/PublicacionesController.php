@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
+use App\Modelos\Seguidores; 
 use App\Modelos\Megusta;   
+use DB;
 class PublicacionesController extends Controller
 {
     public function posts(Request $r){
@@ -62,5 +64,15 @@ class PublicacionesController extends Controller
     public function deletepost($id){
         $proveedores = Publicaciones::destroy($id);
         return redirect("/profile");
+    }
+    public function seguidor(Request $r){
+        $id_seguidor = $r->id;
+        $usuario = session::get('usuario');
+        $id = $usuario->id;
+        DB::select("call followers ('$id','$id_seguidor')");  
+        
+        // $validacion = DB::table('');
+        // if
+        return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
 }

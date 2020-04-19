@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Modelos\Usuario;
@@ -64,7 +64,7 @@ class loginController extends Controller
                     $user = Session::get('usuario');
                     // dd($user);
 
-                    return redirect('/chat');
+                    return redirect('chat');
                 }
             }
         }
@@ -146,16 +146,19 @@ class loginController extends Controller
         $usuario->imagen = $img;
 
         $usuario->save();
-         
+
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
 
-		return redirect('/home')
-                    ->with('correcto', 'Su cuenta se creó correctamente')
-                    ->with('user', $usu);
+		return redirect('chat');
     }
 
     
+
+    function logout(){
+        Session::forget('usuario');
+        return redirect('/');
+    }
 
     function prueba(){
         return view('welcome');

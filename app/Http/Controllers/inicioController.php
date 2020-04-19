@@ -15,6 +15,8 @@ use App\mmegusta;
 use App\TComentarios;
 use App\Tfotos;
 use App\Modelos\Seguidores;
+
+use Illuminate\Support\Collection;
 class inicioController extends Controller
 {
     //
@@ -22,18 +24,50 @@ class inicioController extends Controller
     function likes(Request $request){
 
         $id = $request->id;
-        $agregado = Products::all()->find($id);
+        $usu=$request->usu;
+        $like=1;
+        $likes= new mmegusta();
+        $likes->usuario_id=$usu;
+        $likes->publicacion_id=$id;
+        $likes->like=$like;
+        $likes->save();
+        $y=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
+        return $y;
 
-        $producto = new Producto($id,$agregado['nombre'],$agregado['descripcion'],$agregado['precio'],$agregado['img']);
-        $arreglo = Session::get('productos')->push($producto);
-        return $arreglo;
+
 
     }
 
     function pifi(){
-        
+        $megst1=mmegusta::with('megusta1')->get();
+        $todos = Collection::make($megst1);
+        $t = $todos->groupBy('publicacion_id')->toArray();
+         $rv=[];
+         foreach ($t as $k => $c)
+         {
+             $rv[]=[
+                 'id'=>$c[0]["publicacion_id"],'cantidad'=> count($c),'producto'=>$c[0]
+             ];
+         }
         $fo=Tfotos::with('usuario')->get();
-        return view('ayuda',compact('fo'));
+        //dd($fo, $rv);
+
+        $sv=[];
+        foreach ($fo as $k => $c)
+        {
+            
+
+            foreach ($rv as $k => $r)
+        {
+            if($r['id']==$c->id)
+            
+            $sv[]=[
+                'cantidad'=> $r['cantidad'],'id'=>$c->id
+            ];
+        }
+        }
+
+        return view('ayuda',compact('fo','rv', 'sv'));
     }
 
     function coment(Request $request){
@@ -65,11 +99,39 @@ class inicioController extends Controller
         $ty=TComentarios::with('usuario')->where('publicacion_id','=','103')->get();
         $seg=Seguidores::where('usuario_id','=','33')->get();
         $t=$seg->groupBy('seguidor_id')->toArray();
-        foreach ($seg as $k => $c)
+       /* foreach ($seg as $k => $c)
         {
             $s[]=['seguidores'=>$c['seguidor_id']];
+        }*/
+
+
+        //$productos = Session::get('productos');
+        $todos = Collection::make($megst1);
+       $t = $todos->groupBy('publicacion_id')->toArray();
+        $rv=[];
+        foreach ($t as $k => $c)
+        {
+            $rv[]=[
+                'id'=>$c[0]["publicacion_id"],'cantidad'=> count($c),'producto'=>$c[0]
+            ];
         }
         $fo=Tfotos::with('usuario')->get();
-        dd($fo);
+        $sv=[];
+        foreach ($fo as $k => $c)
+        {
+            
+
+            foreach ($rv as $k => $r)
+        {
+            if($r['id']==$c->id)
+            {
+            $sv[]=[
+                'cantidad'=> $r['cantidad'],'producto'=>$c->id
+            ];}
+            
+        }
+        }
+
+        dd($sv);
     }
 }

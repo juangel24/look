@@ -61,16 +61,7 @@
                 <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
             </div>
             <!-- Mensajes del chat -->
-            <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages">
-                <!--<div class="badge badge-light font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap mr-auto" style="max-width: 400px;">
-                    <p class="text-left" style="margin-bottom: 8px;">¡Cosa rosada con dedos de mantequilla, de todas formas ¿Qué tienes en esa caja?!</p>
-                    <p class="text-right small mb-0">07:34 p.m.</p>
-                </div>
-                <div class="badge badge-default font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap ml-auto" style="max-width: 400px;">
-                    <p class="text-left" style="margin-bottom: 8px;">Mis billeteras</p>
-                    <p class="text-right small mb-0">07:34 p.m.</p>
-                </div>-->
-            </div>
+            <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages"></div>
             <!-- Input -->
             <div class="d-flex flex-row align-items-center border-top border-default p-3 chat-header">
                 <div class="md-form w-100">
@@ -84,35 +75,19 @@
 
 @section('javascript')
     <script type="text/javascript">
-        //input para enviar msj
-        var input_msg = $('input[name="msg"]');
-        var icon_send_msg = $('#icon-send-msg');
-        icon_send_msg.hide();
-
-        input_msg.keyup(function() {
-            input = $(this);
-            parent = input.parent();
-            console.log(input.val());
-
-            if (input.val()) {
-                icon_send_msg.show();
-                parent.addClass('mr-3');
-            }
-            else {
-                icon_send_msg.hide();
-                parent.removeClass('mr-3');
-            }
-        });
-
-        window.onload = function () {
-            chat = $('#chat-messages');
-            chat.scrollTop(chat.scrollHeight);
-        }
-
-        //
         var receiver_id = '';
         var user_id = "{{ Session::get('usuario')->id }}";
         var users = $('.user');
+        var chat_zone = $('#chat-messages');
+        function scrollToDown() {
+            chat_zone.scrollTop(chat_zone.scrollHeight);
+        }
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         users.click(function() {
             users.removeClass('active');
@@ -120,17 +95,76 @@
 
             receiver_id = $(this).attr('data-id');
 
+            showMessages();
+        });
+
+        //input para enviar msj
+        var input_msg = $('input[name="msg"]');
+        var icon_send_msg = $('#icon-send-msg');
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        icon_send_msg.hide();
+
+        input_msg.keyup(function(e) {
+            var input = $(this);
+            var message = input.val();
+            var parent = input.parent();
+
+            if (message) {
+                icon_send_msg.show();
+                parent.addClass('mr-3');
+
+                if (e.keyCode == 13 && receiver_id != '') {
+                    sendMessage(message);
+                    input.val('');
+                }
+            }
+            else {
+                icon_send_msg.hide();
+                input.parent().removeClass('mr-3');
+            }
+        });
+
+        function showMessages() {
             $.ajax({
                 type: "get",
-                url: "message/" + receiver_id,
-                data: "",
-                success: function(data) {
-                    console.log(data);
+                url: "messages/" + receiver_id,
+                data: '',
+                success: function(messages) {
+                    var html = "";
+
+                    $.each(messages, function(i, msg) {
+                        html += '<div class="badge ' + ((msg.from == user_id) ? 'badge-default ml-auto' : 'badge-light mr-auto') +' font-weight-normal mx-3 mb-3 mt-0 p-2 text-wrap" style="max-width: 400px;">' +
+                                '<p class="text-left text-wrap" style="margin-bottom: 8px;">'+ msg.msg +'</p>' +
+                                '<p class="text-right small mb-0">'+ msg.datetime +'</p>' +
+                            '</div>';
+                    });
+
+                    chat_zone.html(html);
                 },
                 error: function(error) {
                     console.log(error.responseText);
+                },
+                complete: function() {
+                    scrollToDown();
                 }
             });
-        });
+        }
+
+        function sendMessage(message) {
+            $.ajax({
+                type: "post",
+                url: "message",
+                data: {receiver_id, message},
+                success: function(messages) {
+
+                },
+                error: function(error) {
+                    console.log(error.responseText);
+                },
+                complete: function() {
+
+                }
+            });
+        }
     </script>
 @endsection

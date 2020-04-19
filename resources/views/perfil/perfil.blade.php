@@ -33,10 +33,11 @@
                     <div>
                         {{ session::Get('usuario')->descripcion }}
                     </div>
+                    {{--<div>
+                          <button class="btn btn-primary" id="idseguidor">Seguir</button>
+                        </div>--}}
                   </div>
-                  <div>
 
-                  </div>
                 </div>
               
             </div>
@@ -45,8 +46,8 @@
               <div class="container descripciones" id="descripciones">
                   <div class="row">
                     <div class="col-md-4"><h5><b class="font-weight-bold">{{ $cantidad }}</b>&nbsp;&nbsp;Publicaciones</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold">0</b>&nbsp;&nbsp;Seguidores</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold">0</b>&nbsp;&nbsp;Seguidos</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="followers">0</b>&nbsp;&nbsp;Seguidores</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="following">0</b>&nbsp;&nbsp;Seguidos</h5></div>
                   </div>
                 </div>
               </div>
