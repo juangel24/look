@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Pusher\Pusher;
 
 class ChatController extends Controller {
     private $messages = null;
@@ -15,7 +16,7 @@ class ChatController extends Controller {
         $this->messages = new Message;
     }
 
-    function view() {
+    function index() {
         $other_users = DB::select('select id, usuario, nombres, apellidos, imagen '.
         'from usuarios where id != ?', [Session::get('usuario')->id]);
 
@@ -49,12 +50,33 @@ class ChatController extends Controller {
     }
 
     function sendMessage(Request $request) {
-        $this->messages->insertOne([
-            'from' => Session::get('usuario')->id,
-            'to' => $request->receiver_id,
-            'msg' => encrypt($request->message),
+        $from = Session::get('usuario')->id;
+        $to = $request->receiver_id;
+        $message_text = encrypt($request->message);
+        $message = [
+            'from' => $from,
+            'to' => $to,
+            'msg' => $message_text,
             'is_read' => false,
             'datetime' => Carbon::now()->format('d-m-Y h:i A')
-        ]);
+        ];
+
+        $this->messages->insertOne($message);
+
+         // pusher
+        $options = [
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = ['from' => $from, 'to' => $to];
+        $pusher->trigger('my-channel', 'my-event', $data);
     }
 }
