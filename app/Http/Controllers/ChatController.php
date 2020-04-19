@@ -39,36 +39,22 @@ class ChatController extends Controller {
             if (
                 ($msg->from == $session_id && $msg->to == $user_id) ||
                 ($msg->from == $user_id && $msg->to == $session_id)
-            )
+            ) {
+                $msg->msg = decrypt($msg->msg);
                 array_push($user_messages, $msg);
+            }
         }
 
         return $user_messages;
     }
 
-    function insert() {
-        $this->messages->insertMany([
-            [
-                'from' => 35,
-                'to' => 34,
-                'msg' => 'Me das asco',
-                'is_read' => false,
-                'datetime' => Carbon::now()->format('d-m-Y h:i:s')
-            ],
-            [
-                'from' => 34,
-                'to' => 35,
-                'msg' => 't doi azco por q soi gay?',
-                'is_read' => false,
-                'datetime' => Carbon::now()->addMinutes(5)->format('d-m-Y h:i:s')
-            ],
-            [
-                'from' => 35,
-                'to' => 34,
-                'msg' => 'Mejor ya acabemos esta wea :(',
-                'is_read' => false,
-                'datetime' => Carbon::now()->addMinutes(5)->format('d-m-Y h:i:s')
-            ],
+    function sendMessage(Request $request) {
+        $this->messages->insertOne([
+            'from' => Session::get('usuario')->id,
+            'to' => $request->receiver_id,
+            'msg' => encrypt($request->message),
+            'is_read' => false,
+            'datetime' => Carbon::now()->format('d-m-Y h:i A')
         ]);
     }
 }
