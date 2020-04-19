@@ -153,10 +153,10 @@
                                         {{csrf_field()}}
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
                                         <figcaption class="figure-caption">
-                                            <button class="btn btn-link">
+                                            <button class="btn btn-link likes">
                                                 
-                                                    
-                                            aqui deberian de ir los likes pero memarca error
+                                            {{$fo->likes}} likes
+                                            
                                             </button>
                                         </figcaption>
                                         <button type="button" class="btn btn-default btn-like">like!</button>
@@ -230,7 +230,9 @@
 
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
-
+            var contenido = $('.likes');
+            contenido.html('');
+            var s=0;
             $.ajax({
                 url: "/likes",
                 data: {
@@ -242,6 +244,8 @@
                 datatype: "json",
                 success: function(response) {
                     console.log(response)
+                    s=response.length
+                    contenido.append(s+" likes");
 
                 }
             });

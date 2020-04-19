@@ -55,19 +55,41 @@ class inicioController extends Controller
         $sv=[];
         foreach ($fo as $k => $c)
         {
-            
-
             foreach ($rv as $k => $r)
         {
             if($r['id']==$c->id)
-            
+            {
             $sv[]=[
-                'cantidad'=> $r['cantidad'],'id'=>$c->id
-            ];
+                'cantidad'=> $r['cantidad'],'producto'=>$c->id
+            ];}
         }
         }
+        $gg=[];
 
-        return view('ayuda',compact('fo','rv', 'sv'));
+        foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($sv as $f => $r)
+        {
+            
+            if($r["producto"]==$c->id)
+            {
+               
+            $gg[]=[
+                'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
+            ];$au=true;
+            $fo[$k]->likes=  $r['cantidad'];}
+               
+        }
+        if($au==false){
+        $gg[]=[
+            'foto'=>$fo[$k],'cantidad'=> 0
+        ];
+        $fo[$k]->likes= 0;}
+        }
+        $sde= Collection::make($gg);
+        
+        return view('ayuda',compact('fo','rv', 'sv','sde'));
     }
 
     function coment(Request $request){
@@ -91,14 +113,14 @@ class inicioController extends Controller
 
     function megusta(){
          $s=[];
-        $megst=mmegusta::with('megusta')->get();
+        //$megst=mmegusta::with('megusta')->get();
         $megst1=mmegusta::with('megusta1')->get();
         //likes
-        $y=mmegusta::with('megusta')->where('publicacion_id','=','103')->get();
+        //$y=mmegusta::with('megusta')->where('publicacion_id','=','103')->get();
         //comentrios
-        $ty=TComentarios::with('usuario')->where('publicacion_id','=','103')->get();
-        $seg=Seguidores::where('usuario_id','=','33')->get();
-        $t=$seg->groupBy('seguidor_id')->toArray();
+       // $ty=TComentarios::with('usuario')->where('publicacion_id','=','103')->get();
+        //$seg=Seguidores::where('usuario_id','=','33')->get();
+       // $t=$seg->groupBy('seguidor_id')->toArray();
        /* foreach ($seg as $k => $c)
         {
             $s[]=['seguidores'=>$c['seguidor_id']];
@@ -119,8 +141,6 @@ class inicioController extends Controller
         $sv=[];
         foreach ($fo as $k => $c)
         {
-            
-
             foreach ($rv as $k => $r)
         {
             if($r['id']==$c->id)
@@ -131,7 +151,33 @@ class inicioController extends Controller
             
         }
         }
+        $gg=[];
 
-        dd($sv);
+        foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($sv as $f => $r)
+        {
+            
+            if($r["producto"]==$c->id)
+            {
+               
+            $gg[]=[
+                'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
+            ];$au=true;}
+               
+        }
+        if($au==false)
+        $gg[]=[
+            'foto'=>$fo[$k],'cantidad'=> 0
+        ];
+        }
+        dd($gg);
+
+        //el 33 esta harcoreado, igual se cambiara con la variabla de secion
+        $ssss=Seguidores::where('usuario_id','=','33')->get();
+        
+
+        dd($gg);
     }
 }
