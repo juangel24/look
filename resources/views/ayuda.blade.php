@@ -65,18 +65,6 @@
                         <input class="form-control form-control-sm mr-2 w-75" type="search" placeholder="Search" name="searchProfile" aria-label="Search" id="searchProfile">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </form>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-                        aria-labelledby="navbarDropdownMenuLink-333">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
                 </div>
                 <!-- Collapsible content -->
             </div>
@@ -146,74 +134,84 @@
         <div class="container ">
             <div class="row">
                 <div class="col-9 ">
-                    <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
-                    <div class="text-center ">
-                        <div class="publicacion border border-top-0 ">
-                            <div class=" foto">
-                                <figure class="figure">
-                                    <img src="https://a.wattpad.com/cover/164613855-288-k229076.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
 
-                                </figure>
+                    @foreach($fo as $fo)
+                    <div class="col-12 ">
+                        <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
+                        <div class="text-center ">
+
+                            <!-- ################################################### -->
+                            <div class="publicacion border border-top-0 ">
+                                <div class=" foto">
+                                    <figure class="figure">
+                                        <img src="{{$fo->imagen}}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                                    </figure>
+                                </div>
+                                <div class="inreta ">
+
+                                    <span class="input-group-btn">
+                                        {{csrf_field()}}
+                                        <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
+                                        <figcaption class="figure-caption">
+                                            <button class="btn btn-link">
+                                                
+                                                    
+                                            aqui deberian de ir los likes pero memarca error
+                                            </button>
+                                        </figcaption>
+                                        <button type="button" class="btn btn-default btn-like">like!</button>
+                                        <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
+
+                                    </span>
+                                    <figcaption class="figure-caption">{{$fo->descripcion}}</figcaption>
+
+                                </div>
                             </div>
-                            <div class="inreta ">
+                            <!-- ################################################### -->
 
-                                <span class="input-group-btn">
-                                    {{csrf_field()}}
-                                    <input id="id" class="idimagen" type="text" value="1" hidden>
-                                    <button type="button" class="btn btn-default btn-like">like!</button>
-                                    <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">stop!</button>
-
-
-
-                                </span>
-                                <figcaption class="figure-caption">A caption for the above image.</figcaption>
-
-
-                            </div>
                         </div>
+
                     </div>
+                    @endforeach
 
                 </div>
                 <div class="col-3">
-                    <h5>asd</h5>
+                    <h5>ayuda</h5>
                 </div>
 
             </div>
         </div>
     </section>
-    <div class="dissssss">
+    <!-- ################################################### -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
 
-        <!-- ################################################### -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="cemn">
-                       
-                        </div>
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <form>
 
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                            <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        {{csrf_field()}}
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val="" class="btn btn-primary enviar">Send message</button>
 
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <!-- ################################################### -->
     </div>
+    <!-- ################################################### -->
 </body>
 <style>
     .as {
@@ -222,6 +220,7 @@
 
     .publicacion {
         background: wheat;
+        margin-bottom: 2rem;
 
     }
 </style>
@@ -236,16 +235,13 @@
                 url: "/likes",
                 data: {
                     id: id,
-                    _token: token
+                    _token: token,
+                    usu:1 //aqui lo cambiaremos por la variable id de la variable session
                 },
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
-                    console.log(Object.keys(response).length)
-                    var cantidad = $('.likes').val();
-                    var auxi = 1;
-                    var sum = parseFloat(cantidad) + parseFloat(auxi);
-                    $('.likes').val(sum);
+                    console.log(response)
 
                 }
             });
@@ -253,16 +249,69 @@
 
         });
 
-        $('.btn-comentario').click(function() {
-            
+        $('.enviar').click(function() {
+
+            var token = $('input[name=_token]').val();
+            var id = $(".enviar").val();
+            var te = $("#message-text").val();
+            var usu = 1;
+            var e = "";
             var contenido = $('.cemn');
-            err = '<h5>Popover in a modal</h5>'+
-                        '<p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>'+
-                        '<hr>';
-                                contenido.append(err);
+            contenido.html('');
+            console.log(te);
+            $.ajax({
+                url: "/enviar",
+                data: {
+                    id: id,
+                    _token: token,
+                    commen: te,
+                    usu: usu
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    console.log(response)
+                    $.each(response, function(i, v) {
+                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                            '<p>' + v.comentario + '</p>' +
+                            '<hr>');
+                    });
+
+                }
+            });
+            te.val(e);
+        });
+
+        $('.btn-comentario').click(function() {
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            console.log(id)
+            var contenido = $('.cemn');
+            contenido.html('');
+            $(".enviar").val(id);
+            $.ajax({
+                url: "/coment",
+                data: {
+                    id: id,
+                    _token: token
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    console.log(response)
+                    $.each(response, function(i, v) {
+                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                            '<p>' + v.comentario + '</p>' +
+                            '<hr>')
+                    });
+                }
+            });
+
 
 
         });
+
+
     });
 </script>
 
