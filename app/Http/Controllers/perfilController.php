@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Modelos\Usuario;
 use App\Modelos\Publicaciones;
+use App\Modelos\Seguidores;
 /*use Illuminate\Support\Facades\Storage;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;*/
@@ -47,9 +48,12 @@ class perfilController extends Controller
         $id = session::get('usuario');
         $idu = $id->id;
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
+        $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuarios)->count();
+        $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuarios)->count();
+
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
-        return view('perfil.perfil',compact('usuario','cantidad'))->with('post',$posts);
+        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');
@@ -205,12 +209,29 @@ class perfilController extends Controller
         }
 
         function viewOtherProfile($id){
+            
+            $usuarios = session::get('usuario');
+            $idu = $usuarios->id;
+
             $usuario = DB::table('usuarios')->where('usuario', $id)->first();
+
             $otheruser = DB::table('usuarios')
             ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
             ->where("usuarios.id",$usuario->id)->first();
             $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuario->id)->orderby('created_at','desc')->get();
             $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
-            return view('perfil.otherProfile',compact('usuario','cantidad'))->with('post',$posts);
+
+            $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario->id)->count();
+            $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
+
+            /*$validacion = Seguidores::select("*")->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
+            //dd($validacion);
+                if ($validacion){
+                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion","polo");
+                    //return 1;
+                }*/
+                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+                //return 0;
+            
         }
 }

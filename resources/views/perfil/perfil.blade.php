@@ -1,7 +1,7 @@
 @extends('layout.base')
   @section('title', 'Look! | Mi Perfil |')
     @section('css')
-      <link rel="stylesheet" href="css/Look!/perfil.css">
+      <link rel="stylesheet" href="{{ asset('css/Look!/perfil.css') }}">
       <link rel="stylesheet" href="sweetalert2.min.css">
     @endsection
       @section('content')
@@ -13,14 +13,14 @@
               <div class="media" id="divmedia">
                 <div class="text-center view overlay">
                 {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
-                <img class="d-flex mr-3" id="fotodeperfil"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+                <img class="d-flex mr-3" id="fotodeperfil"  src="{{ asset("$usuario->imagen") }}" style="height:100px;width:100px;border-radius:60%;">
                 <br>
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                      <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
-                        <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
-                        <p class="white-text">Actualizar</p>
+                    <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
+                      <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
+                      <p class="white-text">Actualizar</p>
                     </div>
                 </div>
 
@@ -46,8 +46,8 @@
               <div class="container descripciones" id="descripciones">
                   <div class="row">
                     <div class="col-md-4"><h5><b class="font-weight-bold">{{ $cantidad }}</b>&nbsp;&nbsp;Publicaciones</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold" id="followers">0</b>&nbsp;&nbsp;Seguidores</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold" id="following">0</b>&nbsp;&nbsp;Seguidos</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="followers">{{ $seguidores }}</b>&nbsp;&nbsp;Seguidores</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="following">{{ $seguidos }}</b>&nbsp;&nbsp;Seguidos</h5></div>
                   </div>
                 </div>
               </div>
@@ -128,7 +128,7 @@
               <input type="hidden" value="{{ $item->id }}" name="id_post" id="id_post">
                   <div class="view overlay" data-postid="{{ $item->id }}">
                     <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
-                      <img src="{{ $item->imagen }}" class="card-img-top" style="height:270px;" id="imgpost">
+                      <img src="{{ asset("$item->imagen ")}}" class="card-img-top" style="height:270px;" id="imgpost">
                       <div class="mask flex-center rgba-black-light">
                        <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
                       </div>
@@ -145,7 +145,7 @@
                             <div class="container">
                               <div class="row">
                                 <div class="col-md-5">
-                                  <img src="{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
+                                  <img src="{{ asset("$item->imagen ")}}" class="img-fluid imagepost" id="imagepost">
                                 </div>
                                 <div class="col-md-7 scrollable border border-default" id="div-comments-posts" data-postid="{{ $item->id }}">
                                   <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 comment-header">
@@ -228,10 +228,6 @@
       </div>
       </div>
       </form>
-
-    
-
-
       {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
       @endsection
       @section('javascript')
@@ -241,5 +237,30 @@
           <script src="js/Look!/nuevapublicacion.js"></script>
           <script src="js/Look!/megusta.js"></script>
           <script>
+            $("#idseguidorr").click(function(e){
+            e.preventDefault();
+            //var token = $('input[name=_token]').val();
+            id = $("#idseguidorr").val();
+            console.log(id);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ url('seguidores') }}",
+                method: "GET",
+                data : { "id": id},
+                success: function(data){
+                  console.log(data)
+                  $("#othersfollowers").html(data);
+                  /*$("#idseguidor").css('display', 'none');
+                  $("#idseguidores").css('display', 'block');*/
+                }
+              }).fail( function( jqXHR, textStatus, errorThrown ) {
+                  console.log(jqXHR, textStatus, errorThrown  );
+              });
+          });
           </script>
       @endsection

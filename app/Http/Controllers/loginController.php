@@ -16,7 +16,6 @@ class loginController extends Controller
         return view('access/login');
     }
     function login(Request $request){
-
         // Validaciones
         $this->validate($request, [
             'correo' => 'required|max:30',
@@ -68,12 +67,7 @@ class loginController extends Controller
                 }
             }
         }
-
-        // if ($correo == null or $pass == null) {
-        //    return redirect('/')
-        //         ->with('hacker', 'Hacker Detectado!...');
-        // }
-        // dd("hola");
+        
         return redirect('')->withInput();
     }
 
@@ -163,13 +157,4 @@ class loginController extends Controller
     function prueba(){
         return view('welcome');
     }
-
-    // function searchProfile(Request $request){
-    //     $data = DB::table('usuarios')
-    //         ->select('usuarios.nombres', 'usuarios.apellidos', 'usuarios.imagen')
-    //         ->where('nombres', 'LIKE', '%'.$request->search.'%')
-    //         ->orWhere('apellidos', 'LIKE', '%'.$request->search.'%')
-    //         ->get();
-    //     return $data;
-    // }
 }

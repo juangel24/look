@@ -15,7 +15,7 @@
 
 
     <!-- CSS -->
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css"
@@ -69,12 +69,12 @@
                     </ul>
 
 
-                    
+
                     <ul class="navbar-nav ml-auto nav-flex-icons">
                         <li class="nav-item dropdown avatar">
                             <a class="nav-link dropdown-toggle p-0" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                                <img src="{{Session::get('usuario')->imagen}}"
+                                <img src="{{ asset(Session::get('usuario')->imagen)}}"
                                      class="rounded-circle z-depth-0" alt="avatar image" height="35" width="35" >
                             </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-default"
@@ -105,6 +105,7 @@
     <!-- jQuery y Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"
         integrity="sha256-OUFW7hFO0/r5aEGTQOz9F/aXQOt+TwqI1Z4fbVvww04=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/js/mdb.min.js"

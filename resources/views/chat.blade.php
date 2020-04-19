@@ -166,5 +166,17 @@
                 }
             });
         }
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('c3136ce130df8039ac5b', {
+            cluster: 'us3',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
     </script>
 @endsection
