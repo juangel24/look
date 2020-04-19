@@ -61,7 +61,7 @@
                 <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
             </div>
             <!-- Mensajes del chat -->
-            <div class="flex-column pt-3 h-100 scrollable" id="chat-messages">
+            <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages">
                 <div class="d-flex flex-column h-100 w-100 justify-content-center">
                     <h1 class="display-1 text-default text-center"><i class="fas fa-comments fa-lg"></i></h1>
                     <h3 class="text-center text-default">Tus mensajes</h3>
@@ -188,7 +188,7 @@
         var channel = pusher.subscribe('look');
         channel.bind('chat', function(data) {
             if (user_id == data.from) {
-                //alert('sender');
+                contacts.find("[data-id='"+ receiver_id +"']").click();
             }
             else if (user_id == data.to) {
                 if (receiver_id == data.from) {
