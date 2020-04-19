@@ -1,8 +1,15 @@
-@extends('perfil.navbar')
+@extends('layout.base')
   @section('title', 'Look! |  Perfil ')
     @section('css')
-      <link rel="stylesheet" href="../css/Look!/perfil.css">
+      <link rel="stylesheet" href="{{ asset('css/Look!/perfil.css') }}">
       <link rel="stylesheet" href="sweetalert2.min.css">
+      <style>
+      #idseguidores{
+        height: 30px;
+        width: 40px;
+       
+      }
+      </style>
     @endsection
       @section('content')
       {{-- DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
@@ -12,7 +19,7 @@
               <div class="media" id="divmedia">
                 <div class="text-center view overlay">
                 {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
-                <img class="d-flex mr-3" id="fotodeperfil"  src="../{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;">
+                <img class="d-flex mr-3" id="fotodeperfil"  src="{{asset("$usuario->imagen")}}" style="height:100px;width:100px;border-radius:60%;">
                 </div>
 
                   <div class="media-body " id="mediaperfil">
@@ -21,7 +28,12 @@
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-                      <button class="btn btn-primary" id="idseguidor" value="{{ $usuario->id }}">Seguir</button>  
+                    @if (!Session::has("validacion"))
+                    <button class="btn btn-primary" id="idseguidor" value="{{ $usuario->id }}">Seguir</button>  
+                    @else
+                    <button class="" id="idseguidores" value="{{ $usuario->id }}"><i class="fas fa-check"></i></button>  
+                    @endif
+                      
                   </div>
                 </div>
             </div>
@@ -30,8 +42,8 @@
               <div class="container descripciones" id="descripciones">
                   <div class="row">
                     <div class="col-md-4"><h5><b class="font-weight-bold">{{ $cantidad }}</b>&nbsp;&nbsp;Publicaciones</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowers">0</b>&nbsp;&nbsp;Seguidores</h5></div>
-                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowing">0</b>&nbsp;&nbsp;Seguidos</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowers">{{ $seguidores }}</b>&nbsp;&nbsp;Seguidores</h5></div>
+                    <div class="col-md-4"><h5><b class="font-weight-bold" id="othersfollowing">{{ $seguidos }}</b>&nbsp;&nbsp;Seguidos</h5></div>
                   </div>
                 </div>
               </div>
@@ -48,7 +60,7 @@
               <input type="hidden" value="{{ $item->id }}" name="id_post" id="id_post">
                   <div class="view overlay" data-postid="{{ $item->id }}">
                     <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
-                      <img src="../{{ $item->imagen }}" class="card-img-top" style="height:270px;" id="imgpost">
+                      <img src="{{asset("$item->imagen")}}" class="card-img-top" style="height:270px;" id="imgpost">
                       <div class="mask flex-center rgba-black-light">
                        <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
                       </div>
@@ -65,13 +77,13 @@
                             <div class="container">
                               <div class="row">
                                 <div class="col-md-5">
-                                  <img src="../{{ $item->imagen }}" class="img-fluid imagepost" id="imagepost">
+                                  <img src="{{asset("$item->imagen")}}" class="img-fluid imagepost" id="imagepost">
                                 </div>
                                 <div class="col-md-7 scrollable border border-default" id="div-comments-posts" data-postid="{{ $item->id }}">
                                   <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 comment-header">
                                     <div class="d-flex flex-row">
                                         <a class="p-0 waves-effect waves-light" href="/profile">
-                                            <img class="rounded-circle z-depth-0" src="../{{ $usuario->imagen }}" width="35" height="35">
+                                            <img class="rounded-circle z-depth-0" src="{{asset("$item->imagen")}}" width="35" height="35">
                                         </a>
                                         <h5 class="ml-2 mb-0 align-self-center">{{ $usuario->usuario }}</h5>
                                        &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
@@ -153,13 +165,14 @@
             });
 
             $.ajax({
-                url: "{{ url('seguidores') }}",
+                url: "{{ url('/seguidores') }}",
                 method: "GET",
                 data : { "id": id},
                 success: function(data){
-                  console.log(data)
+                  console.log("hola" + data);
                   $("#othersfollowers").html(data);
-                  html = ``;
+                  /*$("#idseguidor").css('display', 'none');
+                  $("#idseguidores").css('display', 'block');*/
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
@@ -208,6 +221,32 @@
                   error: function () {
                       alert("No se ha podido obtener la información");
                   }
+              });
+          });
+
+          //VERIFICACIÓN
+        $("#idseguidor").click(function(e){
+            e.preventDefault();
+            //var token = $('input[name=_token]').val();
+            id = $("#idseguidor").val();
+            console.log(id);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ url('verificarSeguidores') }}",
+                method: "GET",
+                data : { "id": id},
+                success: function(data){
+                  console.log(data);
+                    /*html = "";
+                    html.append();*/
+                }
+              }).fail( function( jqXHR, textStatus, errorThrown ) {
+                  console.log(jqXHR, textStatus, errorThrown  );
               });
           });
         </script>

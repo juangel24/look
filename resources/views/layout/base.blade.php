@@ -74,7 +74,7 @@
                         <li class="nav-item dropdown avatar">
                             <a class="nav-link dropdown-toggle p-0" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                                <img src="{{Session::get('usuario')->imagen}}"
+                                <img src="{{ asset(Session::get('usuario')->imagen)}}"
                                      class="rounded-circle z-depth-0" alt="avatar image" height="35" width="35" >
                             </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-default"
