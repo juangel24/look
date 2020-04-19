@@ -79,8 +79,10 @@
         var user_id = "{{ Session::get('usuario')->id }}";
         var users = $('.user');
         var chat_zone = $('#chat-messages');
+        var contacts = $('#contacts-container');
+
         function scrollToDown() {
-            chat_zone.scrollTop(chat_zone.scrollHeight);
+            chat_zone.scrollTop(chat_zone[0].scrollHeight);
         }
 
         $.ajaxSetup({
@@ -140,12 +142,10 @@
                     });
 
                     chat_zone.html(html);
+                    scrollToDown();
                 },
                 error: function(error) {
                     console.log(error.responseText);
-                },
-                complete: function() {
-                    scrollToDown();
                 }
             });
         }
@@ -161,9 +161,6 @@
                 error: function(error) {
                     console.log(error.responseText);
                 },
-                complete: function() {
-
-                }
             });
         }
 
@@ -175,8 +172,18 @@
         });
 
         var channel = pusher.subscribe('my-channel');
-            channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
+        channel.bind('my-event', function(data) {
+            if (user_id == data.from) {
+                //alert('sender');
+            }
+            else if (user_id == data.to) {
+                if (receiver_id == data.from) {
+                    contacts.find("[data-id='"+ receiver_id +"']").click();
+                }
+                else {
+                    alert("You have a message :)");
+                }
+            }
         });
     </script>
 @endsection
