@@ -16,6 +16,7 @@ use App\TComentarios;
 use App\Tfotos;
 use App\Modelos\Seguidores;
 
+use App\Modelos\Publicaciones;
 
 use Illuminate\Support\Collection;
 class inicioController extends Controller
@@ -168,7 +169,32 @@ class inicioController extends Controller
         $ty=TComentarios::with('usuario')->where('publicacion_id','=',$id)->get();
         return $ty;
     }
+    function visita($id){
+            
+        $usuarios = session::get('usuario');
+        $idu = $usuarios->id;
+        (int)$id=(int) $id;
+        
+        $usuario = Usuario::all()->where("id","=",1);
+        $otheruser = DB::table('usuarios')
+        ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
+        ->where("usuarios.id",$usuario[0]->id)->first();
+        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuario[0]->id)->orderby('created_at','desc')->get();
+        $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario[0]->id)->count();
 
+        $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario[0]->id)->count();
+        $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario[0]->id)->count();
+
+        /*$validacion = Seguidores::select("*")->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
+        //dd($validacion);
+            if ($validacion){
+                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion","polo");
+                //return 1;
+            }*/
+            return view('perfil.visita',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+            //return 0;
+        
+    }
     function megusta(){
          /*$s=[];
         //$megst=mmegusta::with('megusta')->get();

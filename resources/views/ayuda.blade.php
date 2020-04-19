@@ -333,7 +333,7 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>');
                     });
@@ -361,7 +361,7 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>')
                     });
@@ -391,7 +391,8 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5>' + v.megusta1['usuario'] + '</h5>' +
+                        
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.megusta1['usuario'] + '</a></h5>' +
                             '<hr>')
                     });
                 }
