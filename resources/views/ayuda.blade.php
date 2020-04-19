@@ -151,15 +151,29 @@
 
                                     <span class="input-group-btn">
                                         {{csrf_field()}}
-                                        <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
+                                        <input id="id" class="idimagen" type="text" value="{{$fo->id}}" hidden>
+                                        <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
                                         <figcaption class="figure-caption">
                                             <button class="btn btn-link verlikes" value="{{$fo->id}}" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-                                                
-                                            {{$fo->likes}} likes
-                                            
+
+                                                {{$fo->likes}} likes
+
                                             </button>
                                         </figcaption>
-                                        <button type="button" class="btn btn-default btn-like">like!</button>
+
+
+                                      
+                                        
+                                        @if($fo->can=="si")
+                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">like!</p> </button>
+                                        @else
+                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">dislike!</p></button>
+                                        @endif
+
+
+
+
+
                                         <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
 
                                     </span>
@@ -223,32 +237,75 @@
         margin-bottom: 2rem;
 
     }
+    .estado{
+        margin:0px;
+        padding:0px;
+    }
 </style>
 <script>
     $(document).ready(function() {
         $('.btn-like').click(function() {
-            
+
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
+            var like = $(this).parent().find('.can').val();
+            var est=$(this).parent().find('.estado');
+            var v =$(this).val();
+            console.log(est.html());
             var contenido = $('.verlikes');
-            contenido.html('');
-            var s=0;
-            $.ajax({
+            
+            var s = 0;
+            if(est.html()=="like!"){
+
+                $.ajax({
                 url: "/likes",
                 data: {
                     id: id,
                     _token: token,
-                    usu:1 //aqui lo cambiaremos por la variable id de la variable session
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
                 },
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
+                    contenido.html('');
                     console.log(response)
-                    s=response.length
-                    contenido.append(s+" likes");
-
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("dislike!");
                 }
             });
+
+            }
+            else{
+
+                $.ajax({
+                url: "/dislike",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("like!");
+                }
+            });
+
+            }
+            
+            
+            
+            
+            
+            
+            
 
 
         });
@@ -287,7 +344,7 @@
         });
 
         $('.btn-comentario').click(function() {
-            
+
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
             console.log(id)
@@ -317,7 +374,7 @@
         });
 
         $('.verlikes').click(function() {
-            var ss=$(this).parent().find('.verlikes').val();
+            var ss = $(this).parent().find('.verlikes').val();
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
             console.log(id, ss)

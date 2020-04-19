@@ -21,6 +21,7 @@ class inicioController extends Controller
 {
     //
 
+    
     function likes(Request $request){
 
         $id = $request->id;
@@ -31,6 +32,19 @@ class inicioController extends Controller
         $likes->publicacion_id=$id;
         $likes->like=$like;
         $likes->save();
+        $y=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
+        return $y;
+
+
+
+    }
+
+    function dislike(Request $request){
+
+        $id = $request->id;
+        $usu=$request->usu;
+        $yes=mmegusta::where('publicacion_id','=',$id)->where('usuario_id','=',$usu)->first();
+        $yes->delete();
         $y=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
         return $y;
 
@@ -97,9 +111,31 @@ class inicioController extends Controller
         ];
         $fo[$k]->likes= 0;}
         }
-        $sde= Collection::make($gg);
+        foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($megst1 as $f => $r)
+        {
+            
+            if($r->publicacion_id==$c->id and $r->usuario_id===1)
+            {
+               //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+            $gg[]=[
+                'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
+            ];$au=true;
+            $fo[$k]->can=  "no";}
+               
         
-        return view('ayuda',compact('fo','rv', 'sv','sde'));
+        if($au==false){
+        $gg[]=[
+            'foto'=>$fo[$k],'cantidad'=> 0
+        ];
+        $fo[$k]->can= "si";}
+        }
+    }
+        
+        
+        return view('ayuda',compact('fo','rv', 'sv'));
     }
 
     function coment(Request $request){
@@ -122,7 +158,7 @@ class inicioController extends Controller
     }
 
     function megusta(){
-         $s=[];
+         /*$s=[];
         //$megst=mmegusta::with('megusta')->get();
         $megst1=mmegusta::with('megusta1')->get();
         //likes
@@ -134,7 +170,7 @@ class inicioController extends Controller
        /* foreach ($seg as $k => $c)
         {
             $s[]=['seguidores'=>$c['seguidor_id']];
-        }*/
+        }
 
 
         //$productos = Session::get('productos');
@@ -188,6 +224,83 @@ class inicioController extends Controller
         $ssss=Seguidores::where('usuario_id','=','33')->get();
         
 
-        dd($gg);
+        dd($gg);*/
+
+        $megst1=mmegusta::with('megusta1')->get();
+        $todos = Collection::make($megst1);
+        $t = $todos->groupBy('publicacion_id')->toArray();
+         $rv=[];
+         foreach ($t as $k => $c)
+         {
+             $rv[]=[
+                 'id'=>$c[0]["publicacion_id"],'cantidad'=> count($c),'producto'=>$c[0]
+             ];
+         }
+        $fo=Tfotos::with('usuario')->get();
+        //dd($fo, $rv);
+
+        $sv=[];
+        foreach ($fo as $k => $c)
+        {
+            foreach ($rv as $k => $r)
+        {
+            if($r['id']==$c->id)
+            {
+            $sv[]=[
+                'cantidad'=> $r['cantidad'],'producto'=>$c->id
+            ];}
+        }
+        }
+        $gg=[];
+        ##fotos con likes
+        foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($sv as $f => $r)
+        {
+            
+            if($r["producto"]==$c->id)
+            {
+               
+            $gg[]=[
+                'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
+            ];$au=true;
+            $fo[$k]->likes=  $r['cantidad'];}
+               
+        }
+        if($au==false){
+        $gg[]=[
+            'foto'=>$fo[$k],'cantidad'=> 0
+        ];
+        $fo[$k]->likes= 0;}
+        }
+
+        #ver que foto le e dado like
+        foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($megst1 as $f => $r)
+        {
+            
+            if($r->publicacion_id==$c->id and $r->usuario_id==1)
+            {
+               //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+            $gg[]=[
+                'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
+            ];$au=true;
+            $fo[$k]->can=  "no";}
+               
+        
+        if($au==false){
+        $gg[]=[
+            'foto'=>$fo[$k],'cantidad'=> 0
+        ];
+        $fo[$k]->can= "si";}
+        }
+    }
+    
+    $yes=mmegusta::where('publicacion_id','=',103)->where('usuario_id','=','1')->first();
+    $yes->delete();
+    dd($yes);
     }
 }
