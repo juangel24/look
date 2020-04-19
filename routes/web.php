@@ -47,3 +47,12 @@ Route::get('searchProfile','homeController@searchProfile');
 
 
 Route::post('/likes','loginController@likes');
+
+
+Route::get('/meg','inicioController@megusta');
+
+
+Route::get('/pifi','inicioController@pifi');
+
+Route::post('/coment','inicioController@coment');
+Route::post('/enviar','inicioController@enviar');

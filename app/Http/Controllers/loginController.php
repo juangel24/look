@@ -155,16 +155,7 @@ class loginController extends Controller
                     ->with('user', $usu);
     }
 
-    function likes(Request $request){
-
-        $id = $request->id;
-        $agregado = Products::all()->find($id);
-
-        $producto = new Producto($id,$agregado['nombre'],$agregado['descripcion'],$agregado['precio'],$agregado['img']);
-        $arreglo = Session::get('productos')->push($producto);
-        return $arreglo;
-
-    }
+    
 
     function prueba(){
         return view('welcome');
