@@ -36,9 +36,9 @@
             @foreach ($other_users as $user)
                 <div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable user" data-id="{{ $user->id }}">
                     <div class="d-flex flex-row align-items-center">
-                        <img class="mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="{{ $user->imagen }}" width="35" height="35">
+                        <img class="contact-img mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="{{ $user->imagen }}" width="35" height="35">
                         <div class="d-flex flex-column">
-                            <p class="mb-0">{{ $user->usuario }}</p>
+                            <p class="contact-username mb-0">{{ $user->usuario }}</p>
                             <small>Te envió un mensaje</small>
                         </div>
                     </div>
@@ -54,14 +54,20 @@
             <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 chat-header">
                 <div class="d-flex flex-row">
                     <a class="p-0 waves-effect waves-light" href="/profile">
-                        <img class="rounded-circle z-depth-0" alt="avatar image" src="https://vignette.wikia.nocookie.net/bobesponja/images/c/c1/180px-SBz89.png/revision/latest/scale-to-width-down/340?cb=20131013132813" width="35" height="35">
+                        <img id="selected-img" class="rounded-circle z-depth-0" alt="avatar image" src="img/profile_photos/user.png" width="35" height="35">
                     </a>
-                    <h5 class="ml-2 mb-0 align-self-center">mantarraya</h5>
+                    <h5 id="selected-username" class="ml-2 mb-0 align-self-center">Selecciona un contacto</h5>
                 </div>
                 <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
             </div>
             <!-- Mensajes del chat -->
-            <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages"></div>
+            <div class="flex-column pt-3 h-100 scrollable" id="chat-messages">
+                <div class="d-flex flex-column h-100 w-100 justify-content-center">
+                    <h1 class="display-1 text-default text-center"><i class="fas fa-comments fa-lg"></i></h1>
+                    <h3 class="text-center text-default">Tus mensajes</h3>
+                    <p class="text-center text-default">Comienza una nueva conversación</p>
+                </div>
+            </div>
             <!-- Input -->
             <div class="d-flex flex-row align-items-center border-top border-default p-3 chat-header">
                 <div class="md-form w-100">
@@ -96,6 +102,14 @@
             $(this).addClass('active');
 
             receiver_id = $(this).attr('data-id');
+
+            var contactImg = $(this).find('.contact-img').attr('src');
+            var contactUser = $(this).find('.contact-username').text();
+
+            console.log(contactImg, contactUser);
+
+            $('#selected-img').attr('src', contactImg);
+            $('#selected-username').text(contactUser);
 
             showMessages();
         });
@@ -171,8 +185,8 @@
             forceTLS: true
         });
 
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
+        var channel = pusher.subscribe('look');
+        channel.bind('chat', function(data) {
             if (user_id == data.from) {
                 //alert('sender');
             }
