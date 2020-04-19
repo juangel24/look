@@ -41,7 +41,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     Route::get('/profile/{userprofile}', 'perfilController@viewOtherProfile');
     Route::get('searchProfile','homeController@searchProfile');
     route::GET('seguidores',"PublicacionesController@seguidor");
-
+    route::GET('verificarSeguidores',"PublicacionesController@verificarSeguidoresase");
     // Eddu
     Route::post('/likes','loginController@likes');
 
