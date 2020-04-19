@@ -37,6 +37,16 @@ class inicioController extends Controller
 
 
     }
+    function verlikes(Request $request){
+
+        $id = $request->id;
+        
+        $y=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
+        return $y;
+
+
+
+    }
 
     function pifi(){
         $megst1=mmegusta::with('megusta1')->get();

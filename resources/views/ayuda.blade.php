@@ -153,7 +153,7 @@
                                         {{csrf_field()}}
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
                                         <figcaption class="figure-caption">
-                                            <button class="btn btn-link likes">
+                                            <button class="btn btn-link verlikes" value="{{$fo->id}}" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
                                                 
                                             {{$fo->likes}} likes
                                             
@@ -227,10 +227,10 @@
 <script>
     $(document).ready(function() {
         $('.btn-like').click(function() {
-
+            
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
-            var contenido = $('.likes');
+            var contenido = $('.verlikes');
             contenido.html('');
             var s=0;
             $.ajax({
@@ -287,6 +287,7 @@
         });
 
         $('.btn-comentario').click(function() {
+            
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
             console.log(id)
@@ -311,6 +312,34 @@
                 }
             });
 
+
+
+        });
+
+        $('.verlikes').click(function() {
+            var ss=$(this).parent().find('.verlikes').val();
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            console.log(id, ss)
+            var contenido = $('.cemn');
+            contenido.html('');
+            $(".enviar").val(ss);
+            $.ajax({
+                url: "/verlikes",
+                data: {
+                    id: ss,
+                    _token: token
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    console.log(response)
+                    $.each(response, function(i, v) {
+                        contenido.append('<h5>' + v.megusta1['usuario'] + '</h5>' +
+                            '<hr>')
+                    });
+                }
+            });
 
 
         });

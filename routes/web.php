@@ -47,6 +47,8 @@ Route::group(['middleware' => ['validateUser']], function () {
     
 
     Route::post('/likes','inicioController@likes');
+    
+    Route::post('/verlikes','inicioController@verlikes');
 
 
     Route::get('/meg','inicioController@megusta');
