@@ -340,7 +340,6 @@
 
                 }
             });
-            te.val(e);
         });
 
         $('.btn-comentario').click(function() {

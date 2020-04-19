@@ -16,6 +16,7 @@ use App\TComentarios;
 use App\Tfotos;
 use App\Modelos\Seguidores;
 
+
 use Illuminate\Support\Collection;
 class inicioController extends Controller
 {
@@ -23,12 +24,14 @@ class inicioController extends Controller
 
     
     function likes(Request $request){
+        $aux=Session::get('usuario');
+        $usuario=$aux->id;
 
         $id = $request->id;
         $usu=$request->usu;
         $like=1;
         $likes= new mmegusta();
-        $likes->usuario_id=$usu;
+        $likes->usuario_id=$usuario;
         $likes->publicacion_id=$id;
         $likes->like=$like;
         $likes->save();
@@ -40,10 +43,12 @@ class inicioController extends Controller
     }
 
     function dislike(Request $request){
+        $aux=Session::get('usuario');
+        $usuario=$aux->id;
 
         $id = $request->id;
         $usu=$request->usu;
-        $yes=mmegusta::where('publicacion_id','=',$id)->where('usuario_id','=',$usu)->first();
+        $yes=mmegusta::where('publicacion_id','=',$id)->where('usuario_id','=',$usuario)->first();
         $yes->delete();
         $y=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
         return $y;
@@ -63,6 +68,8 @@ class inicioController extends Controller
     }
 
     function pifi(){
+        $aux=Session::get('usuario');
+        $usuario=$aux->id;
         $megst1=mmegusta::with('megusta1')->get();
         $todos = Collection::make($megst1);
         $t = $todos->groupBy('publicacion_id')->toArray();
@@ -117,13 +124,15 @@ class inicioController extends Controller
             foreach ($megst1 as $f => $r)
         {
             
-            if($r->publicacion_id==$c->id and $r->usuario_id===1)
+            if($r->publicacion_id==$c->id and $r->usuario_id==$usuario)
             {
                //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
             $gg[]=[
                 'foto'=>$fo[$k],'cantidad'=> $r['cantidad']
-            ];$au=true;
-            $fo[$k]->can=  "no";}
+            ];
+            $fo[$k]->can= "no";
+            $au=true;
+        }
                
         
         if($au==false){
@@ -133,6 +142,7 @@ class inicioController extends Controller
         $fo[$k]->can= "si";}
         }
     }
+    
         
         
         return view('ayuda',compact('fo','rv', 'sv'));
@@ -145,11 +155,13 @@ class inicioController extends Controller
     }
 
     function enviar(Request $request){
+        $aux=Session::get('usuario');
+        $usuario=$aux->id;
         $usu=$request->usu;
         $comen=$request->commen;
         $id = $request->id;
         $comentario= new TComentarios();
-        $comentario->usuario_id=$usu;
+        $comentario->usuario_id=$usuario;
         $comentario->publicacion_id=$id;
         $comentario->comentario=$comen;
         $comentario->save();
