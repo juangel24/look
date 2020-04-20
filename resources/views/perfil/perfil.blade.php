@@ -161,7 +161,7 @@
             <!--Card content-->
             <div class="card-body card-body-cascade">
               <input type="hidden"  class="idimagen"value="{{ $item->id }}">
-              {{-- <input id="can" class="can" type="text" value="{{$fo->can}}" hidden> --}}
+              <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -174,15 +174,15 @@
               <p class="">{{ $item->descripcion }}</p>
             </div>
           <div class="modal-footer">
-             {{-- @if($fo->can=="si")  --}}
+              @if($fo->can=="si") 
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
-            {{--   @else  --}}
+               @else  
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">dislike!</p>
               </button>
-           {{-- @endif --}}
+            @endif 
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

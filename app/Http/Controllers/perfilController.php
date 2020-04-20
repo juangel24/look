@@ -53,13 +53,107 @@ class perfilController extends Controller
         $id = session::get('usuario');
         $idu = $id->id;
 
+
+        $megst1 = mmegusta::with('megusta1')->get();
+        $todos = Collection::make($megst1);
+        $t = $todos->groupBy('publicacion_id')->toArray();
+        $rv = [];
+        foreach ($t as $k => $c) {
+            $rv[] = [
+                'id' => $c[0]["publicacion_id"], 'cantidad' => count($c), 'producto' => $c[0]
+            ];
+        }
+        $fo = Tfotos::with('usuario')->get();
+        //dd($fo, $rv);
+
+        $sv = [];
+        foreach ($fo as $k => $c) {
+            foreach ($rv as $k => $r) {
+                if ($r['id'] == $c->id) {
+                    $sv[] = [
+                        'cantidad' => $r['cantidad'], 'producto' => $c->id
+                    ];
+                }
+            }
+        }
+        $gg = [];
+        ##fotos con likes
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($sv as $f => $r) {
+
+                if ($r["producto"] == $c->id) {
+
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => $r['cantidad']
+                    ];
+                    $au = true;
+                    $fo[$k]->likes =  $r['cantidad'];
+                }
+            }
+            if ($au == false) {
+                $gg[] = [
+                    'foto' => $fo[$k], 'cantidad' => 0
+                ];
+                $fo[$k]->likes = 0;
+            }
+        }
+
+        #ver que foto le e dado like
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($megst1 as $f => $r) {
+
+                if ($r->publicacion_id == $c->id and $r->usuario_id == 1) {
+                    //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => $r['cantidad']
+                    ];
+                    $au = true;
+                    $fo[$k]->can =  "no";
+                }
+
+
+                if ($au == false) {
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => 0
+                    ];
+                    $fo[$k]->can = "si";
+                }
+            }
+        }
+
+        $aux = Session::get('usuario');
+        $usuario = $aux->id;
+        $yes = mmegusta::where('publicacion_id', '=', 103)->where('usuario_id', '=', $usuario)->first();
+        $fos = [];
+        $segi = Seguid::where('usuario_id', '=', $usuario)->get();
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($segi as $f => $r) {
+
+                if ($r->seguidor_id == $c->usuario_id) {
+                    //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+                    $au = true;
+                    
+                }
+
+            }
+            if ($au == false) {
+                $fos[] = $c;
+            }
+        }
+
+        $fos = Collection::make($fos);
+        //dd($fo, $fos);
+        $fo = $fos;
+        
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuarios)->count();
         $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuarios)->count();
-
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
-        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores','fo'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');
@@ -250,5 +344,6 @@ class perfilController extends Controller
                 //return 0;
             
         }
-     
+
+
 }

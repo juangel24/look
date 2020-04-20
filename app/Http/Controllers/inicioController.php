@@ -176,6 +176,7 @@ class inicioController extends Controller
 
 
         return view('home', compact('fo', 'rv', 'sv', 'sugerencia'));
+       
     }
 
     function coment(Request $request)
