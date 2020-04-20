@@ -154,6 +154,7 @@
             </div>
             <!--Card content-->
             <div class="card-body card-body-cascade">
+              <input type="hidden"  class="idimagen"value="{{ $item->id }}">
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -167,9 +168,72 @@
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default">Likes</button>
-            <button type="button" class="btn btn-default">Comentarios</button>
+            <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
+      <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-default" id="exampleModalLabel">Comentarios</h5>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        {{csrf_field()}}
+                        
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val=""  class="btn btn-primary enviar">Send message</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
             <!--/.Card content-->
+            <!-- ################################################### -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-default" id="exampleModalLabel">Comentarios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        {{csrf_field()}}
+
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val="" class="btn btn-primary enviar">Send message</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
+ 
     </div>
           <!--/.Card-->
   </div>
@@ -217,13 +281,83 @@
       </div>
       </form>
       {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
+
+      
       @endsection
       @section('javascript')
           
-          <script src="js/Look!/perfil.js"></script>
-          <script src="js/Look!/publicaciones.js"></script>
-          <script src="js/Look!/nuevapublicacion.js"></script>
-          <script src="js/Look!/megusta.js"></script>
+    <script src="{{ asset("js/Look!/perfil.js") }}"></script>
+    <script src="{{ asset("js/Look!/publicaciones.js") }}"></script>
+    <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
+    <script src="{{ asset("js/Look!/megusta.js") }}"></script>
+    <script>
+    $('.enviar').click(function (e) {
+      e.preventDefault();
+     var token = $('input[name=_token]').val();
+     var id = $(".enviar").val();
+     var te = $("#message-text").val();
+     var usu = 1;
+     var e = "";
+     var contenido = $('.cemn');
+
+     console.log(te);
+     $.ajax({
+         url: "/enviar",
+         data: {
+             id: id,
+             _token: token,
+             commen: te,
+             usu: usu
+         },
+         type: "POST",
+         datatype: "json",
+         success: function (response) {
+             contenido.html('');
+             console.log(response)
+             $("#message-text").val("");
+             $.each(response, function (i, v) {
+                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                     '<p>' + v.comentario + '</p>' +
+                     '<hr>');
+             });
+
+         }
+     });
+ });
+
+ $('.btn-comentario').click(function (e) {
+  e.preventDefault();
+     var token = $('input[name=_token]').val();
+     var id = $(this).parent().parent().find('.idimagen').val();
+     var coms = $(".coms")
+     coms.html('');
+     //console.log(id)
+     var contenido = $('.cemn');
+     contenido.html('');
+     $(".enviar").val(id);
+     $.ajax({
+         url: "/coment",
+         data: {
+             id: id,
+             _token: token
+         },
+         type: "POST",
+         datatype: "json",
+         success: function (response) {
+             console.log(response)
+             $.each(response, function (i, v) {
+                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                     '<p>' + v.comentario + '</p>' +
+                     '<hr>')
+             });
+         }
+     });
+
+
+
+ });
+
+          </script>
           <script>
             $("#idseguidorr").click(function(e){
             e.preventDefault();
@@ -250,5 +384,72 @@
                   console.log(jqXHR, textStatus, errorThrown  );
               });
           });
+          </script>
+          <script>
+            $('.enviar').click(function () {
+
+    var token = $('input[name=_token]').val();
+    var id = $(".enviar").val();
+    var te = $("#message-text").val();
+    var usu = 1;
+    var e = "";
+    var contenido = $('.cemn');
+
+    console.log(te);
+    $.ajax({
+        url: "/enviar",
+        data: {
+            id: id,
+            _token: token,
+            commen: te,
+            usu: usu
+        },
+        type: "POST",
+        datatype: "json",
+        success: function (response) {
+            contenido.html('');
+            console.log(response)
+            $.each(response, function (i, v) {
+                contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                    '<p>' + v.comentario + '</p>' +
+                    '<hr>');
+            });
+
+        }
+    });
+});
+
+$('.btn-comentario').click(function () {
+
+    var token = $('input[name=_token]').val();
+    var id = $(this).parent().find('.idimagen').val();
+    var coms = $(".coms")
+    coms.html('');
+    console.log(id)
+    var contenido = $('.cemn');
+    contenido.html('');
+    $(".enviar").val(id);
+    $.ajax({
+        url: "/coment",
+        data: {
+            id: id,
+            _token: token
+        },
+        type: "POST",
+        datatype: "json",
+        success: function (response) {
+            console.log(response)
+            $.each(response, function (i, v) {
+                contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                    '<p>' + v.comentario + '</p>' +
+                    '<hr>')
+            });
+        }
+    });
+
+
+
+});
+
           </script>
       @endsection

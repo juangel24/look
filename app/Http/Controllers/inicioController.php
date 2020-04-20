@@ -15,6 +15,7 @@ use App\Tmegusta;
 use App\mmegusta;
 use App\TComentarios;
 use App\Tfotos;
+use Illuminate\Support\Facades\View;
 use App\Modelos\Seguidores;
 
 use App\Modelos\Publicaciones;
