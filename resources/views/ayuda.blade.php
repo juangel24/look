@@ -154,7 +154,7 @@
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}" hidden>
                                         <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
                                         <figcaption class="figure-caption">
-                                            <button class="btn btn-link verlikes" value="{{$fo->id}}" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                                            <button class="btn btn-link verlikes" value="{{$fo->id}}" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">
 
                                                 {{$fo->likes}} likes
 
@@ -201,7 +201,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -215,9 +215,11 @@
                 <div class="modal-footer">
                     <form>
                         {{csrf_field()}}
-                        <div class="coms">
                         
-                        </div>
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val="" class="btn btn-primary enviar">Send message</button>
+                        
 
                     </form>
                 </div>
@@ -225,6 +227,30 @@
         </div>
     </div>
     <!-- ################################################### -->
+
+    <!-- ################################################### -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Likes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
+
+
+
 </body>
 <style>
     .as {
@@ -317,7 +343,7 @@
             var usu = 1;
             var e = "";
             var contenido = $('.cemn');
-            contenido.html('');
+            
             console.log(te);
             $.ajax({
                 url: "/enviar",
@@ -330,6 +356,7 @@
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
+                    contenido.html('');
                     console.log(response)
                     $.each(response, function(i, v) {
                         contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
@@ -347,9 +374,6 @@
             var id = $(this).parent().find('.idimagen').val();
             var coms=$(".coms")
             coms.html('');
-            coms.append('<label for="message-text" class="col-form-label">Message:</label>'+
-                        '<textarea class="form-control" id="message-text" class="yeah"></textarea>'+
-                        '<button type="button" val="" class="btn btn-primary enviar">Send message</button>');
             console.log(id)
             var contenido = $('.cemn');
             contenido.html('');
@@ -377,8 +401,6 @@
         });
 
         $('.verlikes').click(function() {
-            var coms=$(".coms")
-            coms.html('');
             var ss = $(this).parent().find('.verlikes').val();
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
