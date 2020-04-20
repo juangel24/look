@@ -199,7 +199,8 @@ class inicioController extends Controller
         $idu = $usuarios->id;
         (int)$id=(int) $id;
         
-        $usuario = Usuario::all()->where("id","=",1);
+        $usuario = Usuario::where("id","=",$id)->get();
+        //dd($usuario);
         $otheruser = DB::table('usuarios')
         ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
         ->where("usuarios.id",$usuario[0]->id)->first();
