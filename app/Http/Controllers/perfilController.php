@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Modelos\Usuario;
 use App\Modelos\Publicaciones;
 use App\Modelos\Seguidores;
+//use Illuminate\Support\Facades\View;
 /*use Illuminate\Support\Facades\Storage;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;*/
@@ -209,11 +210,12 @@ class perfilController extends Controller
         }
 
         function viewOtherProfile($id){
-            
+            //dd($id);
             $usuarios = session::get('usuario');
             $idu = $usuarios->id;
 
             $usuario = DB::table('usuarios')->where('usuario', $id)->first();
+            //$likes=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
 
             $otheruser = DB::table('usuarios')
             ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
@@ -230,7 +232,12 @@ class perfilController extends Controller
                     return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion","polo");
                     //return 1;
                 }*/
+                $url = "http://127.0.0.1:8000/profile/".$id;
+                //return redirect($url);
+                //return view('perfil.otherProfile')->share($url);
+                
                 return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+
                 //return 0;
             
         }

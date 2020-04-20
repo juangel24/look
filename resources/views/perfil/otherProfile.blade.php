@@ -7,7 +7,6 @@
       #idseguidores{
         height: 30px;
         width: 40px;
-       
       }
       </style>
     @endsection
@@ -29,9 +28,9 @@
                         {{ $usuario->descripcion }}
                     </div>
                     @if (!Session::has("validacion"))
-                    <button class="btn btn-primary" id="idseguidor" value="{{ $usuario->id }}">Seguir</button>  
+                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
                     @else
-                    <button class="" id="idseguidores" value="{{ $usuario->id }}"><i class="fas fa-check"></i></button>  
+                    <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
                     @endif
                       
                   </div>
@@ -242,12 +241,27 @@
                 data : { "id": id},
                 success: function(data){
                   console.log(data);
-                    /*html = "";
-                    html.append();*/
+                   //$("#idseguidores").css('display', 'block');
+                   
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
           });
         </script>
+        <script>
+          function visualiza_seguir(){
+            document.getElementById('idseguidor').style.visibility='visible';
+            document.getElementById('idseguidor').style.display='block';
+            document.getElementById('idseguidor').style.visibility='hidden';
+            document.getElementById('idseguidor').style.display='none';
+          };
+          function visualiza_dejardeseguir(){
+            document.getElementById('idseguidores').style.visibility='visible';
+            document.getElementById('idseguidores').style.display='block';
+            document.getElementById('idseguidores').style.visibility='hidden';
+            document.getElementById('idseguidores').style.display='none';
+          };
+        </script>
+
       @endsection

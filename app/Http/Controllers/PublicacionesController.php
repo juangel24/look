@@ -73,17 +73,27 @@ class PublicacionesController extends Controller
         return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
     public function verificarSeguidores(Request $r){
+        
         $id_seguidor = $r->id;
         $usuario = session::get('usuario');
         $id = $usuario->id;
 
-        $validacion = Seguidores::select("*")->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
+        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuario->id)->orderby('created_at','desc')->get();
+        $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
+        $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario->id)->count();
+        $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
+
+
+        $validacion = Seguidores::select("*")->where("usuario_id", "=", $id)->Where("seguidor_id","=",$usuario->id)->first();
             //dd($validacion);
-                if ($validacion){
-                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion","polo");
+                if (!$validacion){
+                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion",$validacion);
+                    //return redirect("/profile");
                     //return 1;
                 }
                 return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+                //return 0
+                
     
     }
 }
