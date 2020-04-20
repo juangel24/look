@@ -14,8 +14,8 @@
 
     // LOGIN
 Route::group(['middleware' => ['validateUser']], function () {
-    
-    
+
+
     // PRUEBON
     Route::get('prueba', 'loginController@prueba');
 
@@ -44,7 +44,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     route::GET('verificarSeguidores',"PublicacionesController@verificarSeguidores");
     // Eddu
     Route::post('/likes','loginController@likes');
-    
+
 
     Route::post('/likes','inicioController@likes');
     Route::post('/dislike','inicioController@dislike');
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     Route::get('/meg','inicioController@megusta');
 
 
-    Route::get('/pifi','inicioController@pifi');
+    Route::get('/home','inicioController@index');
 
     Route::post('/coment','inicioController@coment');
     Route::post('/enviar','inicioController@enviar');
@@ -69,4 +69,4 @@ Route::post('verificar-usario', 'loginController@login');
 Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
 
- 
+

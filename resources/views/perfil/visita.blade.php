@@ -19,7 +19,7 @@
               <div class="media" id="divmedia">
                 <div class="text-center view overlay">
                 {{-- <img class="" id="pictureUpdate"  src="{{$usuario[0]->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
-                <img class="d-flex mr-3" id="fotodeperfil"  src="{{asset("$usuario[0]->imagen")}}" style="height:100px;width:100px;border-radius:60%;">
+                <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($usuario[0]->imagen) }}"   style="height:100px;width:100px;border-radius:60%;">
                 </div>
 
                   <div class="media-body " id="mediaperfil">
