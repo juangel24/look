@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 use App\Modelos\Usuario;
 use App\Modelos\Publicaciones;
 use App\Modelos\Seguidores;
+use App\Seguid;
+use App\mmegusta;
+use App\Tfotos;
+use App\Tmegusta;
+use App\Tcomentarios;
+use Illuminate\Support\Collection;
+//use Illuminate\Support\Facades\View;
 /*use Illuminate\Support\Facades\Storage;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;*/
@@ -209,11 +216,12 @@ class perfilController extends Controller
         }
 
         function viewOtherProfile($id){
-            
+
             $usuarios = session::get('usuario');
             $idu = $usuarios->id;
 
             $usuario = DB::table('usuarios')->where('usuario', $id)->first();
+            //$likes=mmegusta::with('megusta1')->where('publicacion_id','=',$id)->get();
 
             $otheruser = DB::table('usuarios')
             ->select("usuarios.imagen","usuarios.nombres","usuarios.apellidos","usuarios.descripcion")
@@ -224,14 +232,24 @@ class perfilController extends Controller
             $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario->id)->count();
             $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
 
-            /*$validacion = Seguidores::select("*")->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
+           $validacion = Seguidores::select("seguidor_id","usuario_id")->where("usuario_id", "=", $id)->Where("seguidor_id","=",$usuario->id)->first();
+        
             //dd($validacion);
                 if ($validacion){
-                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion","polo");
+                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion",$validacion);
+                    //return redirect("/profile");
                     //return 1;
-                }*/
+                }
                 return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+        
+                $url = "http://127.0.0.1:8000/profile/".$id;
+                //return redirect($url);
+                //return view('perfil.otherProfile')->share($url);
+                
+                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+
                 //return 0;
             
         }
+     
 }

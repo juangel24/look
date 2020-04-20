@@ -7,7 +7,6 @@
       #idseguidores{
         height: 30px;
         width: 40px;
-       
       }
       </style>
     @endsection
@@ -29,9 +28,9 @@
                         {{ $usuario->descripcion }}
                     </div>
                     @if (!Session::has("validacion"))
-                    <button class="btn btn-primary" id="idseguidor" value="{{ $usuario->id }}">Seguir</button>  
+                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
                     @else
-                    <button class="" id="idseguidores" value="{{ $usuario->id }}"><i class="fas fa-check"></i></button>  
+                    <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
                     @endif
                       
                   </div>
@@ -86,7 +85,7 @@
                                             <img class="rounded-circle z-depth-0" src="{{asset("$item->imagen")}}" width="35" height="35">
                                         </a>
                                         <h5 class="ml-2 mb-0 align-self-center">{{ $usuario->usuario }}</h5>
-                                       &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
+                                  
                                       </diV>
 
                                   </div>
@@ -153,7 +152,7 @@
       @endsection
       @section('javascript')
         <script>
-          $("#idseguidor").click(function(e){
+          /*$("#idseguidor").click(function(e){
             e.preventDefault();
             //var token = $('input[name=_token]').val();
             id = $("#idseguidor").val();
@@ -171,13 +170,70 @@
                 success: function(data){
                   console.log("hola" + data);
                   $("#othersfollowers").html(data);
-                  /*$("#idseguidor").css('display', 'none');
-                  $("#idseguidores").css('display', 'block');*/
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-          });
+          });*/
+    $(document).ready(function() {
+        $('#like').click(function() {
+
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            var like = $(this).parent().find('.can').val();
+            var est=$(this).parent().find('.estado');
+            var v =$(this).val();
+            console.log(est.html());
+            var contenido = $(this).parent().find('.verlikes');;
+            
+            var s = 0;
+            if(est.html()=="like!"){
+
+                $.ajax({
+                url: "/likes",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("dislike!");
+                }
+            });
+
+            }
+            else{
+
+                $.ajax({
+                url: "/dislike",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("like!");
+                }
+            });
+
+            }
+        });
+
+
 
           //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
@@ -242,12 +298,15 @@
                 data : { "id": id},
                 success: function(data){
                   console.log(data);
-                    /*html = "";
-                    html.append();*/
+                   //$("#idseguidores").css('display', 'block');
+                   
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
           });
+    });
         </script>
+
+
       @endsection
