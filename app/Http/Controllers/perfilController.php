@@ -59,7 +59,7 @@ class perfilController extends Controller
 
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
-        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with('fo',$fo);
+        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');

@@ -168,15 +168,15 @@
               <p class="">{{ $item->descripcion }}</p>
             </div>
           <div class="modal-footer">
-             @if($fo->can=="si") 
+             {{-- @if($fo->can=="si")  --}}
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
-              @else
+            {{--   @else  --}}
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">dislike!</p>
               </button>
-           @endif
+           {{-- @endif --}}
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
