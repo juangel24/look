@@ -134,6 +134,7 @@ class inicioController extends Controller
                 $fo[$k]->can = "si";
             }
         }
+
         $fos = [];
         $segi = Seguid::where('usuario_id', '=', $usuario)->get();
         foreach ($fo as $k => $c) {
@@ -167,8 +168,6 @@ class inicioController extends Controller
                 $sugerencia[]=$c;
             }
         }
-        $sugerencia = Collection::make($sugerencia);
-        
         $fos = Collection::make($fos);
         $fo = $fos;
 
