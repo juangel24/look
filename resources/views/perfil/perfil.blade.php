@@ -155,6 +155,7 @@
             <!--Card content-->
             <div class="card-body card-body-cascade">
               <input type="hidden"  class="idimagen"value="{{ $item->id }}">
+              {{-- <input id="can" class="can" type="text" value="{{$fo->can}}" hidden> --}}
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -167,7 +168,15 @@
               <p class="">{{ $item->descripcion }}</p>
             </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default">Likes</button>
+             @if($fo->can=="si") 
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">like!</p>
+              </button>
+              @else
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">dislike!</p>
+              </button>
+           @endif
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -290,74 +299,64 @@
     <script src="{{ asset("js/Look!/publicaciones.js") }}"></script>
     <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
     <script src="{{ asset("js/Look!/megusta.js") }}"></script>
+    <script src="{{ asset("js/Look!/comentarios.js") }}"></script>
     <script>
-    $('.enviar').click(function (e) {
-      e.preventDefault();
-     var token = $('input[name=_token]').val();
-     var id = $(".enviar").val();
-     var te = $("#message-text").val();
-     var usu = 1;
-     var e = "";
-     var contenido = $('.cemn');
+      $('.btn-like').click(function() {
 
-     console.log(te);
-     $.ajax({
-         url: "/enviar",
-         data: {
-             id: id,
-             _token: token,
-             commen: te,
-             usu: usu
-         },
-         type: "POST",
-         datatype: "json",
-         success: function (response) {
-             contenido.html('');
-             console.log(response)
-             $("#message-text").val("");
-             $.each(response, function (i, v) {
-                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
-                     '<p>' + v.comentario + '</p>' +
-                     '<hr>');
-             });
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            var like = $(this).parent().find('.can').val();
+            var est = $(this).parent().find('.estado');
+            var v = $(this).val();
+            console.log(est.html());
+            var contenido = $(this).parent().find('.verlikes');;
 
-         }
-     });
- });
+            var s = 0;
+            if (est.html() == "like!") {
 
- $('.btn-comentario').click(function (e) {
-  e.preventDefault();
-     var token = $('input[name=_token]').val();
-     var id = $(this).parent().parent().find('.idimagen').val();
-     var coms = $(".coms")
-     coms.html('');
-     //console.log(id)
-     var contenido = $('.cemn');
-     contenido.html('');
-     $(".enviar").val(id);
-     $.ajax({
-         url: "/coment",
-         data: {
-             id: id,
-             _token: token
-         },
-         type: "POST",
-         datatype: "json",
-         success: function (response) {
-             console.log(response)
-             $.each(response, function (i, v) {
-                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
-                     '<p>' + v.comentario + '</p>' +
-                     '<hr>')
-             });
-         }
-     });
+                $.ajax({
+                    url: "/likes",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("dislike!");
+                    }
+                });
 
+            } else {
 
+                $.ajax({
+                    url: "/dislike",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("like!");
+                    }
+                });
 
- });
+            }
 
-          </script>
+    </script>
           <script>
             $("#idseguidorr").click(function(e){
             e.preventDefault();
@@ -385,71 +384,5 @@
               });
           });
           </script>
-          <script>
-            $('.enviar').click(function () {
-
-    var token = $('input[name=_token]').val();
-    var id = $(".enviar").val();
-    var te = $("#message-text").val();
-    var usu = 1;
-    var e = "";
-    var contenido = $('.cemn');
-
-    console.log(te);
-    $.ajax({
-        url: "/enviar",
-        data: {
-            id: id,
-            _token: token,
-            commen: te,
-            usu: usu
-        },
-        type: "POST",
-        datatype: "json",
-        success: function (response) {
-            contenido.html('');
-            console.log(response)
-            $.each(response, function (i, v) {
-                contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
-                    '<p>' + v.comentario + '</p>' +
-                    '<hr>');
-            });
-
-        }
-    });
-});
-
-$('.btn-comentario').click(function () {
-
-    var token = $('input[name=_token]').val();
-    var id = $(this).parent().find('.idimagen').val();
-    var coms = $(".coms")
-    coms.html('');
-    console.log(id)
-    var contenido = $('.cemn');
-    contenido.html('');
-    $(".enviar").val(id);
-    $.ajax({
-        url: "/coment",
-        data: {
-            id: id,
-            _token: token
-        },
-        type: "POST",
-        datatype: "json",
-        success: function (response) {
-            console.log(response)
-            $.each(response, function (i, v) {
-                contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
-                    '<p>' + v.comentario + '</p>' +
-                    '<hr>')
-            });
-        }
-    });
-
-
-
-});
-
-          </script>
+  
       @endsection

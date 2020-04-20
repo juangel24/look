@@ -172,7 +172,7 @@ class inicioController extends Controller
         
         $fos = Collection::make($fos);
         $fo = $fos;
-
+ 
 
 
         return view('home', compact('fo', 'rv', 'sv', 'sugerencia'));
