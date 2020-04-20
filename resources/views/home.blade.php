@@ -210,7 +210,7 @@
                         
                     <h5>Sugerencias</h5>
                     @foreach($sugerencia as $sug)
-                    <a href="/visita/{{$sug->usuario}}">{{$sug->usuario}} </a>
+                    <a href="/visita/{{$sug->id}}">{{$sug->usuario}} </a>
                         
                         
                         <hr>
