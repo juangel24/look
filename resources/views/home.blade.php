@@ -133,22 +133,23 @@
     <section class="as">
         <div class="container ">
             <div class="row">
-                <div class="col-9 ">
+                <div class="col-md-9 col-sm-12">
 
                     @foreach($fo as $fo)
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
-                        
-                        <div class="col-12">
-                        <div class="row">
-                        <div class="col-3">
-                            <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}"   style="display:block; height:100px;width:100px;border-radius:60%;">
-                            </div>
-                            <div class="col-7">
-                            <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
-                            </div>
 
-                        </div></div>
+                        <div class="col-12">
+                            <div class="row infotmacion">
+                                <div class="col-3">
+                                    <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:100px;width:100px;border-radius:60%;">
+                                </div>
+                                <div class="col-7">
+                                    <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="text-center ">
 
                             <!-- ################################################### -->
@@ -173,12 +174,16 @@
                                         </figcaption>
 
 
-                                      
-                                        
+
+
                                         @if($fo->can=="si")
-                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">like!</p> </button>
+                                        <button type="button" class="btn btn-default btn-like" val="like">
+                                            <p class="estado">like!</p>
+                                        </button>
                                         @else
-                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">dislike!</p></button>
+                                        <button type="button" class="btn btn-default btn-like" val="like">
+                                            <p class="estado">dislike!</p>
+                                        </button>
                                         @endif
 
 
@@ -200,8 +205,18 @@
                     @endforeach
 
                 </div>
-                <div class="col-3">
-                    <h5>ayuda</h5>
+                <div class="col-md-3 d-md-block">
+                    <div class="overflow-auto">
+                        
+                    <h5>Sugerencias</h5>
+                    @foreach($sugerencia as $sug)
+                    <a href="/visita/{{$sug->usuario}}">{{$sug->usuario}} </a>
+                        
+                        
+                        <hr>
+                        @endforeach
+
+                    </div>
                 </div>
 
             </div>
@@ -226,11 +241,11 @@
                 <div class="modal-footer">
                     <form>
                         {{csrf_field()}}
-                        
+
                         <label for="message-text" class="col-form-label">Message:</label>
                         <textarea class="form-control" id="message-text" class="yeah"></textarea>
                         <button type="button" val="" class="btn btn-primary enviar">Send message</button>
-                        
+
 
                     </form>
                 </div>
@@ -273,9 +288,14 @@
         margin-bottom: 2rem;
 
     }
-    .estado{
-        margin:0px;
-        padding:0px;
+
+    .infotmacion {
+        background: wheat;
+    }
+
+    .estado {
+        margin: 0px;
+        padding: 0px;
     }
 </style>
 <script>
@@ -285,63 +305,62 @@
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
             var like = $(this).parent().find('.can').val();
-            var est=$(this).parent().find('.estado');
-            var v =$(this).val();
+            var est = $(this).parent().find('.estado');
+            var v = $(this).val();
             console.log(est.html());
             var contenido = $(this).parent().find('.verlikes');;
-            
+
             var s = 0;
-            if(est.html()=="like!"){
+            if (est.html() == "like!") {
 
                 $.ajax({
-                url: "/likes",
-                data: {
-                    id: id,
-                    _token: token,
-                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-                },
-                type: "POST",
-                datatype: "json",
-                success: function(response) {
-                    contenido.html('');
-                    console.log(response)
-                    s = response.length
-                    contenido.append(s + " likes");
-                    est.html('');
-                    est.append("dislike!");
-                }
-            });
+                    url: "/likes",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("dislike!");
+                    }
+                });
 
-            }
-            else{
+            } else {
 
                 $.ajax({
-                url: "/dislike",
-                data: {
-                    id: id,
-                    _token: token,
-                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-                },
-                type: "POST",
-                datatype: "json",
-                success: function(response) {
-                    contenido.html('');
-                    console.log(response)
-                    s = response.length
-                    contenido.append(s + " likes");
-                    est.html('');
-                    est.append("like!");
-                }
-            });
+                    url: "/dislike",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("like!");
+                    }
+                });
 
             }
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
 
 
         });
@@ -354,7 +373,7 @@
             var usu = 1;
             var e = "";
             var contenido = $('.cemn');
-            
+
             console.log(te);
             $.ajax({
                 url: "/enviar",
@@ -370,7 +389,7 @@
                     contenido.html('');
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>');
                     });
@@ -383,7 +402,7 @@
 
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
-            var coms=$(".coms")
+            var coms = $(".coms")
             coms.html('');
             console.log(id)
             var contenido = $('.cemn');
@@ -400,7 +419,7 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>')
                     });
@@ -430,8 +449,8 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        
-                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.megusta1['usuario'] + '</a></h5>' +
+
+                        contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.megusta1['usuario'] + '</a></h5>' +
                             '<hr>')
                     });
                 }

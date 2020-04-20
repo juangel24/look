@@ -133,14 +133,14 @@
     <section class="as">
         <div class="container ">
             <div class="row">
-                <div class="col-9 ">
+                <div class="col-md-9 col-sm-12">
 
                     @foreach($fo as $fo)
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
                         
                         <div class="col-12">
-                        <div class="row">
+                        <div class="row infotmacion">
                         <div class="col-3">
                             <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}"   style="display:block; height:100px;width:100px;border-radius:60%;">
                             </div>
@@ -200,7 +200,7 @@
                     @endforeach
 
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 d-md-block">
                     <h5>ayuda</h5>
                 </div>
 
@@ -268,10 +268,13 @@
         margin-top: 3rem;
     }
 
-    .publicacion {
+    .publicacion  {
         background: wheat;
         margin-bottom: 2rem;
 
+    }
+    .infotmacion{
+        background: wheat;
     }
     .estado{
         margin:0px;
