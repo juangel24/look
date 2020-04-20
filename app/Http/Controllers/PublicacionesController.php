@@ -72,6 +72,10 @@ class PublicacionesController extends Controller
         DB::select("call followers ('$id','$id_seguidor')"); 
         return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
+
+
+
+   
     public function verificarSeguidores(Request $r){
         
         $id_seguidor = $r->id;
@@ -85,8 +89,9 @@ class PublicacionesController extends Controller
 
 
         $validacion = Seguidores::select("*")->where("usuario_id", "=", $id)->Where("seguidor_id","=",$usuario->id)->first();
+
             //dd($validacion);
-                if (!$validacion){
+                if ($validacion){
                     return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion",$validacion);
                     //return redirect("/profile");
                     //return 1;

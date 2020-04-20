@@ -85,7 +85,7 @@
                                             <img class="rounded-circle z-depth-0" src="{{asset("$item->imagen")}}" width="35" height="35">
                                         </a>
                                         <h5 class="ml-2 mb-0 align-self-center">{{ $usuario->usuario }}</h5>
-                                       &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
+                                  
                                       </diV>
 
                                   </div>
@@ -152,7 +152,7 @@
       @endsection
       @section('javascript')
         <script>
-          $("#idseguidor").click(function(e){
+          /*$("#idseguidor").click(function(e){
             e.preventDefault();
             //var token = $('input[name=_token]').val();
             id = $("#idseguidor").val();
@@ -170,13 +170,70 @@
                 success: function(data){
                   console.log("hola" + data);
                   $("#othersfollowers").html(data);
-                  /*$("#idseguidor").css('display', 'none');
-                  $("#idseguidores").css('display', 'block');*/
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-          });
+          });*/
+    $(document).ready(function() {
+        $('#like').click(function() {
+
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            var like = $(this).parent().find('.can').val();
+            var est=$(this).parent().find('.estado');
+            var v =$(this).val();
+            console.log(est.html());
+            var contenido = $(this).parent().find('.verlikes');;
+            
+            var s = 0;
+            if(est.html()=="like!"){
+
+                $.ajax({
+                url: "/likes",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("dislike!");
+                }
+            });
+
+            }
+            else{
+
+                $.ajax({
+                url: "/dislike",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("like!");
+                }
+            });
+
+            }
+        });
+
+
 
           //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
@@ -248,20 +305,8 @@
                   console.log(jqXHR, textStatus, errorThrown  );
               });
           });
+    });
         </script>
-        <script>
-          function visualiza_seguir(){
-            document.getElementById('idseguidor').style.visibility='visible';
-            document.getElementById('idseguidor').style.display='block';
-            document.getElementById('idseguidor').style.visibility='hidden';
-            document.getElementById('idseguidor').style.display='none';
-          };
-          function visualiza_dejardeseguir(){
-            document.getElementById('idseguidores').style.visibility='visible';
-            document.getElementById('idseguidores').style.display='block';
-            document.getElementById('idseguidores').style.visibility='hidden';
-            document.getElementById('idseguidores').style.display='none';
-          };
-        </script>
+
 
       @endsection
