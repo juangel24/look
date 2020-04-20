@@ -138,6 +138,17 @@
                     @foreach($fo as $fo)
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
+                        
+                        <div class="col-12">
+                        <div class="row">
+                        <div class="col-3">
+                            <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}"   style="display:block; height:100px;width:100px;border-radius:60%;">
+                            </div>
+                            <div class="col-7">
+                            <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
+                            </div>
+
+                        </div></div>
                         <div class="text-center ">
 
                             <!-- ################################################### -->
