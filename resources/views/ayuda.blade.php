@@ -215,10 +215,9 @@
                 <div class="modal-footer">
                     <form>
                         {{csrf_field()}}
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
-                        <button type="button" val="" class="btn btn-primary enviar">Send message</button>
-
+                        <div class="coms">
+                        
+                        </div>
 
                     </form>
                 </div>
@@ -346,6 +345,11 @@
 
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
+            var coms=$(".coms")
+            coms.html('');
+            coms.append('<label for="message-text" class="col-form-label">Message:</label>'+
+                        '<textarea class="form-control" id="message-text" class="yeah"></textarea>'+
+                        '<button type="button" val="" class="btn btn-primary enviar">Send message</button>');
             console.log(id)
             var contenido = $('.cemn');
             contenido.html('');
@@ -373,6 +377,8 @@
         });
 
         $('.verlikes').click(function() {
+            var coms=$(".coms")
+            coms.html('');
             var ss = $(this).parent().find('.verlikes').val();
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
