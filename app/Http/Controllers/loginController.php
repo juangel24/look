@@ -63,11 +63,11 @@ class loginController extends Controller
                     $user = Session::get('usuario');
                     // dd($user);
 
-                    return redirect('chat');
+                    return redirect('home');
                 }
             }
         }
-        
+
         return redirect('')->withInput();
     }
 
@@ -147,7 +147,7 @@ class loginController extends Controller
 		return redirect('chat');
     }
 
-    
+
 
     function logout(){
         Session::forget('usuario');
