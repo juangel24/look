@@ -10,6 +10,7 @@ use App\Modelos\Usuario;
 use Illuminate\Support\Str;
 use Session;
 use Hash;
+use App\Seguid;
 use App\Tmegusta;
 use App\mmegusta;
 use App\TComentarios;
@@ -143,6 +144,29 @@ class inicioController extends Controller
         $fo[$k]->can= "si";}
         }
     }
+    $fos=[];
+    $segi=Seguid::where('usuario_id','=',$usuario)->get();
+    foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($segi as $f => $r)
+        {
+            
+            if($r->seguidor_id==$c->usuario_id)
+            {
+               //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+            $au=true;
+            $fos[]=$c;
+            }
+               
+        
+        if($au==false){
+            
+        }
+        }
+    }
+    $fos = Collection::make($fos);
+    $fo=$fos;
     
         
         
@@ -336,9 +360,34 @@ class inicioController extends Controller
         $fo[$k]->can= "si";}
         }
     }
-    
-    $yes=mmegusta::where('publicacion_id','=',103)->where('usuario_id','=','1')->first();
-    $yes->delete();
-    dd($yes);
+
+    $aux=Session::get('usuario');
+    $usuario=$aux->id;
+    $yes=mmegusta::where('publicacion_id','=',103)->where('usuario_id','=',$usuario)->first();
+    $fos=[];
+    $segi=Seguid::where('usuario_id','=',$usuario)->get();
+    foreach ($fo as $k => $c)
+        {
+            $au=false;
+            foreach ($segi as $f => $r)
+        {
+            
+            if($r->seguidor_id==$c->usuario_id)
+            {
+               //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+            $au=true;
+            $fos[]=$c;
+            }
+               
+        
+        if($au==false){
+            
+        }
+        }
+    }
+
+    $fos = Collection::make($fos);
+    dd($fo, $fos);
+    $fo=$fos;
     }
 }

@@ -277,7 +277,7 @@
             var est=$(this).parent().find('.estado');
             var v =$(this).val();
             console.log(est.html());
-            var contenido = $('.verlikes');
+            var contenido = $(this).parent().find('.verlikes');;
             
             var s = 0;
             if(est.html()=="like!"){
