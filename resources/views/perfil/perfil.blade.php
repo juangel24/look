@@ -3,6 +3,12 @@
     @section('css')
       <link rel="stylesheet" href="{{ asset('css/Look!/perfil.css') }}">
       <link rel="stylesheet" href="sweetalert2.min.css">
+      <style>
+        .estado {
+        margin: 0px;
+        padding: 0px;
+    }
+      </style>
     @endsection
       @section('content')
         @csrf
