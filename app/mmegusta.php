@@ -12,7 +12,7 @@ class mmegusta extends Model
     Protected $primaryKey='id';
     Protected $table='megusta';
     public $timestamps=false;
-
+ 
     //
     
 
