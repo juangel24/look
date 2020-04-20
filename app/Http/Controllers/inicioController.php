@@ -126,15 +126,14 @@ class inicioController extends Controller
                 }
 
 
-                if ($au == false) {
-                    $gg[] = [
-                        'foto' => $fo[$k], 'cantidad' => 0
-                    ];
-                    $fo[$k]->can = "si";
-                }
+                
+            } if ($au == false) {
+                $gg[] = [
+                    'foto' => $fo[$k], 'cantidad' => 0
+                ];
+                $fo[$k]->can = "si";
             }
         }
-
         $fos = [];
         $segi = Seguid::where('usuario_id', '=', $usuario)->get();
         foreach ($fo as $k => $c) {
@@ -152,12 +151,30 @@ class inicioController extends Controller
                 }
             }
         }
+        $sugerencia=[];
+         $segi = Seguid::where('usuario_id', '=', $usuario)->get();
+        $segi2 = Usuario::all();
+        foreach ($segi2 as $k => $c) {
+            $au = false;
+            foreach ($segi as $f => $r) {
+                
+                if ($r->seguidor_id == $c->id  ) {
+                    $au = true;
+                   
+                }
+            }
+            if ($au == false and $c->id!=$usuario ) {
+                $sugerencia[]=$c;
+            }
+        }
+        $sugerencia = Collection::make($sugerencia);
+        
         $fos = Collection::make($fos);
         $fo = $fos;
 
 
 
-        return view('home', compact('fo', 'rv', 'sv'));
+        return view('home', compact('fo', 'rv', 'sv', 'sugerencia'));
     }
 
     function coment(Request $request)
@@ -361,12 +378,12 @@ class inicioController extends Controller
                 if ($r->seguidor_id == $c->usuario_id) {
                     //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
                     $au = true;
-                    $fos[] = $c;
+                    
                 }
 
-
-                if ($au == false) {
-                }
+            }
+            if ($au == false) {
+                $fos[] = $c;
             }
         }
 
