@@ -50,8 +50,8 @@ class perfilController extends Controller
         $usu = session::get('usuario');
         $usuarios = $usu->id;
         // dd($usuarios);
-        $id = session::get('usuario');
-        $idu = $id->id;
+        /*$id = session::get('usuario');
+        $idu = $id->id;*/
 
 
         $megst1 = mmegusta::with('megusta1')->get();
@@ -151,8 +151,8 @@ class perfilController extends Controller
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuarios)->count();
         $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuarios)->count();
-        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
-        $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
+        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuarios)->orderby('created_at','desc')->get();
+        $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuarios)->count();
         return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores','fo'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
