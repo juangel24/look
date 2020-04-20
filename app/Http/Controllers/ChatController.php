@@ -77,6 +77,6 @@ class ChatController extends Controller {
         );
 
         $data = ['from' => $from, 'to' => $to];
-        $pusher->trigger('my-channel', 'my-event', $data);
+        $pusher->trigger('look', 'chat', $data);
     }
 }
