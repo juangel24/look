@@ -7,11 +7,8 @@
       #idseguidores{
         height: 30px;
         width: 40px;
+       
       }
-      .estado {
-        margin: 0px;
-        padding: 0px;
-    }
       </style>
     @endsection
       @section('content')
@@ -21,8 +18,8 @@
             <div class="col-md-6 perfilfoto" id="perfilfoto">
               <div class="media" id="divmedia">
                 <div class="text-center view overlay">
-                {{-- <img class="" id="pictureUpdate" src="{{$usuario[0]->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
-                <img class="d-flex mr-3" id="fotodeperfil"  src="{{ asset($usuario[0]->imagen) }}" style="height:100px;width:100px;border-radius:60%;">
+                {{-- <img class="" id="pictureUpdate"  src="{{$usuario[0]->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
+                <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($usuario[0]->imagen) }}"   style="height:100px;width:100px;border-radius:60%;">
                 </div>
 
                   <div class="media-body " id="mediaperfil">
@@ -32,9 +29,9 @@
                         {{ $usuario[0]->descripcion }}
                     </div>
                     @if (!Session::has("validacion"))
-                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario[0]->id }}">Seguir</button>  
+                    <button class="btn btn-primary" id="idseguidor" value="{{ $usuario[0]->id }}">Seguir</button>  
                     @else
-                    <button class="" id="idseguidores" value="{{ $usuario[0]->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
+                    <button class="" id="idseguidores" value="{{ $usuario[0]->id }}"><i class="fas fa-check"></i></button>  
                     @endif
                       
                   </div>
@@ -55,120 +52,71 @@
         {{-- FIN DE  DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
 
         {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
-  @if ($post != null )
-    <div class="row">
-      @foreach ($post as $item)
-      <div class="col-lg-4 col-md-12 mb-4">
-          <!--Card-->
-        <div class="card card-cascade wider mb-4">
-            <!--Card image-->
-            <div class="view overlay" data-postid="{{ $item->id }}">
-              <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
-                <img src="{{ asset("$item->imagen ")}}" class="card-img-top" style="height:270px;" id="imgpost">
-                  <div class="mask flex-center rgba-black-light">
-                    <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
+          @if ($post != null )
+          <div class="row" id="postt">
+            @csrf
+            @foreach ($post as $item)
+            <div class="col-lg-4 col-md-12 mb-4">
+              <input type="hidden" value="{{ $item->id }}" name="id_post" id="id_post">
+                  <div class="view overlay" data-postid="{{ $item->id }}">
+                    <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
+                      <img src="{{asset("$item->imagen")}}" class="card-img-top" style="height:270px;" id="imgpost">
+                      <div class="mask flex-center rgba-black-light">
+                       <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
+                      </div>
+                    </a>
                   </div>
-              </a>
-            </div>
-            <!--/Card image-->
-            
-            <div class="modal fade" id="imagemodal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title text-default" id="exampleModalLabel">{{ session::get('usuario')->usuario }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                     <img src="{{ asset("$item->imagen ")}}" class="img-fluid imagepost" id="imagepost">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--Card content-->
-            <div class="card-body card-body-cascade">
-              <input type="hidden"  class="idimagen"value="{{ $item->id }}">
-              <!--Title-->
-              <h4 class="card-title text-default text-center"><strong>{{ $usuario[0]->usuario }}</strong>
-              </h4>
-              <a class="waves-effect waves-light dropdown-toggle text-default mr-4" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="dropdown-option" s>
-                {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
-              </a>
-              <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                  
-              </div>
-              <p class="">{{ $item->descripcion }}</p>
-            </div>
-            <div class="modal-footer">
-          <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
-              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
-              @if($item->can=="si") 
-              
-              <button type="button" class="btn btn-default btn-like" val="like">
-                <p class="estado">like!</p>
-              </button>
-               @else  
-              <button type="button" class="btn btn-default btn-like" val="like">
-                <p class="estado">dislike!</p>
-              </button>
-            @endif 
-            <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
-          </div>
-      <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-default" id="exampleModalLabel">Comentarios</h5>
-                    
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="cemn">
+                    @csrf
+                    <div class="modal fade" id="imagemodal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" id="spanclose">&times;</span>
+                      </button>
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content post">
+                        <div class="modal-body">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-md-5">
+                                  <img src="{{asset("$item->imagen")}}" class="img-fluid imagepost" id="imagepost">
+                                </div>
+                                <div class="col-md-7 scrollable border border-default" id="div-comments-posts" data-postid="{{ $item->id }}">
+                                  <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 comment-header">
+                                    <div class="d-flex flex-row">
+                                        <a class="p-0 waves-effect waves-light" href="/profile">
+                                            <img class="rounded-circle z-depth-0" src="{{asset("$item->imagen")}}" width="35" height="35">
+                                        </a>
+                                        <h5 class="ml-2 mb-0 align-self-center">{{ $usuario[0]->usuario }}</h5>
+                                       &nbsp;&nbsp;&nbsp;<a class="waves-effect waves-light" id="like"><i class="far fa-thumbs-up text-default fa-2x"></i></a>
+                                      </diV>
 
+                                  </div>
+                                <div class="d-flex flex-row align-items-center" id="comment" >
+                                  <div class="md-form border-top border-default comment-header">
+                                        <input name="comment_content"  id="comment_content" placeholder="Escribe tu comentario aquí..." type="text" class="form-control">
+                                    </div>
+                                    <a id="icon-send-comment" class="button waves-effect waves-light"  type="submit"><i class="fas fa-paper-plane text-default fa-2x"></i></a>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <form>
-                        {{csrf_field()}}
-                        
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
-                        <button type="button" val=""  class="btn btn-primary enviar">Send message</button>
-
-
-                    </form>
-                </div>
-            </div>
+                  </div>
+              </div>
+            @endforeach    
         </div>
-    </div>
-    <!-- ################################################### -->
-
-            <!--/.Card content-->
-    </div>
-    
-          <!--/.Card-->
-  </div>
-  
-  @endforeach    
-</div>
-  @else
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-      <strong>Hola {{ session::get('usuario')->usuario }}</strong>No has hecho ninguna publicaión x-x
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-@endif
+          @else
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Hola {{ $usuario[0]->usuario }}</strong>No has hecho ninguna publicaión x-x
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          @endif
           {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
             {{-- MODAL DE CAMBIAR FOTO DE PERFIL --}}
         
-
       <form  action="{{ url('/updatephoto') }}" method="post" enctype="multipart/form-data">
         @csrf
       <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -201,12 +149,11 @@
       </div>
       </div>
       </form>
-          {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
+      {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
       @endsection
       @section('javascript')
-       <script src="{{ asset("js/Look!/comentarios.js")}}"></script>
         <script>
-          /*$("#idseguidor").click(function(e){
+          $("#idseguidor").click(function(e){
             e.preventDefault();
             //var token = $('input[name=_token]').val();
             id = $("#idseguidor").val();
@@ -224,69 +171,15 @@
                 success: function(data){
                   console.log("hola" + data);
                   $("#othersfollowers").html(data);
+                  /*$("#idseguidor").css('display', 'none');
+                  $("#idseguidores").css('display', 'block');*/
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-          });*/
-    $(document).ready(function() {
-      $('.btn-like').click(function() {
+          });
 
-var token = $('input[name=_token]').val();
-var id = $(this).parent().find('.idimagen').val();
-
-var like = $(this).parent().find('.can').val();
-var est = $(this).parent().find('.estado');
-var v = $(this).val();
-console.log(id);
-var contenido = $(this).parent().find('.verlikes');;
-
-var s = 0;
-if (est.html() == "like!") {
-
-    $.ajax({
-        url: "/likes",
-        data: {
-            id: id,
-            _token: token,
-            usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-        },
-        type: "POST",
-        datatype: "json",
-        success: function(response) {
-            contenido.html('');
-            console.log(response)
-            s = response.length
-            contenido.append(s + " likes");
-            est.html('');
-            est.append("dislike!");
-        }
-    });
-
-} else {
-
-    $.ajax({
-        url: "/dislike",
-        data: {
-            id: id,
-            _token: token,
-            usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-        },
-        type: "POST",
-        datatype: "json",
-        success: function(response) {
-            contenido.html('');
-            console.log(response)
-            s = response.length
-            contenido.append(s + " likes");
-            est.html('');
-            est.append("like!");
-        }
-    });
-
-}
-});
-    //Buscador de Usuarios
+          //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
               // e.preventDefault();
               $value = $('#searchProfile').val();
@@ -349,14 +242,12 @@ if (est.html() == "like!") {
                 data : { "id": id},
                 success: function(data){
                   console.log(data);
-                   //$("#idseguidores").css('display', 'block');
-                   
+                    /*html = "";
+                    html.append();*/
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
           });
-    });
         </script>
-
       @endsection
