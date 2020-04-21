@@ -29,7 +29,9 @@
             <!-- Encabezado -->
             <div class="d-flex justify-content-between align-items-center border-bottom border-default p-3 text-default chat-header">
                 <h5 class="mb-0">Tus chats</h5>
-                <a class="waves-effect waves-light" href="#"><i class="fas fa-pen-square text-default fa-2x"></i></a>
+                <a class="waves-effect waves-light" href="" data-toggle="modal" data-target="#modalMessage">
+                    <i class="fas fa-pen text-default fa-lg"></i>
+                </a>
             </div>
             <!-- Contactos con chat -->
             <div class="h-100 scrollable" id="contacts-container">
@@ -58,7 +60,7 @@
                     </a>
                     <h5 id="selected-username" class="ml-2 mb-0 align-self-center">Selecciona un contacto</h5>
                 </div>
-                <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-2x"></i></a>
+                <a class="waves-effect waves-light" href="#"><i class="fas fa-ellipsis-h text-default fa-lg"></i></a>
             </div>
             <!-- Mensajes del chat -->
             <div class="d-flex flex-column pt-3 h-100 scrollable" id="chat-messages">
@@ -77,9 +79,12 @@
             </div>
         </div>
     </div>
+
+    @include('globals.modal_message');
 @endsection
 
 @section('javascript')
+    <script src="js/modal_mensaje.js"></script>
     <script type="text/javascript">
         var receiver_id = '';
         var user_id = "{{ Session::get('usuario')->id }}";
@@ -185,13 +190,19 @@
             if (user_id == data.from) {
                 contacts.find("[data-id='"+ receiver_id +"']").click();
             }
-            else if (user_id == data.to) {
-                if (receiver_id == data.from) {
-                    contacts.find("[data-id='"+ receiver_id +"']").click();
-                }
-                else {
-                    alert("You have a message :)");
-                }
+            else {
+                $.each(data.to, function(i, to) {
+                    if (user_id == to) {
+                        if (receiver_id == data.from) {
+                            contacts.find("[data-id='"+ receiver_id +"']").click();
+                        }
+                        else {
+                            alert("You have a message :)");
+                        }
+
+                        return false;
+                    }
+                });
             }
         });
     </script>

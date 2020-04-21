@@ -142,7 +142,7 @@ class loginController extends Controller
         $usu = Session::put('usuario', $usuario);
         $usu = Session::get('usuario', $usuario);
 
-		return redirect('chat');
+		return redirect('home');
     }
 
 

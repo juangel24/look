@@ -19,11 +19,13 @@ class ChatController extends Controller {
     function index() {
         $user_id = Session::get('usuario')->id;
         $users = $this->messages->usersIds($user_id);
+        $other_users = [];
 
-        $spaces = trim( str_repeat('?,', count($users)), ',');
-
-        $other_users = DB::select("select id, usuario, nombres, apellidos, imagen ".
-        "from usuarios where id IN ($spaces)", $users);
+        if (count($users)) {
+            $spaces = trim( str_repeat('?,', count($users)), ',');
+            $other_users = DB::select("select id, usuario, nombres, apellidos, imagen ".
+            "from usuarios where id IN ($spaces)", $users);
+        }
 
         return view('chat', compact('other_users'));
     }
@@ -66,7 +68,55 @@ class ChatController extends Controller {
             $options
         );
 
-        $data = ['from' => $from, 'to' => $to];
+        $data = ['from' => $from, 'to' => [$to,]];
         $pusher->trigger('look', 'chat', $data);
+    }
+
+    function sendMessages(Request $request) {
+        $from = intval($request->user_id);
+        $receivers = array_map('intval', $request->selectedIds);
+        $content = encrypt($request->msgContent);
+        $inserts = [];
+
+        foreach ($receivers as $id) {
+            array_push($inserts, [
+                'from' => $from,
+                'to' =>  $id,
+                'msg' => $content,
+                'is_read' => false,
+                'datetime' => Carbon::now()->format('d-m-Y h:i A')
+            ]);
+        }
+
+        $this->messages->insertMany($inserts);
+
+         // pusher
+        $options = [
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'useTLS' => true,
+        ];
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = ['from' => $from, 'to' => $receivers];
+        $pusher->trigger('look', 'chat', $data);
+    }
+
+    function searchUsers(Request $request) {
+        $username = strtolower($request->val);
+        $exceptions = $request->exceptions_ids;
+        $spaces = trim( str_repeat('?,', count($exceptions)), ',');
+
+        $users = DB::select("SELECT id, imagen, LOWER(usuario) AS username FROM usuarios ".
+            "WHERE usuario LIKE '%$username%' ".
+            "AND id NOT IN ($spaces) ".
+            'LIMIT 5', $exceptions);
+
+        return json_encode($users);
     }
 }
