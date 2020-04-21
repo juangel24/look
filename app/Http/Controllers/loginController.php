@@ -16,7 +16,6 @@ class loginController extends Controller
         return view('access/login');
     }
     function login(Request $request){
-        // Validaciones
         $this->validate($request, [
             'correo' => 'required|max:30',
             'password' => 'required|min:4|max:12',],
@@ -61,8 +60,7 @@ class loginController extends Controller
                     $user = Session::put('usuario', $vato);
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
-                    // dd($user);
-
+                    // dd($user->id);
                     return redirect('home');
                 }
             }

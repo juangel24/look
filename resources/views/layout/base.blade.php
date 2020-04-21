@@ -90,7 +90,8 @@
         </nav>
         <!--/.Navbar-->
     </header>
-
+    <!-- OBTAIN THE USER LOGGED -->
+    <input type="hidden" id="obtenerUsuarioOjb" value="{{ Session::get('usuario')->id }}">{{ Session::get('usuario')->id }}</input>
     <!-- PRINT PROFILE SEARCHED -->
     <section>
         <div class="print-profileSearch">

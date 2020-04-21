@@ -63,10 +63,11 @@ Route::group(['middleware' => ['validateUser']], function () {
 
     // Rutas relacionadas al chat
     include 'web/chat.php';
+
+    
 });
 Route::get('', 'loginController@viewLogin');
 Route::post('verificar-usario', 'loginController@login');
 Route::get('register', 'loginController@viewRegister')->name('register');
 Route::get('registerdata', 'loginController@register');
-
-
+Route::get('/logout', 'loginController@logout');
