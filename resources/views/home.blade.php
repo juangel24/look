@@ -136,23 +136,23 @@
                 <div class="col-md-9 col-sm-12">
 
                     @foreach($fo as $fo)
-                    <div class="col-12 ">
+                    <div class="col-10">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
-                        <div class="card">
-
+                        
                        
                         <div class="col-12">
-                            <div class="row infotmacion">
+                            <div class="row infotmacion border-top border-default border-left border-default border-right border-default">
                                 <div class="col-3">
-                                    <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:100px;width:100px;border-radius:60%;">
+                                    <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:80px;width:80px;border-radius:60%;">
                                 </div>
                                 <div class="col-7">
-                                    <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
+                                    <h5><a href="/visita/{{$fo['usuario']->id}}" class="font-weight-bold bold" style="color:gray;">{{$fo['usuario']->usuario}} </a></h5>
+                                    <h5><a href="/visita/{{$fo['usuario']->id}}" class="text-default">{{$fo['usuario']->descripcion}} </a></h5>
                                 </div>
                                 
                             </div>
                         </div>
-                        <div class="text-center ">
+                        <div class="text-center border border-default">
                             
                             <!-- ################################################### -->
                             <div class="publicacion border border-top-0 ">
@@ -162,10 +162,10 @@
                                     </figure>
                                 </div>
                                 <div class="d-flex flex-row" style="margin-left:30px;">
-                                        <a class="p-0 waves-effect waves-light" href="/profile">
-                                            <h5>{{ $fo['usuario']->usuario}}</h5>
+                                        <a class="" href="/visita/{{$fo['usuario']->id}}">
+                                            <h5 class="font-weight-bold" style="color:gray;">{{ $fo['usuario']->usuario}}</h5>
                                         </a>
-                                        <h5 style="margin-left:50px;">{{ $fo->descripcion }}</h5>
+                                        <h5 style="margin-left:50px;color:#212121" >{{ $fo->descripcion }}</h5>
                                       
                                       </diV>
                                 <div class="inreta ">
@@ -201,7 +201,7 @@
 
                         </div>
 
-                    </div>
+                    
                 </div>
                 <br><br><br>
             @endforeach
@@ -209,15 +209,13 @@
                 </div>
                 <div class="col-md-3 d-md-block">
                     <div class="overflow-auto">
-                        
-                    <h5>Sugerencias</h5>
+                        <h5 class="font-weight-bold" style="color:gray">Sugerencias</h5>
                     @foreach($sugerencia as $sug)
-                    <a href="/visita/{{$sug->id}}">{{$sug->usuario}} </a>
-                        
-                        
-                        <hr>
-                        @endforeach
-
+                    
+                    <a href="/visita/{{$sug->id}}" style="color:#212121">{{$sug->usuario}} </a>
+                        <hr class="text-default">
+                    @endforeach
+                        </div>
                     </div>
                 </div>
 

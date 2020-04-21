@@ -31,11 +31,11 @@
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-                    @if (!Session::has("validacion"))
+                  {{--   @if (!Session::has("validacion")) --}}
                     <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
-                    @else
+                  {{--   @else
                     <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
-                    @endif
+                    @endif --}}
                       
                   </div>
                 </div>
@@ -103,12 +103,18 @@
               <p class="">{{ $item->descripcion }}</p>
             </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-like" val="like">
-              <p class="estado">like!</p>
-            </button>
-            {{-- <button type="button" class="btn btn-default btn-like" val="like">
-              <p class="estado">dislike!</p>
-            </button> --}}
+            <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+              @if($item->can=="si") 
+              
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">like!</p>
+              </button>
+               @else  
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">dislike!</p>
+              </button>
+            @endif 
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -199,8 +205,9 @@
       @endsection
       @section('javascript')
        <script src="{{ asset("js/Look!/comentarios.js")}}"></script>
+       <script src="{{ asset("js/Look!/megusta.js") }}"></script>
         <script>
-          /*$("#idseguidor").click(function(e){
+          $("#idseguidor").click(function(e){
             e.preventDefault();
             //var token = $('input[name=_token]').val();
             id = $("#idseguidor").val();
@@ -222,7 +229,8 @@
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-          });*/
+
+          });
     $(document).ready(function() {
     //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
