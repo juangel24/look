@@ -15,6 +15,7 @@ use App\Tmegusta;
 use App\mmegusta;
 use App\TComentarios;
 use App\Tfotos;
+use Illuminate\Support\Facades\View;
 use App\Modelos\Seguidores;
 
 use App\Modelos\Publicaciones;
@@ -169,11 +170,13 @@ class inicioController extends Controller
             }
         }
         $fos = Collection::make($fos);
+        
         $fo = $fos;
-
+ 
 
 
         return view('home', compact('fo', 'rv', 'sv', 'sugerencia'));
+       
     }
 
     function coment(Request $request)

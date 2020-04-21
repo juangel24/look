@@ -3,6 +3,12 @@
     @section('css')
       <link rel="stylesheet" href="{{ asset('css/Look!/perfil.css') }}">
       <link rel="stylesheet" href="sweetalert2.min.css">
+      <style>
+        .estado {
+        margin: 0px;
+        padding: 0px;
+    }
+      </style>
     @endsection
       @section('content')
         @csrf
@@ -150,10 +156,12 @@
                      <img src="{{ asset("$item->imagen ")}}" class="img-fluid imagepost" id="imagepost">
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
             <!--Card content-->
             <div class="card-body card-body-cascade">
+              <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -164,12 +172,85 @@
                 <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                  
               </div>
               <p class="">{{ $item->descripcion }}</p>
-            </div>
+            </div>{{csrf_field()}}
           <div class="modal-footer">
-            <button type="button" class="btn btn-default">Likes</button>
-            <button type="button" class="btn btn-default">Comentarios</button>
+              @if($item->can=="si") 
+              <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">like!</p>
+              </button>
+               @else  
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">dislike!</p>
+              </button>
+            @endif 
+            <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
+      <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-default" id="exampleModalLabel">Comentarios</h5>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        {{csrf_field()}}
+                        
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val=""  class="btn btn-primary enviar">Send message</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
             <!--/.Card content-->
+            <!-- ################################################### -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-default" id="exampleModalLabel">Comentarios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        {{csrf_field()}}
+
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" class="yeah"></textarea>
+                        <button type="button" val="" class="btn btn-primary enviar">Send message</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
+ 
     </div>
           <!--/.Card-->
   </div>
@@ -217,13 +298,75 @@
       </div>
       </form>
       {{-- FIN DE MODAL DE FOTO DE PERFIL --}}
+
+      
       @endsection
       @section('javascript')
           
-          <script src="js/Look!/perfil.js"></script>
-          <script src="js/Look!/publicaciones.js"></script>
-          <script src="js/Look!/nuevapublicacion.js"></script>
-          <script src="js/Look!/megusta.js"></script>
+    <script src="{{ asset("js/Look!/perfil.js") }}"></script>
+    <script src="{{ asset("js/Look!/publicaciones.js") }}"></script>
+    <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
+    <script src="{{ asset("js/Look!/megusta.js") }}"></script>
+    <script src="{{ asset("js/Look!/comentarios.js") }}"></script>
+    <script>
+      
+      $('.btn-like').click(function() {
+
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+
+            var like = $(this).parent().find('.can').val();
+            var est = $(this).parent().find('.estado');
+            var v = $(this).val();
+            console.log(id);
+            var contenido = $(this).parent().find('.verlikes');;
+
+            var s = 0;
+            if (est.html() == "like!") {
+
+                $.ajax({
+                    url: "/likes",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("dislike!");
+                    }
+                });
+
+            } else {
+
+                $.ajax({
+                    url: "/dislike",
+                    data: {
+                        id: id,
+                        _token: token,
+                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                    },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(response) {
+                        contenido.html('');
+                        console.log(response)
+                        s = response.length
+                        contenido.append(s + " likes");
+                        est.html('');
+                        est.append("like!");
+                    }
+                });
+
+            }
+          });
+            </script>
           <script>
             $("#idseguidorr").click(function(e){
             e.preventDefault();
@@ -251,4 +394,5 @@
               });
           });
           </script>
+  
       @endsection

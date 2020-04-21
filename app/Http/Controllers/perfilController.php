@@ -47,20 +47,142 @@ class perfilController extends Controller
     }
 
     public function profile(){
-       // $usuarios = session::get('usuario.id');
-        //$usuarios = session::get('usuario.imagen');
         $usu = session::get('usuario');
         $usuarios = $usu->id;
         // dd($usuarios);
         $id = session::get('usuario');
         $idu = $id->id;
+
+        //aqui se sabe cuantos likes tiene cada foto 
+        $megst1 = mmegusta::with('megusta1')->get();
+        $todos = Collection::make($megst1);
+        $t = $todos->groupBy('publicacion_id')->toArray();
+        $rv = [];
+        foreach ($t as $k => $c) {
+            $rv[] = [
+                'id' => $c[0]["publicacion_id"], 'cantidad' => count($c), 'producto' => $c[0]
+            ];
+        }
+        //Aqui terminina lo de cuantos likes tiene cada foto
+
+        //aqui me traigo todas las fotos con sus respectivos usuarios
+        $fo = Tfotos::with('usuario')->get();
+        //dd($fo, $rv);
+        $sv = [];
+        foreach ($fo as $k => $c) {
+            foreach ($rv as $k => $r) {
+                if ($r['id'] == $c->id) {
+                    $sv[] = [
+                        'cantidad' => $r['cantidad'], 'producto' => $c->id
+                    ];
+                }
+            }
+        }
+        $gg = [];
+        //aqui a las fotos que me traigo le creo la variable like que contiene los likes que ha resivido y los saco con ayuda de la variable $sv
+        ##fotos con likes
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($sv as $f => $r) {
+
+                if ($r["producto"] == $c->id) {
+
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => $r['cantidad']
+                    ];
+                    $au = true;
+                    $fo[$k]->likes =  $r['cantidad'];
+                }
+            }
+            if ($au == false) {
+                $gg[] = [
+                    'foto' => $fo[$k], 'cantidad' => 0
+                ];
+                $fo[$k]->likes = 0;
+            }
+        }
+        ########################################################################
+
+        //aqui veo que fotos les he dalo like, para saber si le podre dar like o dislike en la view :D
+        #ver que foto le e dado like
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($megst1 as $f => $r) {
+
+                if ($r->publicacion_id == $c->id and $r->usuario_id == $usuarios) {
+                    //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => $r['cantidad']
+                    ];
+                    $au = true;
+                    $fo[$k]->can =  "no";
+                }
+
+
+                if ($au == false) {
+                    $gg[] = [
+                        'foto' => $fo[$k], 'cantidad' => 0
+                    ];
+                    $fo[$k]->can = "si";
+                }
+            }
+        }
+        ###############################################################################
+
+
+        //aqui me fijo a quien sigo para solo publicar fotos de personas que sigo ok?
+        $aux = Session::get('usuario');
+        $usuario = $aux->id;
+        $yes = mmegusta::where('publicacion_id', '=', 103)->where('usuario_id', '=', $usuario)->first();
+        $fos = [];
+        $segi = Seguid::where('usuario_id', '=', $usuario)->get();
+        $yeah=$fo;
+        foreach ($fo as $k => $c) {
+            $au = false;
+            foreach ($segi as $f => $r) {
+
+                if ($r->seguidor_id == $c->usuario_id) {
+                    //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+                    $au = true;
+                    
+                }
+
+            }
+            if ($au == false) {
+                $fos[] = $c;
+            }
+        }
+
+        $fos = Collection::make($fos);
+        //dd($fo, $fos);
+        $fo = $fos;
+        # traigo las publicaciones que son mias
+        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
+        $pifi=$posts;
+        //aqui compararemos las fotos que son mias y si les pueo dar like o nel
+        foreach ($yeah as $k => $c) {
+            $au = false;
+            foreach ($pifi as $f => $r) {
+
+                if ($r->id == $c->id) {
+                    //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
+                    $au = true;
+                    $pifi[$f]->likes=$c->likes;
+                    $pifi[$f]->can=$c->can;
+                }
+
+            }
+        
+        }
+        $posts=$pifi;
+
+        
         $usuario = Usuario::select("usuarios.imagen")->where('usuarios.id','=',$usuarios)->first();
         $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuarios)->count();
         $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuarios)->count();
-
-        $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$idu)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$idu)->count();
-        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+       
+        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores','fo'))->with('post',$posts);
     }
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');
@@ -251,5 +373,6 @@ class perfilController extends Controller
                 //return 0;
             
         }
-     
+
+
 }
