@@ -1,7 +1,9 @@
 $('#searchProfile').on('keyup', function (e) {
     // e.preventDefault();
     $value = $('#searchProfile').val();
-    console.log($value);
+
+    $user = $('#obtenerUsuarioOjb').val();
+    //console.log($user);
 
     $.ajaxSetup({
         headers: {
@@ -19,7 +21,13 @@ $('#searchProfile').on('keyup', function (e) {
             if ($value != "") {
                 $('#printProfileSearched').html("");
                 $.each(data, function (key, item) {
+                    
+                    if(item.id == $user){
+                        item.splice($user, 1)
+                    }
                     console.log(item);
+                    console.log(key);
+                   // if(item.usuario = )
                     $html = " <a class='searchProfile' href='/profile'> " +
                         " <div class='sProfile'> " +
                         " <ul class='listSearchProfile'> " +
