@@ -93,6 +93,13 @@ return [
 
     ],
 
+    'mongodb' => [
+        'database' => env('MONGODB_DATABASE'),
+        'cluster' => env('MONGODB_CLUSTER'),
+        'username' => env('MONGODB_USER'),
+        'password' => env('MONGODB_PASS')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Migration Repository Table

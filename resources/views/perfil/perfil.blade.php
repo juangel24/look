@@ -33,7 +33,7 @@
                   <div class="media-body " id="mediaperfil">
                     <h4 class="mt-0 mb-2 font-weight-bold"> {{Session::get('usuario')->usuario}}&nbsp;&nbsp;
                         <a href="/updateProfile" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
-                        &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a>
+                     {{--  &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a> --}}
                       </h4></a>
                     <h5>{{ Session::get('usuario')->nombres }}</h5>
                     <div>
@@ -60,6 +60,22 @@
           </div>
           <hr>
         {{-- FIN DE  DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}
+  {{--   @if (session::has('mensajeperfil'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{session::get('mensajeperfil')}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+      @endif
+            @if (session::has('mensajerrorperfil'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{session::get('mensajerrorperfil')}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            @endif--}} 
 
         {{-- BOTON DE CREACION DE PUBLICACION --}}
           <center><button type="button" class="btn blue-gradient" style="border-radius:30px;" data-toggle="modal" data-target="#modalpublicaciones"><i class="fas fa-plus-circle fa-2x pr-2"
@@ -311,7 +327,6 @@
           
     <script src="{{ asset("js/Look!/perfil.js") }}"></script>
     <script src="{{ asset("js/Look!/publicaciones.js") }}"></script>
-    <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
     <script src="{{ asset("js/Look!/megusta.js") }}"></script>
     <script src="{{ asset("js/Look!/comentarios.js") }}"></script>
           <script>

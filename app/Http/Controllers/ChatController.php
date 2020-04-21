@@ -17,22 +17,21 @@ class ChatController extends Controller {
     }
 
     function index() {
-        $other_users = DB::select('select id, usuario, nombres, apellidos, imagen '.
-        'from usuarios where id != ?', [Session::get('usuario')->id]);
+        $user_id = Session::get('usuario')->id;
+        $users = $this->messages->usersIds($user_id);
+
+        $spaces = trim( str_repeat('?,', count($users)), ',');
+
+        $other_users = DB::select("select id, usuario, nombres, apellidos, imagen ".
+        "from usuarios where id IN ($spaces)", $users);
 
         return view('chat', compact('other_users'));
     }
 
     function getMessages(int $receiver_id) {
         $user_id = Session::get('usuario')->id;
-        $condition = [
-            '$and' => [
-                ['from' => ['$in' => [$user_id, $receiver_id]]],
-                ['to' => ['$in' => [$user_id, $receiver_id]]]
-            ]
-        ];
 
-        $messages = $this->messages->find($condition)->toArray();
+        $messages = $this->messages->get($user_id, $receiver_id);
 
         for($i = 0; $i < count($messages); $i++)
             $messages[$i]->msg = decrypt($messages[$i]->msg);
@@ -69,7 +68,18 @@ class ChatController extends Controller {
 
         $data = ['from' => $from, 'to' => $to];
         $pusher->trigger('look', 'chat', $data);
+    }
 
-        return $to;
+    function searchUsers(Request $request) {
+        $username = strtolower($request->val);
+        $exceptions = $request->exceptions_ids;
+        $spaces = trim( str_repeat('?,', count($exceptions)), ',');
+
+        $users = DB::select("SELECT id, imagen, LOWER(usuario) AS username FROM usuarios ".
+            "WHERE usuario LIKE '%$username%' ".
+            "AND id NOT IN ($spaces) ".
+            'LIMIT 5', $exceptions);
+
+        return json_encode($users);
     }
 }

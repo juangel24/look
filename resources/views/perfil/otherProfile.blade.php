@@ -4,10 +4,6 @@
       <link rel="stylesheet" href="{{ asset('css/Look!/perfil.css') }}">
       <link rel="stylesheet" href="sweetalert2.min.css">
       <style>
-      #idseguidores{
-        height: 30px;
-        width: 40px;
-      }
       .estado {
         margin: 0px;
         padding: 0px;
@@ -24,18 +20,18 @@
                 {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
                 <img class="d-flex mr-3" id="fotodeperfil"  src="{{asset("$usuario->imagen")}}" style="height:100px;width:100px;border-radius:60%;">
                 </div>
-
                   <div class="media-body " id="mediaperfil">
                     <h4 class="mt-0 mb-2 font-weight-bold"> {{$usuario->usuario}}</h4>
                     <h5>{{ $usuario->nombres }}</h5>
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-                  @if (!Session::has("validacion"))
-                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
-                  @else
-                    <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
-                    @endif
+               
+                <button class="btn btn-primary"  id="idseguidor" value="{{ $usuario->id }}">seguir</button>
+             
+                <a id="iddejardeseguir" href="http://127.0.0.1:8000/unfollow/{{$usuario->id}}" type="button" class="btn btn-primary" hidden >Dejar de seguir</a>
+                     {{--<button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>   --}}
+                
                       
                   </div>
                 </div>
@@ -206,6 +202,7 @@
       @section('javascript')
        <script src="{{ asset("js/Look!/comentarios.js")}}"></script>
        <script src="{{ asset("js/Look!/megusta.js") }}"></script>
+       <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
         <script>
           $("#idseguidor").click(function(e){
             e.preventDefault();
@@ -225,12 +222,16 @@
                 success: function(data){
                   console.log("hola" + data);
                   $("#othersfollowers").html(data);
+                  /*$("#idseguidor").css('display', 'none');
+                  $("#iddejardeseguir").css('display','block');*/
+    
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
 
           });
+       
     $(document).ready(function() {
     //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
@@ -278,7 +279,7 @@
           });
 
           //VERIFICACIÓN
-        $("#idseguidor").click(function(e){
+      /*  $("#iddejardeseguir").click(function(e){
             e.preventDefault();
             //var token = $('input[name=_token]').val();
             id = $("#idseguidor").val();
@@ -295,13 +296,13 @@
                 data : { "id": id},
                 success: function(data){
                   console.log(data);
-                   //$("#idseguidores").css('display', 'block');
+                   $("#idseguidores").css('display', 'block');
                    
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-          });
+          });*/
     });
         </script>
 
