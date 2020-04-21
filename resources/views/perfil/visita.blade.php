@@ -9,7 +9,7 @@
         width: 40px;
        
       }
-      </style>
+      </style> 
     @endsection
       @section('content')
       {{-- DISEÑO DE PARTE DE FOTO DE PERFIL Y MUESTRA DE SEGUIDORES --}}

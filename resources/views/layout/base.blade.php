@@ -32,7 +32,7 @@
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark default-color">
             <div class="container">
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/home">
                     <img src="/img/white_logo.png" height="30" alt="Look">
                 </a>
 
@@ -48,7 +48,7 @@
                     <!-- Links -->
                     <ul class="navbar-nav justify-content-center">
                         <li class="nav-item active">
-                            <a class="nav-link" href="home"><i class="fas fa-home fa-lg"></i></a>
+                            <a class="nav-link" href="/home"><i class="fas fa-home fa-lg"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-globe fa-lg"></i></a>
