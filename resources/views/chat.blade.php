@@ -190,13 +190,19 @@
             if (user_id == data.from) {
                 contacts.find("[data-id='"+ receiver_id +"']").click();
             }
-            else if (user_id == data.to) {
-                if (receiver_id == data.from) {
-                    contacts.find("[data-id='"+ receiver_id +"']").click();
-                }
-                else {
-                    alert("You have a message :)");
-                }
+            else {
+                $.each(data.to, function(i, to) {
+                    if (user_id == to) {
+                        if (receiver_id == data.from) {
+                            contacts.find("[data-id='"+ receiver_id +"']").click();
+                        }
+                        else {
+                            alert("You have a message :)");
+                        }
+
+                        return false;
+                    }
+                });
             }
         });
     </script>

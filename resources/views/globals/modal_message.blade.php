@@ -22,12 +22,8 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default">Enviar</button>
+                <button class="btn btn-default" id="btn-enviar-msg">Enviar</button>
             </div>
         </div>
     </div>
 </div>
-<!--<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
-    Modal Login Form</a>
-</div>-->

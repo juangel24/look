@@ -9,7 +9,8 @@ $(document).ready(function() {
         var val = $(this).val();
 
         if(val != '') {
-            var exceptions_ids = getExceptionsIds();
+            var exceptions_ids = getSelectedIds();
+            exceptions_ids.push(user_id);
 
             $.ajax({
                 type: "get",
@@ -48,21 +49,41 @@ $(document).ready(function() {
         );
 
         divResult.empty();
+        inputSearch.val('');
     });
 
     divSelectedUsers.on('click', '.close', function() {
         $(this).parents('span').remove();
     });
 
-    function getExceptionsIds() {
+    function getSelectedIds() {
         var array = [];
 
         $.each(divSelectedUsers.children(), function(i, span) {
             var id = parseInt($(span).attr('data-id'));
             array.push(id);
         });
-        array.push(user_id);
 
         return array;
     }
+
+    $('#btn-enviar-msg').click(function() {
+        var selectedIds = getSelectedIds();
+        var msgContent = $('#msg-content').val();
+
+        if (selectedIds.length > 0 && msgContent != '') {
+            $.ajax({
+                type: "post",
+                url: "message-many",
+                data: {user_id ,selectedIds, msgContent},
+                success: function() {
+                    alert('you are the cock');
+                },
+                error: function(error) {
+                    console.log(error.responseText);
+                    alert('why did you born?');
+                },
+            });
+        }
+    });
 });
