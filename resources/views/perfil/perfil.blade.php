@@ -169,7 +169,7 @@
                 {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
               </a>
               <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                  
+                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                   
               </div>
               <p class="">{{ $item->descripcion }}</p>
             </div>{{csrf_field()}}
