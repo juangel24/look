@@ -117,7 +117,7 @@
                     'search': $value
                 },
                 success: function(data) {
-                    if ($value != "") {
+                    if ($value != "") {profile
                         $('#printProfileSearched').html("");
                         $.each(data, function(key, item) {
                             $html = " <a class='searchProfile' href=''> " +

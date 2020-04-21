@@ -318,6 +318,7 @@ class inicioController extends Controller
         $fo = $fos;
         # traigo las publicaciones que son mias
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$visitar)->orderby('created_at','desc')->get();
+       
         $pifi=$posts;
         //aqui compararemos las fotos que son mias y si les pueo dar like o nel
         foreach ($yeah as $k => $c) {

@@ -137,7 +137,7 @@
               <a class="myBox" data-target="#imagemodal{{ $item->id }}" data-toggle="modal" id="imgmodal">
                 <img src="{{ asset("$item->imagen ")}}" class="card-img-top" style="height:270px;" id="imgpost">
                   <div class="mask flex-center rgba-black-light">
-                    <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>
+                    {{--  <i class="fas fa-heart fa-lg white-text pr-3"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-comment fa-lg white-text pr-3" style="margin-left:20px;"></i>--}}
                   </div>
               </a>
             </div>
@@ -169,10 +169,15 @@
                 {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
               </a>
               <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                   
+                <a class="dropdown-item"href="deletepost/{{ $item->id }}" onClick="confirm('¿Realmente desea eliminar la publicacion?')">Eliminar</a>                                   
               </div>
               <p class="">{{ $item->descripcion }}</p>
-            </div>{{csrf_field()}}
+            
+            </div>
+            {{csrf_field()}}
+            <button class="btn btn-link btn-sm verlikes"  value="{{$item->id}}">
+                  {{$item->likes}} likes
+            </button>
           <div class="modal-footer">
           <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
               <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
@@ -309,65 +314,6 @@
     <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
     <script src="{{ asset("js/Look!/megusta.js") }}"></script>
     <script src="{{ asset("js/Look!/comentarios.js") }}"></script>
-    <script>
-      
-      $('.btn-like').click(function() {
-
-            var token = $('input[name=_token]').val();
-            var id = $(this).parent().find('.idimagen').val();
-
-            var like = $(this).parent().find('.can').val();
-            var est = $(this).parent().find('.estado');
-            var v = $(this).val();
-            console.log(id);
-            var contenido = $(this).parent().find('.verlikes');;
-
-            var s = 0;
-            if (est.html() == "like!") {
-
-                $.ajax({
-                    url: "/likes",
-                    data: {
-                        id: id,
-                        _token: token,
-                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-                    },
-                    type: "POST",
-                    datatype: "json",
-                    success: function(response) {
-                        contenido.html('');
-                        console.log(response)
-                        s = response.length
-                        contenido.append(s + " likes");
-                        est.html('');
-                        est.append("dislike!");
-                    }
-                });
-
-            } else {
-
-                $.ajax({
-                    url: "/dislike",
-                    data: {
-                        id: id,
-                        _token: token,
-                        usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
-                    },
-                    type: "POST",
-                    datatype: "json",
-                    success: function(response) {
-                        contenido.html('');
-                        console.log(response)
-                        s = response.length
-                        contenido.append(s + " likes");
-                        est.html('');
-                        est.append("like!");
-                    }
-                });
-
-            }
-          });
-            </script>
           <script>
             $("#idseguidorr").click(function(e){
             e.preventDefault();
@@ -379,7 +325,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             $.ajax({
                 url: "{{ url('seguidores') }}",
                 method: "GET",

@@ -1,18 +1,56 @@
- var postId = 0
-$("#like").on('click', function(event){
-    event.preventDefault();
-    var isLike = event.target.previousElementSibling == null;
-    var token = $('input[name=_token]').val();
-    //console.log(isLike);
-    var urlLike = '{{ route("like") }}';
-    postId =  event.target.parentNode.parentNode.dataset['postid'];
+$('.btn-like').click(function () {
 
-    $.ajax({
-        method : 'POST',
-        url: urlLike,
-        data: {isLike: isLike, postid:postid, _token:token}
-    })
-    .done(function(){
-        
-    });
+    var token = $('input[name=_token]').val();
+    var id = $(this).parent().find('.idimagen').val();
+
+    var like = $(this).parent().find('.can').val();
+    var est = $(this).parent().find('.estado');
+    var v = $(this).val();
+    console.log(id);
+    var contenido = $(this).parent().parent().find('.verlikes');;
+
+    var s = 0;
+    if (est.html() == "like!") {
+
+        $.ajax({
+            url: "/likes",
+            data: {
+                id: id,
+                _token: token,
+                usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+            },
+            type: "POST",
+            datatype: "json",
+            success: function (response) {
+                contenido.html('');
+                console.log(response)
+                s = response.length
+                contenido.append(s + " likes");
+                est.html('');
+                est.append("dislike!");
+            }
+        });
+
+    } else {
+
+        $.ajax({
+            url: "/dislike",
+            data: {
+                id: id,
+                _token: token,
+                usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+            },
+            type: "POST",
+            datatype: "json",
+            success: function (response) {
+                contenido.html('');
+                console.log(response)
+                s = response.length
+                contenido.append(s + " likes");
+                est.html('');
+                est.append("like!");
+            }
+        });
+
+    }
 });

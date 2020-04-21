@@ -23,32 +23,30 @@ class ChatController extends Controller {
         return view('chat', compact('other_users'));
     }
 
-    function getMessages($receiver_id) {
+    function getMessages(int $receiver_id) {
         $user_id = Session::get('usuario')->id;
-        // Código temporal - Problema: No se pueden aplicar los filtros
-        $messages = $this->messages->find()->toArray();
-        $user_messages = [];
+        $condition = [
+            '$and' => [
+                ['from' => ['$in' => [$user_id, $receiver_id]]],
+                ['to' => ['$in' => [$user_id, $receiver_id]]]
+            ]
+        ];
 
-        foreach ($messages as $msg) {
-            if (
-                ($msg->from == $user_id && $msg->to == $receiver_id) ||
-                ($msg->from == $receiver_id && $msg->to == $user_id)
-            ) {
-                $msg->msg = decrypt($msg->msg);
-                array_push($user_messages, $msg);
-            }
-        }
+        $messages = $this->messages->find($condition)->toArray();
+
+        for($i = 0; $i < count($messages); $i++)
+            $messages[$i]->msg = decrypt($messages[$i]->msg);
 
         return $messages;
     }
 
     function sendMessage(Request $request) {
         $from = Session::get('usuario')->id;
-        $to = $request->receiver_id;
+        $to = intval($request->receiver_id);
         $message_text = encrypt($request->message);
         $message = [
             'from' => $from,
-            'to' => $to,
+            'to' =>  $to,
             'msg' => $message_text,
             'is_read' => false,
             'datetime' => Carbon::now()->format('d-m-Y h:i A')
@@ -71,5 +69,7 @@ class ChatController extends Controller {
 
         $data = ['from' => $from, 'to' => $to];
         $pusher->trigger('look', 'chat', $data);
+
+        return $to;
     }
 }

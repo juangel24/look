@@ -136,22 +136,24 @@
                 <div class="col-md-9 col-sm-12">
 
                     @foreach($fo as $fo)
-                    <div class="col-12 ">
+                    <div class="col-10">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
-
+                        
+                       
                         <div class="col-12">
-                            <div class="row infotmacion">
+                            <div class="row infotmacion border-top border-default border-left border-default border-right border-default">
                                 <div class="col-3">
-                                    <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:100px;width:100px;border-radius:60%;">
+                                    <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:80px;width:80px;border-radius:60%;">
                                 </div>
                                 <div class="col-7">
-                                    <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
+                                    <h5><a href="/visita/{{$fo['usuario']->id}}" class="font-weight-bold bold" style="color:gray;">{{$fo['usuario']->usuario}} </a></h5>
+                                    <h5><a href="/visita/{{$fo['usuario']->id}}" class="text-default">{{$fo['usuario']->descripcion}} </a></h5>
                                 </div>
-
+                                
                             </div>
                         </div>
-                        <div class="text-center ">
-
+                        <div class="text-center border border-default">
+                            
                             <!-- ################################################### -->
                             <div class="publicacion border border-top-0 ">
                                 <div class=" foto">
@@ -159,9 +161,17 @@
                                         <img src="{{$fo->imagen}}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
                                     </figure>
                                 </div>
+                                <div class="d-flex flex-row" style="margin-left:30px;">
+                                        <a class="" href="/visita/{{$fo['usuario']->id}}">
+                                            <h5 class="font-weight-bold" style="color:gray;">{{ $fo['usuario']->usuario}}</h5>
+                                        </a>
+                                        <h5 style="margin-left:50px;color:#212121" >{{ $fo->descripcion }}</h5>
+                                      
+                                      </diV>
                                 <div class="inreta ">
-
+                                   
                                     <span class="input-group-btn">
+                                       
                                         {{csrf_field()}}
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}" hidden>
                                         <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
@@ -172,9 +182,7 @@
 
                                             </button>
                                         </figcaption>
-
-
-
+                                        
 
                                         @if($fo->can=="si")
                                         <button type="button" class="btn btn-default btn-like" val="like">
@@ -185,37 +193,29 @@
                                             <p class="estado">dislike!</p>
                                         </button>
                                         @endif
-
-
-
-
-
                                         <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
-
                                     </span>
-                                    <figcaption class="figure-caption">{{$fo->descripcion}}</figcaption>
-
                                 </div>
                             </div>
                             <!-- ################################################### -->
 
                         </div>
 
-                    </div>
-                    @endforeach
+                    
+                </div>
+                <br><br><br>
+            @endforeach
 
                 </div>
                 <div class="col-md-3 d-md-block">
                     <div class="overflow-auto">
-                        
-                    <h5>Sugerencias</h5>
+                        <h5 class="font-weight-bold" style="color:gray">Sugerencias</h5>
                     @foreach($sugerencia as $sug)
-                    <a href="/visita/{{$sug->id}}">{{$sug->usuario}} </a>
-                        
-                        
-                        <hr>
-                        @endforeach
-
+                    
+                    <a href="/visita/{{$sug->id}}" style="color:#212121">{{$sug->usuario}} </a>
+                        <hr class="text-default">
+                    @endforeach
+                        </div>
                     </div>
                 </div>
 
@@ -285,14 +285,14 @@
     }
 
     .publicacion {
-        background: wheat;
+        /*background: wheat;*/
         margin-bottom: 2rem;
 
     }
 
-    .infotmacion {
+    /*.infotmacion {
         background: wheat;
-    }
+    }*/
 
     .estado {
         margin: 0px;
