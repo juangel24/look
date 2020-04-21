@@ -138,7 +138,9 @@
                     @foreach($fo as $fo)
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
+                        <div class="card">
 
+                       
                         <div class="col-12">
                             <div class="row infotmacion">
                                 <div class="col-3">
@@ -147,11 +149,11 @@
                                 <div class="col-7">
                                     <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
                                 </div>
-
+                                
                             </div>
                         </div>
                         <div class="text-center ">
-
+                            
                             <!-- ################################################### -->
                             <div class="publicacion border border-top-0 ">
                                 <div class=" foto">
@@ -159,9 +161,17 @@
                                         <img src="{{$fo->imagen}}" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
                                     </figure>
                                 </div>
+                                <div class="d-flex flex-row" style="margin-left:30px;">
+                                        <a class="p-0 waves-effect waves-light" href="/profile">
+                                            <h5>{{ $fo['usuario']->usuario}}</h5>
+                                        </a>
+                                        <h5 style="margin-left:50px;">{{ $fo->descripcion }}</h5>
+                                      
+                                      </diV>
                                 <div class="inreta ">
-
+                                   
                                     <span class="input-group-btn">
+                                       
                                         {{csrf_field()}}
                                         <input id="id" class="idimagen" type="text" value="{{$fo->id}}" hidden>
                                         <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
@@ -172,9 +182,7 @@
 
                                             </button>
                                         </figcaption>
-
-
-
+                                        
 
                                         @if($fo->can=="si")
                                         <button type="button" class="btn btn-default btn-like" val="like">
@@ -185,16 +193,8 @@
                                             <p class="estado">dislike!</p>
                                         </button>
                                         @endif
-
-
-
-
-
                                         <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
-
                                     </span>
-                                    <figcaption class="figure-caption">{{$fo->descripcion}}</figcaption>
-
                                 </div>
                             </div>
                             <!-- ################################################### -->
@@ -202,7 +202,9 @@
                         </div>
 
                     </div>
-                    @endforeach
+                </div>
+                <br><br><br>
+            @endforeach
 
                 </div>
                 <div class="col-md-3 d-md-block">
@@ -285,14 +287,14 @@
     }
 
     .publicacion {
-        background: wheat;
+        /*background: wheat;*/
         margin-bottom: 2rem;
 
     }
 
-    .infotmacion {
+    /*.infotmacion {
         background: wheat;
-    }
+    }*/
 
     .estado {
         margin: 0px;

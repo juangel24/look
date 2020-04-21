@@ -126,9 +126,9 @@
           </form>
           {{-- FIN DE MODAL DE CREACION DE PUBLICACION --}}
         {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
-  @if ($post != null )
+  @if ($posts != null )
     <div class="row">
-      @foreach ($post as $item)
+      @foreach ($posts as $item)
       <div class="col-lg-4 col-md-12 mb-4">
           <!--Card-->
         <div class="card card-cascade wider mb-4">
@@ -160,8 +160,8 @@
             </div>
             <!--Card content-->
             <div class="card-body card-body-cascade">
-              <input type="hidden"  class="idimagen"value="{{ $item->id }}">
-              <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
+              <input type="hidden"  class="idimagen"value="{{ $item->id }}"> {{-- 
+             <input id="can" class="can" type="text" value="{{$fo->can}}" hidden> --}}
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -173,16 +173,18 @@
               </div>
               <p class="">{{ $item->descripcion }}</p>
             </div>
+            {{-- ---------------------LIKES -------------------------------------------------------------- --}}
           <div class="modal-footer">
-              @if($fo->can=="si") 
+            {{--   @if($fo->can=="si")  --}}
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
-               @else  
+           {{--     @else   --}}
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">dislike!</p>
               </button>
-            @endif 
+           {{--  @endif  --}}
+             {{-- ---------------------LIKES -------------------------------------------------------------- --}}
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -361,6 +363,7 @@
                 });
 
             }
+      });
 
     </script>
           <script>

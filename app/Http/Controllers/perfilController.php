@@ -153,8 +153,7 @@ class perfilController extends Controller
         $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuarios)->count();
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuarios)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuarios)->count();
-        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores','fo'))->with('post',$posts);
-    }
+        return view('perfil.perfil',compact('usuario','cantidad','seguidos','seguidores','fo','posts'));
     /*public function uploadphotodropbox(Request $r){
         $usuarios = session::get('usuario.id');
         $file = $r->file('imagen');
@@ -178,7 +177,7 @@ class perfilController extends Controller
         $usuarios = Usuario::all();
         return view('perfil.perfil',compact('usuarios'));
     }*/
-
+    }
     function viewUpdateProfile () {
         $usuario = Session::get('usuario');
         return view('perfil/perfilUpdated', compact('usuario'));
@@ -335,7 +334,7 @@ class perfilController extends Controller
                 }
                 return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
         
-                $url = "http://127.0.0.1:8000/profile/".$id;
+               // $url = "http://127.0.0.1:8000/profile/".$id;
                 //return redirect($url);
                 //return view('perfil.otherProfile')->share($url);
                 
@@ -344,6 +343,5 @@ class perfilController extends Controller
                 //return 0;
             
         }
+    }
 
-
-}
