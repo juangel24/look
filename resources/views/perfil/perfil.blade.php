@@ -169,7 +169,7 @@
                 {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
               </a>
               <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                   
+                <a class="dropdown-item"href="deletepost/{{ $item->id }}" onClick="confirm('¿Realmente desea eliminar la publicacion?')">Eliminar</a>                                   
               </div>
               <p class="">{{ $item->descripcion }}</p>
             
