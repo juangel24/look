@@ -26,11 +26,14 @@
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-               
+               @if ( !$variable == 1)
                 <button class="btn btn-primary"  id="idseguidor" value="{{ $usuario->id }}">seguir</button>
+               @else
+                <a id="iddejardeseguir" onclick="window.location='http://127.0.0.1:8000/unfollow/{{$usuario->id}}'" type="button" class="btn btn-primary">Dejar de seguir</a>     
+              @endif
+               
              
-                <a id="iddejardeseguir" href="http://127.0.0.1:8000/unfollow/{{$usuario->id}}" type="button" class="btn btn-primary" hidden >Dejar de seguir</a>
-                     {{--<button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>   --}}
+              {{--<button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>   --}}
                 
                       
                   </div>
@@ -202,7 +205,7 @@
       @section('javascript')
        <script src="{{ asset("js/Look!/comentarios.js")}}"></script>
        <script src="{{ asset("js/Look!/megusta.js") }}"></script>
-       <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script>
+      {{-- <script src="{{ asset("js/Look!/nuevapublicacion.js") }}"></script> --}} 
         <script>
           $("#idseguidor").click(function(e){
             e.preventDefault();
@@ -222,14 +225,14 @@
                 success: function(data){
                   console.log("hola" + data);
                   $("#othersfollowers").html(data);
-                  /*$("#idseguidor").css('display', 'none');
-                  $("#iddejardeseguir").css('display','block');*/
-    
+                  $("#idseguidor").css('display', 'none');
+                  $("#iddejardeseguir").css('display','block');
+                  window.location.reload();
                 }
               }).fail( function( jqXHR, textStatus, errorThrown ) {
                   console.log(jqXHR, textStatus, errorThrown  );
               });
-
+              //location.href= "/profile"
           });
        
     $(document).ready(function() {

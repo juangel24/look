@@ -44,6 +44,10 @@ class perfilController extends Controller
             $usuario->save();
             return redirect('/profile');
         }
+        else{
+            Session::flash('mensajerrorperfil', 'Necesita subir una foto');
+            return  redirect('/profile');
+        }
     }
 
 
@@ -483,18 +487,19 @@ class perfilController extends Controller
             $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
 
            $validacion = DB::table("seguidores")
-           ->select("usuario_id","seguidor_id")
            ->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
-            
             //dd($validacion);
-                //if ($validacion){
-                    //return "paso";
-                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores','validacion'))->with('post',$posts)->with("validacion", $validacion);
+            $variable = 0;
+            //dd($validacion);
+                if ($validacion != null){
+                    $variable = 1;
+                    //return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores','validacion','variable'))->with('post',$posts)->with("validacion", $validacion);
                     //return redirect("/profile");
                     //return 1;
-               // }
-                //return "no pasó";
-                //return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+                }
+                
+                
+                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores','variable'))->with('post',$posts);
         
                 //$url = "http://127.0.0.1:8000/profile/".$id;
                 //return redirect($url);

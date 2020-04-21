@@ -55,6 +55,7 @@ class PublicacionesController extends Controller
         return redirect("/profile");
     }
     public function seguidor(Request $r){
+
         $id_seguidor = $r->id;
         $usuario = session::get('usuario');
         $id = $usuario->id;
@@ -62,6 +63,7 @@ class PublicacionesController extends Controller
         return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
     public function unfollow($id){
+        //dd($id);
         $usuarios = session::get('usuario');
         $idu = $usuarios->id;
         //dd($idu);
@@ -70,7 +72,8 @@ class PublicacionesController extends Controller
         $seguidores = Seguidores::where("usuario_id","=",$idu)
         ->where("seguidor_id","=",$id);
         $seguidores->delete();
-
+             //return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores','variable'))->with('post',$posts);
+        
         return redirect()->back();
     }
 
