@@ -482,25 +482,30 @@ class perfilController extends Controller
             $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario->id)->count();
             $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
 
-           $validacion = Seguidores::select("seguidor_id","usuario_id")->where("usuario_id", "=", $id)->Where("seguidor_id","=",$usuario->id)->first();
-        
+           $validacion = DB::table("seguidores")
+           ->select("usuario_id","seguidor_id")
+           ->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
+            
             //dd($validacion);
-                if ($validacion){
-                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts)->with("validacion",$validacion);
+                //if ($validacion){
+                    //return "paso";
+                    return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores','validacion'))->with('post',$posts)->with("validacion", $validacion);
                     //return redirect("/profile");
                     //return 1;
-                }
-                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+               // }
+                //return "no pasó";
+                //return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
         
-                $url = "http://127.0.0.1:8000/profile/".$id;
+                //$url = "http://127.0.0.1:8000/profile/".$id;
                 //return redirect($url);
                 //return view('perfil.otherProfile')->share($url);
                 
-                return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
+                //return view('perfil.otherProfile',compact('usuario','cantidad','seguidos','seguidores'))->with('post',$posts);
 
                 //return 0;
             
         }
+        
      
     }
 

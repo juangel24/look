@@ -1,3 +1,14 @@
+$(document).ready(function () {
+    $(":button").click(function () {
+        if (this.id == 'idseguidor') {
+            $("#idseguidor").css('display', 'none');
+            $('#iddejardeseguir').removeAttr('hidden');
+        }
+    });
+});
+
+
+
 /*$(document).ready(function(){
    
     var id = $('input[name="id"]').val();
@@ -43,4 +54,3 @@
     });
   
   });*/
- 

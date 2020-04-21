@@ -7,7 +7,7 @@ use Session;
 use Validator;
 use App\Modelos\Publicaciones;              
 use App\Modelos\Seguidores; 
-use App\Modelos\Megusta;   
+ 
 use DB;
 class PublicacionesController extends Controller
 {
@@ -49,18 +49,7 @@ class PublicacionesController extends Controller
         $id_post = $r->get('id_post');
         dd($id_post);
     }
-    public function likes(Request $r){
-        $post_id = $r['postid'];
-        $is_like = $r['isLike'] === true;
-        $update = false;
-        $post = Post::find($post_id);
-        if (!$post) {
-            return null;
-        }
-        $user = session::get('usuario');
-        $uid = $user->id;
-        
-    }
+
     public function deletepost($id){
         $proveedores = Publicaciones::destroy($id);
         return redirect("/profile");
@@ -72,23 +61,36 @@ class PublicacionesController extends Controller
         DB::select("call followers ('$id','$id_seguidor')"); 
         return Seguidores::select("seguidor_id")->where("seguidor_id","=",$id_seguidor)->count();
     }
+    public function unfollow($id){
+        $usuarios = session::get('usuario');
+        $idu = $usuarios->id;
+        //dd($idu);
+        //$usuario = DB::table('usuarios')->where('usuario', $id)->first();
+        
+        $seguidores = Seguidores::where("usuario_id","=",$idu)
+        ->where("seguidor_id","=",$id);
+        $seguidores->delete();
 
+        return redirect()->back();
+    }
 
 
    
-    public function verificarSeguidores(Request $r){
-        
-        $id_seguidor = $r->id;
-        $usuario = session::get('usuario');
-        $id = $usuario->id;
-
+    public function verificarSeguidores($id){
+        /*$id_seguidor = $r->id;
+        dd($id_seguidor);*/
+        $usuarios = session::get('usuario');
+        $idu = $usuarios->id;
+        $usuario = DB::table('usuarios')->where('usuario', $id)->first();
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$usuario->id)->orderby('created_at','desc')->get();
         $cantidad = Publicaciones::select("publicaciones.id")->where("usuario_id","=",$usuario->id)->count();
         $seguidos = Seguidores::select("usuario_id")->where("usuario_id","=",$usuario->id)->count();
         $seguidores = Seguidores::select("seguidor_id")->where("seguidor_id","=",$usuario->id)->count();
 
 
-        $validacion = Seguidores::select("*")->where("usuario_id", "=", $id)->Where("seguidor_id","=",$usuario->id)->first();
+        $validacion = DB::table("seguidores")
+           ->select("usuario_id","seguidor_id")
+           ->where("usuario_id", "=", $idu)->Where("seguidor_id","=",$usuario->id)->first();
 
             //dd($validacion);
                 if ($validacion){
