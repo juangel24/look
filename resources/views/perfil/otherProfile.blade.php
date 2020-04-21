@@ -31,11 +31,11 @@
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
-                  {{--   @if (!Session::has("validacion")) --}}
+                  @if (!Session::has("validacion"))
                     <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
-                  {{--   @else
+                  @else
                     <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
-                    @endif --}}
+                    @endif
                       
                   </div>
                 </div>
@@ -94,28 +94,28 @@
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ $usuario->usuario }}</strong>
               </h4>
-              <a class="waves-effect waves-light dropdown-toggle text-default mr-4" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="dropdown-option" s>
-                {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
-              </a>
-              <div class="dropdown-menu">
-                <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                  
-              </div>
               <p class="">{{ $item->descripcion }}</p>
             </div>
+               <button class="btn btn-link btn-sm verlikes"  value="{{$item->id}}">
+                  {{$item->likes}} likes
+            </button>
           <div class="modal-footer">
+
             <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
-              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+            <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+            
               @if($item->can=="si") 
-              
+             
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
-               @else  
-              <button type="button" class="btn btn-default btn-like" val="like">
+            
+               @else
+              <button type="button class="btn btn-default btn-like" val="like">
                 <p class="estado">dislike!</p>
               </button>
-            @endif 
-            <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
+              @endif 
+            <button type="button" class="btn btn-default btn-comentario"  data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

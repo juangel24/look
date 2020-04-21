@@ -7,7 +7,7 @@ $('.btn-like').click(function () {
     var est = $(this).parent().find('.estado');
     var v = $(this).val();
     console.log(id);
-    var contenido = $(this).parent().find('.verlikes');;
+    var contenido = $(this).parent().parent().find('.verlikes');;
 
     var s = 0;
     if (est.html() == "like!") {
