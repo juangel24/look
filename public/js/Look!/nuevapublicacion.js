@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
    
     var id = $('input[name="id"]').val();
     $("#profileimage").change(function(){
@@ -42,5 +42,5 @@ $(document).ready(function(){
         });
     });
   
-  });
+  });*/
  

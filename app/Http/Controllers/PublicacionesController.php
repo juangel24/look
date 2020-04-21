@@ -35,7 +35,7 @@ class PublicacionesController extends Controller
             else
             {
                 Session::flash('mensajerror', 'Hubo un error al subir una foto');
-                return  redirect('/profile');;
+                return  redirect('/profile');
             }
     }
     public function post(Request $r, $id){
