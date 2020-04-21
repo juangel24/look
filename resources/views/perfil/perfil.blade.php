@@ -126,9 +126,9 @@
           </form>
           {{-- FIN DE MODAL DE CREACION DE PUBLICACION --}}
         {{-- INICIO DE VALIDACIÓN Y CREACION DE CARD DE PUBLICACION --}}
-  @if ($posts != null )
+  @if ($post != null )
     <div class="row">
-      @foreach ($posts as $item)
+      @foreach ($post as $item)
       <div class="col-lg-4 col-md-12 mb-4">
           <!--Card-->
         <div class="card card-cascade wider mb-4">
@@ -156,12 +156,12 @@
                      <img src="{{ asset("$item->imagen ")}}" class="img-fluid imagepost" id="imagepost">
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
             <!--Card content-->
             <div class="card-body card-body-cascade">
-              <input type="hidden"  class="idimagen"value="{{ $item->id }}"> {{-- 
-             <input id="can" class="can" type="text" value="{{$fo->can}}" hidden> --}}
+              <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
               <!--Title-->
               <h4 class="card-title text-default text-center"><strong>{{ session::get('usuario')->usuario }}</strong>
               </h4>
@@ -172,19 +172,20 @@
                 <button class="dropdown-item" onclick="deletepost();">Eliminar</button>                                  
               </div>
               <p class="">{{ $item->descripcion }}</p>
-            </div>
-            {{-- ---------------------LIKES -------------------------------------------------------------- --}}
+            </div>{{csrf_field()}}
           <div class="modal-footer">
-            {{--   @if($fo->can=="si")  --}}
+          <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+              @if($item->can=="si") 
+              
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
-           {{--     @else   --}}
+               @else  
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">dislike!</p>
               </button>
-           {{--  @endif  --}}
-             {{-- ---------------------LIKES -------------------------------------------------------------- --}}
+            @endif 
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -309,19 +310,17 @@
     <script src="{{ asset("js/Look!/megusta.js") }}"></script>
     <script src="{{ asset("js/Look!/comentarios.js") }}"></script>
     <script>
+      
       $('.btn-like').click(function() {
-
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
             var like = $(this).parent().find('.can').val();
             var est = $(this).parent().find('.estado');
             var v = $(this).val();
-            console.log(est.html());
+            console.log(id);
             var contenido = $(this).parent().find('.verlikes');;
-
             var s = 0;
             if (est.html() == "like!") {
-
                 $.ajax({
                     url: "/likes",
                     data: {
@@ -340,9 +339,7 @@
                         est.append("dislike!");
                     }
                 });
-
             } else {
-
                 $.ajax({
                     url: "/dislike",
                     data: {
@@ -361,11 +358,9 @@
                         est.append("like!");
                     }
                 });
-
             }
-      });
-
-    </script>
+          });
+            </script>
           <script>
             $("#idseguidorr").click(function(e){
             e.preventDefault();
@@ -377,7 +372,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             $.ajax({
                 url: "{{ url('seguidores') }}",
                 method: "GET",
