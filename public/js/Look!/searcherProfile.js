@@ -1,8 +1,5 @@
 $('#searchProfile').on('keyup', function (e) {
-    // e.preventDefault();
-    // $(window).on("load",function(){});
     $value = $('#searchProfile').val();
-
     $user = $('#obtenerUsuarioOjb').val();
 
     $.ajaxSetup({
@@ -25,6 +22,7 @@ $('#searchProfile').on('keyup', function (e) {
                 });
                 return data;
             }
+            x(data)
             if ($value != "") {
                 $('#printProfileSearched').html("");
                 $.each(data, function (key, item) {

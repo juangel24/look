@@ -61,7 +61,7 @@ class loginController extends Controller
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
                     // dd($user->id);
-                    return redirect('profile');
+                    return redirect('home');
                 }
             }
         }
