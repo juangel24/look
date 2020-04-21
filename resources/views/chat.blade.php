@@ -106,8 +106,6 @@
             var contactImg = $(this).find('.contact-img').attr('src');
             var contactUser = $(this).find('.contact-username').text();
 
-            console.log(contactImg, contactUser);
-
             $('#selected-img').attr('src', contactImg);
             $('#selected-username').text(contactUser);
 
@@ -169,9 +167,6 @@
                 type: "post",
                 url: "message",
                 data: {receiver_id, message},
-                success: function(messages) {
-
-                },
                 error: function(error) {
                     console.log(error.responseText);
                 },
