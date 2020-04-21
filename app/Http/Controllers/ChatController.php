@@ -23,19 +23,16 @@ class ChatController extends Controller {
         return view('chat', compact('other_users'));
     }
 
-    function getMessages($receiver_id) {
-        $receiver_id = intval($receiver_id);
+    function getMessages(int $receiver_id) {
         $user_id = Session::get('usuario')->id;
-        $pipeline = [
-            ['$match' => [
-                'from' => ['$in' => [$user_id, $receiver_id]]
-            ]],
-            ['$match' => [
-                'to' => ['$in' => [$user_id, $receiver_id]]
-            ]]
+        $condition = [
+            '$and' => [
+                ['from' => ['$in' => [$user_id, $receiver_id]]],
+                ['to' => ['$in' => [$user_id, $receiver_id]]]
+            ]
         ];
 
-        $messages = iterator_to_array($this->messages->aggregate($pipeline));
+        $messages = $this->messages->find($condition)->toArray();
 
         for($i = 0; $i < count($messages); $i++)
             $messages[$i]->msg = decrypt($messages[$i]->msg);
