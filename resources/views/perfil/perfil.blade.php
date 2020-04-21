@@ -174,9 +174,10 @@
               <p class="">{{ $item->descripcion }}</p>
             </div>{{csrf_field()}}
           <div class="modal-footer">
-              @if($item->can=="si") 
-              <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+          <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
               <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+              @if($item->can=="si") 
+              
               <button type="button" class="btn btn-default btn-like" val="like">
                 <p class="estado">like!</p>
               </button>
