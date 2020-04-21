@@ -69,4 +69,17 @@ class ChatController extends Controller {
         $data = ['from' => $from, 'to' => $to];
         $pusher->trigger('look', 'chat', $data);
     }
+
+    function searchUsers(Request $request) {
+        $username = strtolower($request->val);
+        $exceptions = $request->exceptions_ids;
+        $spaces = trim( str_repeat('?,', count($exceptions)), ',');
+
+        $users = DB::select("SELECT id, imagen, LOWER(usuario) AS username FROM usuarios ".
+            "WHERE usuario LIKE '%$username%' ".
+            "AND id NOT IN ($spaces) ".
+            'LIMIT 5', $exceptions);
+
+        return json_encode($users);
+    }
 }

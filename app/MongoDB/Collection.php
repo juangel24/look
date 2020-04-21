@@ -5,12 +5,13 @@ use MongoDB\{Client, Collection as MongoCollection};
 
 class Collection extends MongoCollection {
     function __construct(string $collectionName = null) {
-        $user = env('MONGODB_USER');
-        $pass = env('MONGODB_PASS');
-        $cluster = env('MONGODB_CLUSTER');
+        $user = config('database.mongodb.username');
+        $pass = config('database.mongodb.password');
+        $cluster = config('database.mongodb.cluster');
+        $database = config('database.mongodb.database');
 
         $db = (new Client("mongodb+srv://". $user .":". $pass ."@". $cluster))
-            ->{env('MONGODB_DATABASE')};
+            ->{$database};
         $calledClass = strtolower(get_called_class());
 
         if (!$collectionName)
