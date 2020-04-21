@@ -16,6 +16,7 @@ class homeController extends Controller
             ->orWhere('usuario', 'LIKE', '%'.$request->search.'%')
             ->orWhere('nombres', 'LIKE', '%'.$request->search.'%')
             ->get();
+        // $data
         return $data;
     }
 

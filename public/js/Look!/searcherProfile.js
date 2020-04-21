@@ -1,9 +1,9 @@
 $('#searchProfile').on('keyup', function (e) {
     // e.preventDefault();
+    // $(window).on("load",function(){});
     $value = $('#searchProfile').val();
 
     $user = $('#obtenerUsuarioOjb').val();
-    //console.log($user);
 
     $.ajaxSetup({
         headers: {
@@ -17,22 +17,24 @@ $('#searchProfile').on('keyup', function (e) {
             'search': $value
         },
         success: function (data) {
-            
+            var x = function (data){
+                data.forEach(element => {
+                    if (element.id == $user){
+                        data.splice(data.indexOf(element),1)
+                    }
+                });
+                return data;
+            }
             if ($value != "") {
                 $('#printProfileSearched').html("");
                 $.each(data, function (key, item) {
-                    
-                    if(item.id == $user){
-                        item.splice($user, 1)
-                    }
-                    console.log(item);
-                    console.log(key);
-                   // if(item.usuario = )
                     $html = " <a class='searchProfile' href='/profile'> " +
                         " <div class='sProfile'> " +
                         " <ul class='listSearchProfile'> " +
+                        // if(!$usuarios == null){
                         " <li class='li-search-profile'><img class='img-search-profile' src='" + item.imagen + "' alt=''></li> " +
                         " <li class='li-search-profile'><a href='/profile/"+ item.usuario +"'><p> " + item.usuario + " </p></a></li> " +
+                        // }
                         " </ul> " +
                         " </div> " +
                         " </a> ";

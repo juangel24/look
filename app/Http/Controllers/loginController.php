@@ -61,12 +61,11 @@ class loginController extends Controller
                     $user = Session::save('usuario', $vato);
                     $user = Session::get('usuario');
                     // dd($user->id);
-
-                    return redirect('pifi');
+                    return redirect('profile');
                 }
             }
         }
-        
+
         return redirect('')->withInput();
     }
 
@@ -146,7 +145,7 @@ class loginController extends Controller
 		return redirect('chat');
     }
 
-    
+
 
     function logout(){
         Session::forget('usuario');

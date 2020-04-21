@@ -23,30 +23,23 @@ class ChatController extends Controller {
         return view('chat', compact('other_users'));
     }
 
-    function getMessages($user_id) {
-        $session_id = Session::get('usuario')->id;
-        /*$condition = [
-            'from' => ['$in' => [$session_id, $user_id]],
-            'to' => ['$in' => [$session_id, $user_id]]
-        ];
-
-        return $this->messages->find($condition)->toArray();*/
-
+    function getMessages($receiver_id) {
+        $user_id = Session::get('usuario')->id;
         // Código temporal - Problema: No se pueden aplicar los filtros
         $messages = $this->messages->find()->toArray();
         $user_messages = [];
 
         foreach ($messages as $msg) {
             if (
-                ($msg->from == $session_id && $msg->to == $user_id) ||
-                ($msg->from == $user_id && $msg->to == $session_id)
+                ($msg->from == $user_id && $msg->to == $receiver_id) ||
+                ($msg->from == $receiver_id && $msg->to == $user_id)
             ) {
                 $msg->msg = decrypt($msg->msg);
                 array_push($user_messages, $msg);
             }
         }
 
-        return $user_messages;
+        return $messages;
     }
 
     function sendMessage(Request $request) {
@@ -77,6 +70,6 @@ class ChatController extends Controller {
         );
 
         $data = ['from' => $from, 'to' => $to];
-        $pusher->trigger('my-channel', 'my-event', $data);
+        $pusher->trigger('look', 'chat', $data);
     }
 }

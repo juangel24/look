@@ -133,11 +133,22 @@
     <section class="as">
         <div class="container ">
             <div class="row">
-                <div class="col-9 ">
+                <div class="col-md-9 col-sm-12">
 
                     @foreach($fo as $fo)
                     <div class="col-12 ">
                         <!--https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg -->
+                        
+                        <div class="col-12">
+                        <div class="row infotmacion">
+                        <div class="col-3">
+                            <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}"   style="display:block; height:100px;width:100px;border-radius:60%;">
+                            </div>
+                            <div class="col-7">
+                            <h5><a href="/visita/{{$fo['usuario']->id}}">{{$fo['usuario']->usuario}} </a></h5>
+                            </div>
+
+                        </div></div>
                         <div class="text-center ">
 
                             <!-- ################################################### -->
@@ -151,15 +162,29 @@
 
                                     <span class="input-group-btn">
                                         {{csrf_field()}}
-                                        <input id="id" class="idimagen" type="text" value="{{$fo->id}}">
+                                        <input id="id" class="idimagen" type="text" value="{{$fo->id}}" hidden>
+                                        <input id="can" class="can" type="text" value="{{$fo->can}}" hidden>
                                         <figcaption class="figure-caption">
-                                            <button class="btn btn-link">
-                                                
-                                                    
-                                            aqui deberian de ir los likes pero memarca error
+                                            <button class="btn btn-link verlikes" value="{{$fo->id}}" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">
+
+                                                {{$fo->likes}} likes
+
                                             </button>
                                         </figcaption>
-                                        <button type="button" class="btn btn-default btn-like">like!</button>
+
+
+                                      
+                                        
+                                        @if($fo->can=="si")
+                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">like!</p> </button>
+                                        @else
+                                        <button type="button" class="btn btn-default btn-like" val="like"><p class="estado">dislike!</p></button>
+                                        @endif
+
+
+
+
+
                                         <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">comentario!</button>
 
                                     </span>
@@ -175,7 +200,7 @@
                     @endforeach
 
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 d-md-block">
                     <h5>ayuda</h5>
                 </div>
 
@@ -187,7 +212,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -201,10 +226,11 @@
                 <div class="modal-footer">
                     <form>
                         {{csrf_field()}}
+                        
                         <label for="message-text" class="col-form-label">Message:</label>
                         <textarea class="form-control" id="message-text" class="yeah"></textarea>
                         <button type="button" val="" class="btn btn-primary enviar">Send message</button>
-
+                        
 
                     </form>
                 </div>
@@ -212,16 +238,47 @@
         </div>
     </div>
     <!-- ################################################### -->
+
+    <!-- ################################################### -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Likes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="cemn">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ################################################### -->
+
+
+
 </body>
 <style>
     .as {
         margin-top: 3rem;
     }
 
-    .publicacion {
+    .publicacion  {
         background: wheat;
         margin-bottom: 2rem;
 
+    }
+    .infotmacion{
+        background: wheat;
+    }
+    .estado{
+        margin:0px;
+        padding:0px;
     }
 </style>
 <script>
@@ -230,21 +287,64 @@
 
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
+            var like = $(this).parent().find('.can').val();
+            var est=$(this).parent().find('.estado');
+            var v =$(this).val();
+            console.log(est.html());
+            var contenido = $(this).parent().find('.verlikes');;
+            
+            var s = 0;
+            if(est.html()=="like!"){
 
-            $.ajax({
+                $.ajax({
                 url: "/likes",
                 data: {
                     id: id,
                     _token: token,
-                    usu:1 //aqui lo cambiaremos por la variable id de la variable session
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
                 },
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
+                    contenido.html('');
                     console.log(response)
-
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("dislike!");
                 }
             });
+
+            }
+            else{
+
+                $.ajax({
+                url: "/dislike",
+                data: {
+                    id: id,
+                    _token: token,
+                    usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    contenido.html('');
+                    console.log(response)
+                    s = response.length
+                    contenido.append(s + " likes");
+                    est.html('');
+                    est.append("like!");
+                }
+            });
+
+            }
+            
+            
+            
+            
+            
+            
+            
 
 
         });
@@ -257,7 +357,7 @@
             var usu = 1;
             var e = "";
             var contenido = $('.cemn');
-            contenido.html('');
+            
             console.log(te);
             $.ajax({
                 url: "/enviar",
@@ -270,21 +370,24 @@
                 type: "POST",
                 datatype: "json",
                 success: function(response) {
+                    contenido.html('');
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>');
                     });
 
                 }
             });
-            te.val(e);
         });
 
         $('.btn-comentario').click(function() {
+
             var token = $('input[name=_token]').val();
             var id = $(this).parent().find('.idimagen').val();
+            var coms=$(".coms")
+            coms.html('');
             console.log(id)
             var contenido = $('.cemn');
             contenido.html('');
@@ -300,13 +403,42 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5>' + v.usuario['usuario'] + '</h5>' +
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>')
                     });
                 }
             });
 
+
+
+        });
+
+        $('.verlikes').click(function() {
+            var ss = $(this).parent().find('.verlikes').val();
+            var token = $('input[name=_token]').val();
+            var id = $(this).parent().find('.idimagen').val();
+            console.log(id, ss)
+            var contenido = $('.cemn');
+            contenido.html('');
+            $(".enviar").val(ss);
+            $.ajax({
+                url: "/verlikes",
+                data: {
+                    id: ss,
+                    _token: token
+                },
+                type: "POST",
+                datatype: "json",
+                success: function(response) {
+                    console.log(response)
+                    $.each(response, function(i, v) {
+                        
+                        contenido.append('<h5><a href="/visita/'+v.usuario_id+'">' + v.megusta1['usuario'] + '</a></h5>' +
+                            '<hr>')
+                    });
+                }
+            });
 
 
         });

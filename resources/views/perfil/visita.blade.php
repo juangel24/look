@@ -21,20 +21,20 @@
             <div class="col-md-6 perfilfoto" id="perfilfoto">
               <div class="media" id="divmedia">
                 <div class="text-center view overlay">
-                {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
-                <img class="d-flex mr-3" id="fotodeperfil"  src="{{asset("$usuario->imagen")}}" style="height:100px;width:100px;border-radius:60%;">
+                {{-- <img class="" id="pictureUpdate" src="{{$usuario[0]->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
+                <img class="d-flex mr-3" id="fotodeperfil"  src="{{ asset($usuario[0]->imagen) }}" style="height:100px;width:100px;border-radius:60%;">
                 </div>
 
                   <div class="media-body " id="mediaperfil">
-                    <h4 class="mt-0 mb-2 font-weight-bold"> {{$usuario->usuario}}</h4>
-                    <h5>{{ $usuario->nombres }}</h5>
+                    <h4 class="mt-0 mb-2 font-weight-bold"> {{$usuario[0]->usuario}}</h4>
+                    <h5>{{ $usuario[0]->nombres }}</h5>
                     <div>
-                        {{ $usuario->descripcion }}
+                        {{ $usuario[0]->descripcion }}
                     </div>
                     @if (!Session::has("validacion"))
-                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario->id }}">Seguir</button>  
+                    <button class="btn btn-primary" id="idseguidor" onclick="visualiza_dejardeseguir" value="{{ $usuario[0]->id }}">Seguir</button>  
                     @else
-                    <button class="" id="idseguidores" value="{{ $usuario->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
+                    <button class="" id="idseguidores" value="{{ $usuario[0]->id }}" onclick="visualiza_seguir"><i class="fas fa-check"></i></button>  
                     @endif
                       
                   </div>
@@ -92,7 +92,7 @@
             <div class="card-body card-body-cascade">
               <input type="hidden"  class="idimagen"value="{{ $item->id }}">
               <!--Title-->
-              <h4 class="card-title text-default text-center"><strong>{{ $usuario->usuario }}</strong>
+              <h4 class="card-title text-default text-center"><strong>{{ $usuario[0]->usuario }}</strong>
               </h4>
               <a class="waves-effect waves-light dropdown-toggle text-default mr-4" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" id="dropdown-option" s>
                 {{-- <i class="fas fa-ellipsis-h text-default fa-2x"></i> --}}
@@ -102,13 +102,19 @@
               </div>
               <p class="">{{ $item->descripcion }}</p>
             </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-like" val="like">
-              <p class="estado">like!</p>
-            </button>
-            {{-- <button type="button" class="btn btn-default btn-like" val="like">
-              <p class="estado">dislike!</p>
-            </button> --}}
+            <div class="modal-footer">
+          <input type=""  class="idimagen"value="{{ $item->id }}" hidden>
+              <input id="can" class="can" type="text" value="{{$item->can}}" hidden >
+              @if($item->can=="si") 
+              
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">like!</p>
+              </button>
+               @else  
+              <button type="button" class="btn btn-default btn-like" val="like">
+                <p class="estado">dislike!</p>
+              </button>
+            @endif 
             <button type="button" class="btn btn-default btn-comentario" data-toggle="modal" data-target="#exampleModal"  data-whatever="@mdo">comentario!</button>
           </div>
       <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -187,7 +193,7 @@
                 </div>    
             </div>
             <div class="modal-footer">
-              <div id="obtenerUrlPerfil" value="{{$usuario->usuario}}"></div>
+              <div id="obtenerUrlPerfil" value="{{$usuario[0]->usuario}}"></div>
               <button type="button" class="btn btn-outline-info btn-rounded waves-effect btn-md" data-dismiss="modal" id="btncerrar">Cancelar</button>
               <button type="submit" class="btn aqua-gradient btn-md" id="btnaceptar">Subir foto</button>
             </div>
@@ -224,6 +230,62 @@
               });
           });*/
     $(document).ready(function() {
+      $('.btn-like').click(function() {
+
+var token = $('input[name=_token]').val();
+var id = $(this).parent().find('.idimagen').val();
+
+var like = $(this).parent().find('.can').val();
+var est = $(this).parent().find('.estado');
+var v = $(this).val();
+console.log(id);
+var contenido = $(this).parent().find('.verlikes');;
+
+var s = 0;
+if (est.html() == "like!") {
+
+    $.ajax({
+        url: "/likes",
+        data: {
+            id: id,
+            _token: token,
+            usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+        },
+        type: "POST",
+        datatype: "json",
+        success: function(response) {
+            contenido.html('');
+            console.log(response)
+            s = response.length
+            contenido.append(s + " likes");
+            est.html('');
+            est.append("dislike!");
+        }
+    });
+
+} else {
+
+    $.ajax({
+        url: "/dislike",
+        data: {
+            id: id,
+            _token: token,
+            usu: 1 //aqui lo cambiaremos por la variable id de la variable session like! dislike!
+        },
+        type: "POST",
+        datatype: "json",
+        success: function(response) {
+            contenido.html('');
+            console.log(response)
+            s = response.length
+            contenido.append(s + " likes");
+            est.html('');
+            est.append("like!");
+        }
+    });
+
+}
+});
     //Buscador de Usuarios
           $('#searchProfile').on('keyup', function (e) {
               // e.preventDefault();

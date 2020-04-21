@@ -1,41 +1,65 @@
-/*input_msg = $('input[name="msg"]');
-icon_send_msg = $('#icon-send-msg');
-icon_send_msg.hide();
+ $('.enviar').click(function () {
 
-input_msg.keyup(function() {
-    input = $(this);
-    parent = input.parent();
-    console.log(input.val());
+     var token = $('input[name=_token]').val();
+     var id = $(".enviar").val();
+     var te = $("#message-text").val();
+     var usu = 1;
+     var e = "";
+     var contenido = $('.cemn');
 
-    if (input.val()) {
-        icon_send_msg.show();
-        parent.addClass('mr-3');
-    }
-    else {
-        icon_send_msg.hide();
-        parent.removeClass('mr-3');
-    }
-});
+     console.log(te);
+     $.ajax({
+         url: "/enviar",
+         data: {
+             id: id,
+             _token: token,
+             commen: te,
+             usu: usu
+         },
+         type: "POST",
+         datatype: "json",
+         success: function (response) {
+             contenido.html('');
+             console.log(response)
+             $("#message-text").val("");
+             $.each(response, function (i, v) {
+                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                     '<p>' + v.comentario + '</p>' +
+                     '<hr>');
+             });
 
-window.onload = function () {
-    comment = $('#div-image-post');
-    comment.scrollTop(comment.scrollHeight);
-}*/
-$(document).ready(function(){
-    $('#comment_form').on('submit',function(e){
-        e.preventDefault();
-        var fd = $(this).serialize();
-        $.ajax({
-            url: "/comments",
-            method: "POST",
-            data: fd,
-            DataType: "JSON",
-            success: function(data){
-                if (data.error != '') {
-                    $('#comment_form').
-                }
-            }
-        });
+         }
+     });
+ });
 
-    }); 
-});
+ $('.btn-comentario').click(function () {
+
+     var token = $('input[name=_token]').val();
+     var id = $(this).parent().parent().find('.idimagen').val();
+     var coms = $(".coms")
+     coms.html('');
+     console.log(id)
+     var contenido = $('.cemn');
+     contenido.html('');
+     $(".enviar").val(id);
+     $.ajax({
+         url: "/coment",
+         data: {
+             id: id,
+             _token: token
+         },
+         type: "POST",
+         datatype: "json",
+         success: function (response) {
+             console.log(response)
+             $.each(response, function (i, v) {
+                 contenido.append('<h5><a href="/visita/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                     '<p>' + v.comentario + '</p>' +
+                     '<hr>')
+             });
+         }
+     });
+
+
+
+ });
