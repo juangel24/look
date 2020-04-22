@@ -44,7 +44,7 @@
                             <small>Te envió un mensaje</small>
                         </div>
                     </div>
-                    <span class="badge badge-pill badge-default mr-2">2</span>
+                    <span class="badge badge-pill badge-default mr-2 user-badge" style="{{ ($user->not_read == 0) ? 'display: none;' : ''  }}">{{$user->not_read}}</span>
                 </div>
             @endforeach
             </div>
@@ -115,6 +115,21 @@
             $('#selected-username').text(contactUser);
 
             showMessages();
+
+            $.ajax({
+                type: "get",
+                url: "confirm-read/" + receiver_id,
+                data: '',
+                success: function(messages) {
+                    var badge = $(this).find('.user-badge');
+                    console.log(badge);
+                    badge.hide();
+                    badge.text('0');
+                },
+                error: function(error) {
+                    console.log(error.responseText);
+                }
+            });
         });
 
         //input para enviar msj

@@ -127,7 +127,7 @@ class inicioController extends Controller
                 }
 
 
-                
+
             } if ($au == false) {
                 $gg[] = [
                     'foto' => $fo[$k], 'cantidad' => 0
@@ -159,10 +159,10 @@ class inicioController extends Controller
         foreach ($segi2 as $k => $c) {
             $au = false;
             foreach ($segi as $f => $r) {
-                
+
                 if ($r->seguidor_id == $c->id  ) {
                     $au = true;
-                   
+
                 }
             }
             if ($au == false and $c->id!=$usuario ) {
@@ -170,13 +170,13 @@ class inicioController extends Controller
             }
         }
         $fos = Collection::make($fos);
-        
+
         $fo = $fos;
- 
+
 
 
         return view('home', compact('fo', 'rv', 'sv', 'sugerencia'));
-       
+
     }
 
     function coment(Request $request)
@@ -203,7 +203,7 @@ class inicioController extends Controller
     }
     function visita($id)
     {
-        
+
         $usu = session::get('usuario');
         $usuarios = $usu->id;
         $visitar;
@@ -212,8 +212,8 @@ class inicioController extends Controller
         $id = session::get('usuario');
         $idu = $id->id;
 
-        
-        //aqui se sabe cuantos likes tiene cada foto 
+
+        //aqui se sabe cuantos likes tiene cada foto
         $megst1 = mmegusta::with('megusta1')->get();
         $todos = Collection::make($megst1);
         $t = $todos->groupBy('publicacion_id')->toArray();
@@ -304,7 +304,7 @@ class inicioController extends Controller
                 if ($r->seguidor_id == $c->usuario_id) {
                     //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
                     $au = true;
-                    
+
                 }
 
             }
@@ -318,7 +318,7 @@ class inicioController extends Controller
         $fo = $fos;
         # traigo las publicaciones que son mias
         $posts = Publicaciones::select("imagen","id","descripcion")->where("usuario_id","=",$visitar)->orderby('created_at','desc')->get();
-       
+
         $pifi=$posts;
         //aqui compararemos las fotos que son mias y si les pueo dar like o nel
         foreach ($yeah as $k => $c) {
@@ -333,7 +333,7 @@ class inicioController extends Controller
                 }
 
             }
-        
+
         }
         $posts=$pifi;
 
@@ -511,7 +511,7 @@ class inicioController extends Controller
                 if ($r->seguidor_id == $c->usuario_id) {
                     //dd($r->publicacion_id==$c->id and $r->usuario_id===1);
                     $au = true;
-                    
+
                 }
 
             }
@@ -523,5 +523,5 @@ class inicioController extends Controller
         $fos = Collection::make($fos);
         dd($fo, $fos);
         $fo = $fos;
-    }z
+    }
 }
