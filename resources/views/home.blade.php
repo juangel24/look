@@ -363,7 +363,7 @@
                     contenido.html('');
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/profile/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/profile/' +  v.usuario['usuario'] + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>');
                     });
@@ -393,7 +393,7 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/profile/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/profile/' +v.usuario['usuario'] + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>')
                     });
