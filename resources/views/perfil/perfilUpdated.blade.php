@@ -40,7 +40,7 @@
                 <div class="md-form">
                     <input name='firstNameUpdate' id='firstNameUpdate' type="text" 
                         class="form-control @error('firstNameUpdate') field-error @enderror"
-                        value="{{ old('firstNameUpdate') }}" required>
+                        value="{{ Session::get('usuario')->nombres }}" required>
                     <label for="firstNameUpdate">Nombres: </label>
                     @error('firstNameUpdate')
                         <div class="error"> {{ $message }} </div>
@@ -49,7 +49,7 @@
                 <div class="md-form">
                     <input name='lastnameupdate' id='lastnameupdate' type="text" 
                     class="form-control @error('lastnameupdate') field-error @enderror"
-                    value="{{ old('lastnameupdate') }}" required>
+                    value="{{ Session::get('usuario')->apellidos }}" required>
                     <label for="lastnameupdate">Apellidos: </label>
                     @error('lastnameupdate')
                         <div class="error"> {{ $message }} </div>
@@ -58,7 +58,7 @@
                 <div class="md-form">
                     <input name='userUpdated' id='userUpdated' type="text" 
                         class="form-control @error('userUpdated') field-error @enderror"
-                        value="{{ old('userUpdated') }}" required>
+                        value="{{ Session::get('usuario')->usuario }}" required>
                     <label for="userUpdated">Usuario: </label>
                     @error('userUpdated')
                         <div class="error"> {{ $message }} </div>
@@ -67,7 +67,7 @@
                 <div class="md-form">
                     <input name='descriptionUpdate' id='descriptionUpdate' type="text" 
                         class="form-control @error('descriptionUpdate') field-error @enderror"
-                        value="{{ old('descriptionUpdate') }}" required>
+                        value="{{ Session::get('usuario')->descripcion }}" required>
                     <label for="descriptionUpdate">Descripción: </label>
                     @error('descriptionUpdate')
                         <div class="error"> {{ $message }} </div>
@@ -83,27 +83,26 @@
                 <div class="md-form">
                     <input name='emailUpdate' id='emailUpdate' type="email" 
                     class="form-control @error('emailUpdate') field-error @enderror"
-                    value="{{ old('emailUpdate') }}" required>
+                    value="{{ Session::get('usuario')->correo }}" required>
                     <label for="emailUpdate">Dirección de correo electrónico: </label>
                     @error('emailUpdate')
                         <div class="error"> {{ $message }} </div>
                     @enderror
                 </div>
-                <div class="md-form">
+                <!-- <div class="md-form">
                     <input name='phoneUpdate' id='phoneUpdate' type="text" 
                         class="form-control @error('phoneUpdate') field-error @enderror"
-                        value="{{ old('phoneUpdate') }}" 
+                        value="" 
                         minlength="10" maxlength="10" required>
                     <label for="phoneUpdate">Número de teléfono: </label>
                     @error('phoneUpdate')
                         <div class="error"> {{ $message }} </div>
                     @enderror
-                </div>
+                </div> -->
                 <div class="md-form">
                     <select name="genderUpdate" 
                             class="form-control genero-r @error('correo') field-error @enderror" 
                             id="genderUpdate"" required>
-                        <option value="" selected disabled>Género</option>
                         <option value="H" {{ old('genderUpdate') == 'H' ? 'selected' : '' }}>Hombre</option>
                         <option value="M" {{ old('genderUpdate') == 'M' ? 'selected' : '' }}>Mujer</option>
                         <option value="T" {{ old('genderUpdate') == 'T' ? 'selected' : '' }}>Trans</option>
@@ -115,7 +114,7 @@
                 <div class="md-form">
                     <input name='dateUpdate' id='dateUpdate' type="date" 
                         class="form-control @error('correo') field-error @enderror"
-                        value="{{ old('dateUpdate') }}" required>
+                        value="{{ Session::get('usuario')->fecha_nacimiento }}" required>
                     <label for="dateUpdate">Fecha de Nacimiento: </label>
                     @error('dateUpdate')
                         <div class="error"> {{ $message }} </div>
