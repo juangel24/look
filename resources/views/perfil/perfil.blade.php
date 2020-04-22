@@ -21,9 +21,9 @@
                 {{-- <img class="" id="pictureUpdate"  src="{{$usuario->imagen}}" style="height:100px;width:100px;border-radius:60%;"> --}}
                 <img class="d-flex mr-3" id="fotodeperfil"  src="{{ asset("$usuario->imagen") }}" style="height:100px;width:100px;border-radius:60%;">
                 <br>
-                <div class="progress">
+               {{--  <div class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+                </div> --}}
                     <div class="mask flex-center rgba-red-strong" id="hoverimg" type="button" data-toggle="modal" data-target="#modalLoginForm">
                       <i class="fas fa-camera" id="iconfoto"></i>&nbsp;
                       <p class="white-text">Actualizar</p>
@@ -36,8 +36,8 @@
                      {{--  &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a> --}}
                       </h4></a>
                     <h5>{{ Session::get('usuario')->nombres }} {{ Session::get('usuario')->apellidos }}</h5>
-                    <div>
-                        {{ session::Get('usuario')->descripcion }}
+                    <div id="descripcion_usuario">
+                       {{ session::get('usuario')->descripcion }}
                     </div>
                     {{--<div>
                           <button class="btn btn-primary" id="idseguidor">Seguir</button>

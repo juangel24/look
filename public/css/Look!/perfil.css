@@ -10,9 +10,12 @@
     margin-top: 20px;
     height: 75%;
 }
+
 #dropdown-option {
-   float:right;margin-top:-35px;
+    float: right;
+    margin-top: -35px;
 }
+
 #mediaperfil {
     word-wrap: break-word;
 }
@@ -69,7 +72,8 @@
 }
 
 #divmedia,
-#descripcionpost {
+#descripcionpost,
+#descripcion_usuario {
     word-break: break-all;
     word-wrap: break-word;
 }
