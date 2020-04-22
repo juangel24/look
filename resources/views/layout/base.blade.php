@@ -13,15 +13,14 @@
 
     @yield('css')
 
-
     <!-- CSS -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/css/mdb.min.css"
         integrity="sha256-+iogSQQebNm3dRNrrJiTa1ETQGIL+smA6rL+umhEvrQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
         integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <link rel="stylesheet" href="{{ asset('/css/Look!/home.css') }}">
 </head>
@@ -112,15 +111,81 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.1/js/mdb.min.js"
         integrity="sha256-R/XsWrXe04gYQmFYf8lc7jMaga8aLyzmGxWpaqbC+K8=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script type="text/javascript">
-        $("body").tooltip({
-			selector: '[data-toggle=tooltip]'
-		});
+        // Definición de variables/metodos globales
+        window.user_id = $('#obtenerUsuarioOjb').val();
+        window.receiver_id = '';
+
+        var pusher = new Pusher('c3136ce130df8039ac5b', {
+            cluster: 'us3',
+            forceTLS: true
+        });
+        var channel = pusher.subscribe('look');
+        var path = window.location.pathname;
+        var contactsContainer = $('#contacts-container');
+
+        channel.bind('chat', function(data) {
+            if (user_id == data.from) {
+                if (path == '/chat')
+                    contactsContainer.find("[data-id='"+ receiver_id +"']").click();
+            }
+            else {
+                $.each(data.to, function(i, to) {
+                    if (user_id == to) {
+                        if (receiver_id == data.from) {
+                            if (path == '/chat')
+                                contactsContainer.find("[data-id='"+ receiver_id +"']").click();
+                        }
+                        else {
+                            Toastify({
+                                text: "Tienes un mensaje",
+                                duration: 5000,
+                                destination: "/chat",
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: 'right', // `left`, `center` or `right`
+                                backgroundColor: "#00695c",
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                onClick: function(){} // Callback after click
+                            }).showToast();
+
+                            updateContacts();
+                        }
+
+                        return false;
+                    }
+                });
+            }
+        });
+
+        function updateContacts() {
+            if (path != '/chat')
+                return null;
+
+            $.get('get-contacts', function(contacts) {
+                html = '';
+
+                $.each(contacts, function(id, user) {
+                    html += '<div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable user" data-id="'+user.id+'">'+
+                        '<div class="d-flex flex-row align-items-center">'+
+                            '<img class="contact-img mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="'+user.imagen+'" width="35" height="35">'+
+                            '<div class="d-flex flex-column">'+
+                                '<p class="contact-username mb-0">'+user.usuario+'</p>'+
+                                '<small>Te envió un mensaje</small>'+
+                            '</div>'+
+                        '</div>'+
+                        '<span class="badge badge-pill badge-default mr-2 no-read" style="'+((user.not_read == 0) ? 'display: none;' : '')+'">'+user.not_read+'</span>'+
+                    '</div>'
+                });
+
+                contactsContainer.html(html);
+            });
+        }
     </script>
-    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
+
     <script src="{{ asset('js/Look!/searcherProfile.js') }}"></script>
     @yield('javascript')
 </body>
