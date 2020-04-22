@@ -39,6 +39,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     Route::POST('/updateProfiles1/{dataForm1}', 'perfilController@updateProfile1');
     Route::POST('/updateProfiles2/{dataForm2}', 'perfilController@updateProfile2');
     Route::get('/profile/{userprofile}', 'perfilController@viewOtherProfile');
+    
     Route::get('searchProfile','homeController@searchProfile');
     route::GET('seguidores',"PublicacionesController@seguidor");
     route::GET('/unfollow/{id}',"PublicacionesController@unfollow");
@@ -46,7 +47,7 @@ Route::group(['middleware' => ['validateUser']], function () {
     // Eddu
     Route::post('/likes','loginController@likes');
 
-
+ 
     Route::post('/likes','inicioController@likes');
     Route::post('/dislike','inicioController@dislike');
 

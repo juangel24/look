@@ -523,5 +523,5 @@ class inicioController extends Controller
         $fos = Collection::make($fos);
         dd($fo, $fos);
         $fo = $fos;
-    }
+    }z
 }
