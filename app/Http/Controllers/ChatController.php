@@ -19,12 +19,21 @@ class ChatController extends Controller {
     function index() {
         $user_id = Session::get('usuario')->id;
         $users = $this->messages->usersIds($user_id);
+        $ids = array_column($users, '_id');
         $other_users = [];
 
         if (count($users)) {
             $spaces = trim( str_repeat('?,', count($users)), ',');
             $other_users = DB::select("select id, usuario, nombres, apellidos, imagen ".
-            "from usuarios where id IN ($spaces)", $users);
+            "from usuarios where id IN ($spaces)", $ids);
+
+            for ($i = 0; $i < count($other_users); $i++) {
+                foreach ($users as $user) {
+                    if ($other_users[$i]->id == $user->_id) {
+                        $other_users[$i]->not_read = $user->not_read;
+                    }
+                }
+            }
         }
 
         return view('chat', compact('other_users'));
@@ -118,5 +127,10 @@ class ChatController extends Controller {
             'LIMIT 5', $exceptions);
 
         return json_encode($users);
+    }
+
+    function confirmRead(int $sender) {
+        $read_by = Session::get('usuario')->id;
+        $this->messages->updateRead($sender, $read_by);
     }
 }
