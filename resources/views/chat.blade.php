@@ -35,7 +35,7 @@
             </div>
             <!-- Contactos con chat -->
             <div class="h-100 scrollable" id="contacts-container">
-            @foreach ($other_users as $user)
+            @foreach ($contacts as $user)
                 <div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable user" data-id="{{ $user->id }}">
                     <div class="d-flex flex-row align-items-center">
                         <img class="contact-img mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="{{ $user->imagen }}" width="35" height="35">
@@ -88,9 +88,8 @@
     <script type="text/javascript">
         var receiver_id = '';
         var user_id = "{{ Session::get('usuario')->id }}";
-        var users = $('.user');
         var chat_zone = $('#chat-messages');
-        var contacts = $('#contacts-container');
+        var contactsContainer = $('#contacts-container');
 
         function scrollToDown() {
             chat_zone.scrollTop(chat_zone[0].scrollHeight);
@@ -102,10 +101,8 @@
             }
         });
 
-        users.click(function() {
+        contactsContainer.on('click', '.user', function() {
             var user = $(this);
-            users.removeClass('active');
-            user.addClass('active');
 
             receiver_id = user.attr('data-id');
 
@@ -131,6 +128,10 @@
                     console.log(error.responseText);
                 }
             });
+
+            var users = $('.user');
+            users.removeClass('active');
+            user.addClass('active');
         });
 
         //input para enviar msj
@@ -194,6 +195,27 @@
             });
         }
 
+        function updateContacts() {
+            $.get('get-contacts', function(contacts) {
+                html = '';
+
+                $.each(contacts, function(id, user) {
+                    html += '<div class="d-flex justify-content-between p-2 align-items-center contact-badge hoverable user" data-id="'+user.id+'">'+
+                        '<div class="d-flex flex-row align-items-center">'+
+                            '<img class="contact-img mx-2 p-0 rounded-circle z-depth-0" alt="avatar image" src="'+user.imagen+'" width="35" height="35">'+
+                            '<div class="d-flex flex-column">'+
+                                '<p class="contact-username mb-0">'+user.usuario+'</p>'+
+                                '<small>Te envió un mensaje</small>'+
+                            '</div>'+
+                        '</div>'+
+                        '<span class="badge badge-pill badge-default mr-2 no-read" style="'+((user.not_read == 0) ? 'display: none;' : '')+'">'+user.not_read+'</span>'+
+                    '</div>'
+                });
+
+                contactsContainer.html(html);
+            });
+        }
+
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('c3136ce130df8039ac5b', {
@@ -210,10 +232,11 @@
                 $.each(data.to, function(i, to) {
                     if (user_id == to) {
                         if (receiver_id == data.from) {
-                            contacts.find("[data-id='"+ receiver_id +"']").click();
+                            contactsContainer.find("[data-id='"+ receiver_id +"']").click();
                         }
                         else {
                             alert("You have a message :)");
+                            updateContacts();
                         }
 
                         return false;

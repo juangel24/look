@@ -17,26 +17,32 @@ class ChatController extends Controller {
     }
 
     function index() {
+        $contacts = $this->getContacts();
+
+        return view('chat', compact('contacts'));
+    }
+
+    function getContacts() {
         $user_id = Session::get('usuario')->id;
         $users = $this->messages->usersIds($user_id);
         $ids = array_column($users, '_id');
-        $other_users = [];
+        $contacts = [];
 
         if (count($users)) {
             $spaces = trim( str_repeat('?,', count($users)), ',');
-            $other_users = DB::select("select id, usuario, nombres, apellidos, imagen ".
+            $contacts = DB::select("select id, usuario, imagen ".
             "from usuarios where id IN ($spaces)", $ids);
 
-            for ($i = 0; $i < count($other_users); $i++) {
+            for ($i = 0; $i < count($contacts); $i++) {
                 foreach ($users as $user) {
-                    if ($other_users[$i]->id == $user->_id) {
-                        $other_users[$i]->not_read = $user->not_read;
+                    if ($contacts[$i]->id == $user->_id) {
+                        $contacts[$i]->not_read = $user->not_read;
                     }
                 }
             }
         }
 
-        return view('chat', compact('other_users'));
+        return $contacts;
     }
 
     function getMessages(int $receiver_id) {

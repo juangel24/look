@@ -77,7 +77,11 @@ $(document).ready(function() {
                 url: "message-many",
                 data: {user_id ,selectedIds, msgContent},
                 success: function() {
-                    alert('you are the cock');
+                    var path = window.location.pathname;
+
+                    if (path == '/chat')
+                        location.reload();
+
                 },
                 error: function(error) {
                     console.log(error.responseText);
