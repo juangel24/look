@@ -44,7 +44,7 @@
                             <small>Te envió un mensaje</small>
                         </div>
                     </div>
-                    <span class="badge badge-pill badge-default mr-2 user-badge" style="{{ ($user->not_read == 0) ? 'display: none;' : ''  }}">{{$user->not_read}}</span>
+                    <span class="badge badge-pill badge-default mr-2 no-read" style="{{ ($user->not_read == 0) ? 'display: none;' : ''  }}">{{$user->not_read}}</span>
                 </div>
             @endforeach
             </div>
@@ -103,13 +103,15 @@
         });
 
         users.click(function() {
+            var user = $(this);
             users.removeClass('active');
-            $(this).addClass('active');
+            user.addClass('active');
 
-            receiver_id = $(this).attr('data-id');
+            receiver_id = user.attr('data-id');
 
-            var contactImg = $(this).find('.contact-img').attr('src');
-            var contactUser = $(this).find('.contact-username').text();
+            var contactImg = user.find('.contact-img').attr('src');
+            var contactUser = user.find('.contact-username').text();
+            var vadge
 
             $('#selected-img').attr('src', contactImg);
             $('#selected-username').text(contactUser);
@@ -121,8 +123,7 @@
                 url: "confirm-read/" + receiver_id,
                 data: '',
                 success: function(messages) {
-                    var badge = $(this).find('.user-badge');
-                    console.log(badge);
+                    var badge = user.find('.no-read');
                     badge.hide();
                     badge.text('0');
                 },
