@@ -119,8 +119,8 @@
                                     <img class="d-flex mr-3" id="fotodeperfil" src="{{ asset($fo['usuario']->imagen) }}" style="display:block; height:80px;width:80px;border-radius:60%;">
                                 </div>
                                 <div class="col-7">
-                                    <h5><a href="/perfil/{{$fo['usuario']->id}}" class="font-weight-bold bold" style="color:gray;">{{$fo['usuario']->usuario}} </a></h5>
-                                    <h5><a href="/perfil/{{$fo['usuario']->id}}" class="text-default">{{$fo['usuario']->descripcion}} </a></h5>
+                                    <h5><a href="/profile/{{$fo['usuario']->id}}" class="font-weight-bold bold" style="color:gray;">{{$fo['usuario']->usuario}} </a></h5>
+                                    <h5><a href="/profile/{{$fo['usuario']->id}}" class="text-default">{{$fo['usuario']->descripcion}} </a></h5>
                                 </div>
                                 
                             </div>
@@ -135,7 +135,7 @@
                                     </figure>
                                 </div>
                                 <div class="d-flex flex-row" style="margin-left:30px;">
-                                        <a class="" href="/perfil/{{$fo['usuario']->id}}">
+                                        <a class="" href="/profile/{{$fo['usuario']->id}}">
                                             <h5 class="font-weight-bold" style="color:gray;">{{ $fo['usuario']->usuario}}</h5>
                                         </a>
                                         <h5 style="margin-left:50px;color:#212121" >{{ $fo->descripcion }}</h5>
@@ -185,7 +185,7 @@
                         <h5 class="font-weight-bold" style="color:gray">Sugerencias</h5>
                     @foreach($sugerencia as $sug)
                     
-                    <a href="/perfil/{{$sug->id}}" style="color:#212121">{{$sug->usuario}} </a>
+                    <a href="/profile/{{$sug->id}}" style="color:#212121">{{$sug->usuario}} </a>
                         <hr class="text-default">
                     @endforeach
                         </div>
@@ -363,7 +363,7 @@
                     contenido.html('');
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/perfil/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/profile/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>');
                     });
@@ -393,7 +393,7 @@
                 success: function(response) {
                     console.log(response)
                     $.each(response, function(i, v) {
-                        contenido.append('<h5><a href="/perfil/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/profile/' + v.usuario_id + '">' + v.usuario['usuario'] + '</a></h5>' +
                             '<p>' + v.comentario + '</p>' +
                             '<hr>')
                     });
