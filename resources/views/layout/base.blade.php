@@ -49,9 +49,9 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/home"><i class="fas fa-home fa-lg"></i></a>
                         </li>
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-globe fa-lg"></i></a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link" href="chat"><i class="fas fa-comment fa-lg"></i></a>
                         </li>
