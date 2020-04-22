@@ -22,7 +22,7 @@
                 </div>
                   <div class="media-body " id="mediaperfil">
                     <h4 class="mt-0 mb-2 font-weight-bold"> {{$usuario->usuario}}</h4>
-                    <h5>{{ $usuario->nombres }}</h5>
+                    <h5>{{ $usuario->nombres }} {{ $usuario->apellidos }}</h5>
                     <div>
                         {{ $usuario->descripcion }}
                     </div>
