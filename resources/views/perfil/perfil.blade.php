@@ -35,7 +35,7 @@
                         <a href="/updateProfile" type="button" class="iconsperfil"><i class="fas fa-user-edit"></i></a>
                      {{--  &nbsp;&nbsp;<a class="iconsperfil" href="" type="button"><i class="fas fa-cog"></i></a> --}}
                       </h4></a>
-                    <h5>{{ Session::get('usuario')->nombres }}</h5>
+                    <h5>{{ Session::get('usuario')->nombres }} {{ Session::get('usuario')->apellidos }}</h5>
                     <div>
                         {{ session::Get('usuario')->descripcion }}
                     </div>
