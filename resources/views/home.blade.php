@@ -424,7 +424,7 @@
                     console.log(response)
                     $.each(response, function(i, v) {
 
-                        contenido.append('<h5><a href="/profile/' + v.usuario_id + '">' + v.megusta1['usuario'] + '</a></h5>' +
+                        contenido.append('<h5><a href="/profile/' + v.megusta1['usuario']+ '">' + v.megusta1['usuario'] + '</a></h5>' +
                             '<hr>')
                     });
                 }
